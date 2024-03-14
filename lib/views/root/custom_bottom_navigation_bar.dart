@@ -61,18 +61,16 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
     required String svgPath,
   }) =>
       Expanded(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset(
-              svgPath,
-              height: size,
-              colorFilter: viewModel.selectedIndex == index
-                  ? const ColorFilter.mode(Color(0xFF634EC0), BlendMode.srcATop)
-                  : const ColorFilter.mode(
-                  Colors.transparent, BlendMode.srcATop),
-            ),
-          ],
+        child: InkWell(
+          onTap: () => viewModel.changeIndex(index),
+          child: SvgPicture.asset(
+            svgPath,
+            height: size,
+            colorFilter: viewModel.selectedIndex == index
+                ? const ColorFilter.mode(Color(0xFF634EC0), BlendMode.srcATop)
+                : const ColorFilter.mode(
+                Colors.transparent, BlendMode.srcATop),
+          ),
         ),
       );
 

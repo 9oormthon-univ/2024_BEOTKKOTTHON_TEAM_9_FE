@@ -1,10 +1,11 @@
+import 'package:bommeong/views/chat/chat_screen.dart';
+import 'package:bommeong/views/like/like_screen.dart';
+import 'package:bommeong/views/my/my_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/home/home_screen.dart';
 import 'package:bommeong/views/root/custom_bottom_navigation_bar.dart';
-
 import '../../viewModels/root/root_viewmodel.dart';
 
 class RootScreen extends BaseScreen<RootViewModel> {
@@ -12,14 +13,16 @@ class RootScreen extends BaseScreen<RootViewModel> {
 
   @override
   Widget buildBody(BuildContext context) {
+    print(viewModel.selectedIndex);
+    print("뭐임");
     return Obx(
           () => IndexedStack(
         index: viewModel.selectedIndex,
         children: const [
           HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
+          ChatScreen(),
+          LikeScreen(),
+          MyScreen(),
         ],
       ),
     );
@@ -29,7 +32,6 @@ class RootScreen extends BaseScreen<RootViewModel> {
   Widget? buildBottomNavigationBar(BuildContext context) {
     return const CustomBottomNavigationBar();
   }
-
 
   @override
   bool get extendBodyBehindAppBar => true;
