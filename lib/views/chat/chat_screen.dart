@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:bommeong/viewModels/home/home_viewmodel.dart';
+import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 
-class HomeScreen extends BaseScreen<HomeViewModel> {
-  const HomeScreen({super.key});
+class ChatScreen extends BaseScreen<ChatViewModel> {
+  const ChatScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    return Text('Home Screen');
+    return Text('Chat Screen');
   }
 
   @override

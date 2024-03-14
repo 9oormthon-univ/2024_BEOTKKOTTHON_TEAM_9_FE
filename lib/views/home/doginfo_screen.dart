@@ -1,13 +1,13 @@
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 
-class HomeScreen extends BaseScreen<HomeViewModel> {
-  const HomeScreen({super.key});
+class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
+  const DogInfoScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    return Text('Home Screen');
+    return Text('Dog info Screen');
   }
 
   @override
