@@ -20,7 +20,7 @@ class _SignaturePageState extends State<SignaturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Signature to PNG"),
+        title: Text("서명하기"),
       ),
       body: Column(
         children: <Widget>[

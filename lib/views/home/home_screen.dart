@@ -11,13 +11,9 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildBody(BuildContext context) {
     return Text('Home Screen');
-
   }
-
   @override
   bool get wrapWithOuterSafeArea => true;
-
   @override
   bool get wrapWithInnerSafeArea => true;
-
 }

@@ -1,11 +1,26 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../home/hand_sign.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Onboarding',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: OnboardingScreen(), // 앱의 시작점으로 OnboardingScreen을 설정합니다.
+    );
+  }
+}
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -199,6 +214,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
 
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 40, // 핸드폰 가로 너비에서 40(양쪽 20씩)을 뺀 값
+                      height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
+                          ),
+                        ),
+                        onPressed: isAgreed_1 && signatureData != null
+                            ? () {
+                          if (_currentPage < 2) {
+                            _controller.nextPage(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
+                          }
+                        }
+                            : null, // 조건이 충족되지 않으면 버튼 비활성화
+                        child: Text('입양 신청서 작성하기',
+                          style: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),),
+                      ),
+                    ),
+
                   ],
                 ),
               ),
@@ -210,6 +256,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             );
           }
         },
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 3,
       ),
     );
