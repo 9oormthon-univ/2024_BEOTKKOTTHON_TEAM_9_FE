@@ -1,13 +1,13 @@
+import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 
-class HomeScreen extends BaseScreen<HomeViewModel> {
-  const HomeScreen({super.key});
+class LikeScreen extends BaseScreen<LikeViewModel> {
+  const LikeScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    return Text('Home Screen');
+    return Text('Like Screen');
   }
 
   @override

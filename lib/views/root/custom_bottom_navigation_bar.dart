@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nightary/viewModels/root/root_viewmodel.dart';
-import 'package:nightary/views/base/base_widget.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/views/base/base_widget.dart';
 
 class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
   const CustomBottomNavigationBar({super.key});
@@ -10,49 +10,85 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return Obx(
-      () => Theme(
-        data: ThemeData(
-          highlightColor: Colors.transparent,
-          splashFactory: NoSplash.splashFactory,
-        ),
-        child: BottomNavigationBar(
-          elevation: 0,
-          currentIndex: viewModel.selectedIndex,
-          onTap: viewModel.changeIndex,
-
-          // 아이템의 색상
-          unselectedItemColor: Colors.grey[400],
-          selectedItemColor: const Color(0xFF7541EF),
-
-          // 탭 애니메이션 변경 (fixed: 없음)
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-
-          // Bar에 보여질 요소. icon과 label로 구성.
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/house.svg',
-                  height: 24,
-                  colorFilter: viewModel.selectedIndex == 0
-                      ? const ColorFilter.mode(
-                          Color(0xFF7541EF), BlendMode.srcATop)
-                      : ColorFilter.mode(Colors.grey[400]!, BlendMode.srcATop),
+          () =>
+          Theme(
+            data: ThemeData(
+              highlightColor: Colors.transparent,
+              splashFactory: NoSplash.splashFactory,
+            ),
+            child: BottomAppBar(
+              elevation: 0,
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 6.0,
+              clipBehavior: Clip.antiAlias,
+              child: Container(
+                height: 65,
+                color: const Color(0xFFFFFFFF),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildBottomNavigationBarItem(
+                      index: 0,
+                      size: 45,
+                      svgPath: 'assets/icons/meet_g.svg',
+                    ),
+                    _buildBottomNavigationBarItem(
+                      index: 1,
+                      size: 45,
+                      svgPath: 'assets/icons/chat.svg',
+                    ),
+                    _buildBottomNavigationBarItem(
+                      index: 2,
+                      size: 45,
+                      svgPath: 'assets/icons/like.svg',
+                    ),
+                    _buildBottomNavigationBarItem(
+                      index: 3,
+                      size: 45,
+                      svgPath: 'assets/icons/my.svg',
+                    ),
+                  ],
                 ),
-                label: "홈"),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/house.svg',
-                  height: 24,
-                  colorFilter: viewModel.selectedIndex == 1
-                      ? const ColorFilter.mode(
-                          Color(0xFF7541EF), BlendMode.srcATop)
-                      : ColorFilter.mode(Colors.grey[400]!, BlendMode.srcATop),
-                ),
-                label: "내정보"),
-          ],
-        ),
-      ),
+              ),
+            ),
+          ),
     );
   }
+
+  Widget _buildBottomNavigationBarItem({
+    required int index,
+    required double size,
+    required String svgPath,
+  }) =>
+      Expanded(
+        child: InkWell(
+          onTap: () => viewModel.changeIndex(index),
+          child: SvgPicture.asset(
+            svgPath,
+            height: size,
+            colorFilter: viewModel.selectedIndex == index
+                ? const ColorFilter.mode(Color(0xFF634EC0), BlendMode.srcATop)
+                : const ColorFilter.mode(
+                Colors.transparent, BlendMode.srcATop),
+          ),
+        ),
+      );
+
+  Widget _buildBottomNavigationBarLine({
+    required int index,
+    required double size,
+  }) =>
+      Container(
+        child: viewModel.selectedIndex == index
+            ? Container(// 선과 아이콘 사이의 간격 조절
+          height: 2.0, // 선의 높이
+          width: size, // 선의 너비를 아이콘의 크기에 맞추거나 조절
+          color: Color(0xFFA4A3E1), // 선의 색상
+        )
+            : Container(),
+      );
+
+
 }
+
+
