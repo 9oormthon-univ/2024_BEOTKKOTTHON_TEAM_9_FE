@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nightary/viewModels/root/root_viewmodel.dart';
-import 'package:nightary/views/base/base_widget.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/views/base/base_widget.dart';
 
 class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
   const CustomBottomNavigationBar({super.key});
@@ -61,15 +61,12 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
     required String svgPath,
   }) =>
       Expanded(
-        child: InkWell(
-          onTap: () => viewModel.changeIndex(index),
-          child: SvgPicture.asset(
-            svgPath,
-            width: size,
-            colorFilter: viewModel.selectedIndex == index
-                ? const ColorFilter.mode(Color(0xFFD097F4), BlendMode.srcATop)
-                : const ColorFilter.mode(Color(0xFF67686D), BlendMode.srcATop),
-          ),
+        child: SvgPicture.asset(
+          svgPath,
+          height: size,
+          colorFilter: viewModel.selectedIndex == index
+              ? const ColorFilter.mode(Color(0xFFD097F4), BlendMode.srcATop)
+              : const ColorFilter.mode(Color(0xFF67686D), BlendMode.srcATop),
         ),
       );
 }

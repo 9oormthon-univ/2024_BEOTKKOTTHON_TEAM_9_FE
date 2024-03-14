@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
-import 'package:nightary/bindings/root_binding.dart';
+import 'package:bommeong/bindings/root_binding.dart';
 import 'views/root/root_screen.dart';
 
 class MainApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
     FlutterNativeSplash.remove();
 
     return GetMaterialApp(
-      title: "Nightary",
+      title: "Bommeong",
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
