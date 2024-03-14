@@ -28,24 +28,23 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
               children: [
                 _buildBottomNavigationBarItem(
                   index: 0,
-                  size: 24,
-                  svgPath: 'assets/icons/home.svg',
+                  size: 45,
+                  svgPath: 'assets/icons/meet_g.svg',
                 ),
                 _buildBottomNavigationBarItem(
                   index: 1,
-                  size: 30,
-                  svgPath: 'assets/icons/chart.svg',
+                  size: 45,
+                  svgPath: 'assets/icons/chat.svg',
                 ),
-                const SizedBox(width: 70),
                 _buildBottomNavigationBarItem(
                   index: 2,
-                  size: 24,
-                  svgPath: 'assets/icons/search.svg',
+                  size: 45,
+                  svgPath: 'assets/icons/like.svg',
                 ),
                 _buildBottomNavigationBarItem(
                   index: 3,
-                  size: 28,
-                  svgPath: 'assets/icons/setting.svg',
+                  size: 45,
+                  svgPath: 'assets/icons/my.svg',
                 ),
               ],
             ),
@@ -65,8 +64,8 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
           svgPath,
           height: size,
           colorFilter: viewModel.selectedIndex == index
-              ? const ColorFilter.mode(Color(0xFFD097F4), BlendMode.srcATop)
-              : const ColorFilter.mode(Color(0xFF67686D), BlendMode.srcATop),
+              ? const ColorFilter.mode(Color(0xFF634EC0), BlendMode.srcATop)
+              : const ColorFilter.mode(Colors.transparent, BlendMode.srcATop),
         ),
       );
 }
