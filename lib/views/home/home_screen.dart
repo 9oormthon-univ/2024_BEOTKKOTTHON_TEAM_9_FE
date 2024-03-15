@@ -69,8 +69,20 @@ class _Header extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(left: 30),
 
-              child: Text("만나서 반가워요, 현정님!",
-              style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)),),
+              child: RichText(
+                text: TextSpan(
+                  style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)), // 기본 스타일
+                  children: <TextSpan>[
+                    TextSpan(text: '만나서 반가워요, '),
+                    TextSpan(
+                      text: '예비보호자',
+                      style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
+                    ),
+                    TextSpan(text: '님!'),
+                  ],
+                ),
+              )
+
             ),
             Container(
               padding: const EdgeInsets.only(right: 16),
@@ -200,7 +212,8 @@ class _DogComponent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(item.name, style: FontSystem.KR12B,),
-                    Text("${item.age} | ${item.type}"),
+                    Text("${item.age} | ${item.type}",
+                    style: FontSystem.KR10R,),
                   ],
                 ),
               ),

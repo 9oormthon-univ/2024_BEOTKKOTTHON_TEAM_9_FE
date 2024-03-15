@@ -35,3 +35,7 @@ class GetDogList {
   }
 }
 
+
+class GetUserInfo{
+
+}
