@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
-import '../widget/privacy_consent_screen.dart';
+import '../widget/privacy/privacy_consent_screen.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 

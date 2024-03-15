@@ -1,8 +1,10 @@
 import 'dart:typed_data';
+import 'package:bommeong/views/widget/adoption/question.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../home/hand_sign.dart';
+import '../../home/hand_sign.dart';
+import '../adoption/button.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OnboardingScreen(), // 앱의 시작점으로 OnboardingScreen을 설정합니다.
+      home: OnboardingScreen(),
     );
   }
 }
@@ -33,12 +35,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool isAgreed_1 = false;
   bool isSigned_1 = false;
   Uint8List? signatureData;
+  double _opacity = 0.0;
 
   final signcontroller = HandSignatureControl(
     threshold: 5.0,
     smoothRatio: 0.65,
     velocityRange: 2.0,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +94,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ],
       ),
+
       body: PageView.builder(
         controller: _controller,
         onPageChanged: (int page) {
@@ -90,6 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
         itemBuilder: (context, index) {
           if (index == 0) {
+
+            // 스크롤
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(30),
@@ -249,10 +265,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             );
-          } else {
+          } else if (index == 1){
             // 다른 페이지의 기본 텍스트 반환
-            return Center(
-              child: Text("페이지 ${index + 1}"),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // 좌상단으로 정렬하기 위해 start를 설정합니다.
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
+                ),
+                Expanded(
+                  child: Container(), // 공간을 차지하므로 두 번째 위젯은 하단에 위치하게 됩니다.
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ButtonContainer_1(), // 하단 중앙에 정렬될 버튼 컨테이너
+                  ),
+                ),
+              ],
             );
           }
         },
