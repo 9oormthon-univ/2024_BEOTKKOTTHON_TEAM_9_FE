@@ -4,6 +4,12 @@ import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:bommeong/models/home/doglist_state.dart';
+import 'package:bommeong/services/user_service.dart';
+import 'package:bommeong/viewModels/home/home_viewmodel.dart';
+
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -25,6 +31,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         _Header(),
         SizedBox(height: 30),
         _Middle(),
+        _DogList(),
+
 
       ],
 
@@ -107,5 +115,45 @@ class _Middle extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _DogList extends StatelessWidget {
+  const _DogList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
+
+    return Expanded(
+      child: PagedGridView<int, DogList>(
+        pagingController: viewModel.pagingController,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 한 줄에 2개의 항목을 표시
+          childAspectRatio: 1 / 1.2, // 항목의 가로세로 비율 조정
+          crossAxisSpacing: 10, // 항목 간의 가로 간격
+          mainAxisSpacing: 10, // 항목 간의 세로 간격
+        ),
+        builderDelegate: PagedChildBuilderDelegate<DogList>(
+          itemBuilder: (context, item, index) => Container(
+            padding: EdgeInsets.all(8), // 컨테이너 내부 패딩
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.network(
+                    item.imagePath, // 이미지 URL
+                    fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록
+                  ),
+                ),
+                SizedBox(height: 8), // 이미지와 텍스트 사이의 간격
+                Text(item.name, // 이름 표시
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
   }
 }
