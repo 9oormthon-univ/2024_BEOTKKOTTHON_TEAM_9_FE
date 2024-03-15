@@ -220,7 +220,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
+                          backgroundColor: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                           ),
