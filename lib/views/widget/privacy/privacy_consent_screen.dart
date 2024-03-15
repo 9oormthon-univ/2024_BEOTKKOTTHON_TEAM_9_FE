@@ -1,11 +1,28 @@
 import 'dart:typed_data';
-
+import 'package:bommeong/views/widget/adoption/question.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../home/hand_sign.dart';
+import '../adoption/button.dart';
 
-import '../home/hand_sign.dart';
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Onboarding',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: OnboardingScreen(),
+    );
+  }
+}
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -18,12 +35,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool isAgreed_1 = false;
   bool isSigned_1 = false;
   Uint8List? signatureData;
+  double _opacity = 0.0;
 
   final signcontroller = HandSignatureControl(
     threshold: 5.0,
     smoothRatio: 0.65,
     velocityRange: 2.0,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +94,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ],
       ),
+
       body: PageView.builder(
         controller: _controller,
         onPageChanged: (int page) {
@@ -75,6 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
         itemBuilder: (context, index) {
           if (index == 0) {
+
+            // 스크롤
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(30),
@@ -199,17 +230,65 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
 
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 40, // 핸드폰 가로 너비에서 40(양쪽 20씩)을 뺀 값
+                      height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
+                          ),
+                        ),
+                        onPressed: isAgreed_1 && signatureData != null
+                            ? () {
+                          if (_currentPage < 2) {
+                            _controller.nextPage(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
+                          }
+                        }
+                            : null, // 조건이 충족되지 않으면 버튼 비활성화
+                        child: Text('입양 신청서 작성하기',
+                          style: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),),
+                      ),
+                    ),
+
                   ],
                 ),
               ),
             );
-          } else {
+          } else if (index == 1){
             // 다른 페이지의 기본 텍스트 반환
-            return Center(
-              child: Text("페이지 ${index + 1}"),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // 좌상단으로 정렬하기 위해 start를 설정합니다.
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
+                ),
+                Expanded(
+                  child: Container(), // 공간을 차지하므로 두 번째 위젯은 하단에 위치하게 됩니다.
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ButtonContainer_1(), // 하단 중앙에 정렬될 버튼 컨테이너
+                  ),
+                ),
+              ],
             );
           }
         },
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 3,
       ),
     );
