@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         _Header(),
         SizedBox(height: 30),
         _Middle(),
+        SizedBox(height: 20),
         _DogList(),
 
 
@@ -126,34 +128,92 @@ class _DogList extends StatelessWidget {
     final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
 
     return Expanded(
-      child: PagedGridView<int, DogList>(
-        pagingController: viewModel.pagingController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 한 줄에 2개의 항목을 표시
-          childAspectRatio: 1 / 1.2, // 항목의 가로세로 비율 조정
-          crossAxisSpacing: 10, // 항목 간의 가로 간격
-          mainAxisSpacing: 10, // 항목 간의 세로 간격
-        ),
-        builderDelegate: PagedChildBuilderDelegate<DogList>(
-          itemBuilder: (context, item, index) => Container(
-            padding: EdgeInsets.all(8), // 컨테이너 내부 패딩
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.network(
-                    item.imagePath, // 이미지 URL
-                    fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록
-                  ),
-                ),
-                SizedBox(height: 8), // 이미지와 텍스트 사이의 간격
-                Text(item.name, // 이름 표시
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              ],
+      child: Container(
+        margin:  EdgeInsets.only(left: 24, right: 24),
+        child: PagedGridView<int, DogList>(
+
+          pagingController: viewModel.pagingController,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1 / 1.2,
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 0,
+
+          ),
+          builderDelegate: PagedChildBuilderDelegate<DogList>(
+            itemBuilder: (context, item, index) => Container(
+              padding: EdgeInsets.all(0), // 컨테이너 내부 패딩
+              child: _DogComponent(
+                item: item,
+              ),
             ),
           ),
         ),
       ),
     );
 
+  }
+}
+
+class _DogComponent extends StatelessWidget {
+  const _DogComponent({super.key, required this.item});
+
+  final DogList item;
+  @override
+  Widget build(BuildContext context) {
+    final HomeViewModel viewModel = Get.put(HomeViewModel());
+    return Column(
+      children: [
+        Container(
+          height: Get.height * 0.15,
+          width: Get.width * 0.39,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            child: Image.network(
+              item.imagePath, // 이미지 URL
+              fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
+          height: Get.height * 0.07,
+          width: Get.width * 0.39,
+          decoration: BoxDecoration(
+            color: Color(0xFFF0EFF4),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.name, style: FontSystem.KR12B,),
+                    Text("${item.age} | ${item.type}"),
+                  ],
+                ),
+              ),
+              SvgPicture.asset(
+                item.favourite
+                    ? "assets/images/home/heart_fill.svg"
+                    : "assets/images/home/heart.svg",
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

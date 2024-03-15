@@ -23,11 +23,11 @@ class GetDogList {
       // 각 페이지마다 고유한 데이터를 생성하기 위해 pageKey와 index를 사용
       int id = pageKey * 10 + index;
       return DogList(
-        name: 'Dog #$id',
-        age: '${id % 10 + 1}', // 가정한 나이 데이터
+        name:'Dog #$id',
+        age: 'old', // 가정한 나이 데이터
         type: (id % 2 == 0) ? 'Labrador' : 'Beagle', // 간단한 조건으로 타입을 정함
         favourite: false, // 기본값
-        imagePath: 'https://example.com/dog$id.jpg',
+        imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
       );
     });
 
