@@ -39,6 +39,19 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
                   ),
                 ),
               ),
+              Positioned(
+                top: Get.height * 0.02,
+                left: Get.width * 0.03,
+                  child:InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                        "assets/images/home/goBack.svg",
+                        height: 40,
+                    ),
+                  ),
+              ),
             ],
           ),
           _BottomBox(),

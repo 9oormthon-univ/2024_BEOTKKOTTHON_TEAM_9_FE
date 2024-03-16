@@ -16,6 +16,6 @@ class RootBinding extends Bindings {
     Get.lazyPut(() => ChatViewModel());
     Get.lazyPut(() => LikeViewModel());
     Get.lazyPut(() => MyViewModel());
-    Get.lazyPut(() => DogInfoViewModel());
+    Get.lazyPut(() => DogInfoViewModel(),fenix: true);
   }
 }
