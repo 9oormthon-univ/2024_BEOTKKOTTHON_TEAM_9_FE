@@ -99,7 +99,7 @@ class _BottomBox extends StatelessWidget {
                 ],
               ),
             ),
-            Text("Young . 골든리트리버",
+            Text("${viewModel.items.age} . ${viewModel.items.type}",
                 style: FontSystem.KR16R),
             SizedBox(height: 20),
             Text("우리 날봄이는요!",
@@ -107,9 +107,9 @@ class _BottomBox extends StatelessWidget {
             SizedBox(height: 10),
             Row(
               children: [
-                _Tag(text: "#귀엽고 애교많은"),
-                _Tag(text: "#믹스견"),
-                _Tag(text: "#바보"),
+                _Tag(text: viewModel.items.tags[0]),
+                _Tag(text: viewModel.items.tags[1]),
+                _Tag(text: viewModel.items.tags[2]),
               ],
             ),
             SizedBox(height: 15),
@@ -150,6 +150,7 @@ class _TalkBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return Stack(
         children: [SvgPicture.asset(
           "assets/images/home/talk.svg",
@@ -158,7 +159,7 @@ class _TalkBox extends StatelessWidget {
           Positioned(
             top: 20,
             left: 20,
-            child: Text("안녕하세요! 저는 날봄이에요. 오늘 날씨가 참 좋죠?"),
+            child: Text(viewModel.items.dogTalk),
           ),
         ]
     );
@@ -171,6 +172,7 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return InkWell(
       onTap: () {
         print('버튼 탭됨!');
@@ -183,7 +185,7 @@ class _BottomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
         ),
         child: Text(
-          '남봄이와 얘기해보기', // 버튼 텍스트
+          '${viewModel.items.name}이와 얘기해보기', // 버튼 텍스트
           style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
           textAlign: TextAlign.center, // 텍스트 정렬
         ),
