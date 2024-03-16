@@ -10,7 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:bommeong/models/home/doglist_state.dart';
+import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 
@@ -176,10 +176,11 @@ class _DogComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
+    final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     return InkWell(
-      onTap: () {
-        //스크린 이동
-        Get.to(() => DogInfoScreen(), arguments: item.id);
+      onTap: () async {
+        await dogInfoViewModel.fetchPage(item.id);
+        Get.to(() => DogInfoScreen());
       },
       child: Column(
         children: [

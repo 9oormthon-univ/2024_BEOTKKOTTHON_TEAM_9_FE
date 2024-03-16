@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/views/base/base_screen.dart';
@@ -8,7 +10,6 @@ import 'package:get/get.dart';
 
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   const DogInfoScreen({super.key});
-
 
   @override
   Widget buildBody(BuildContext context) {
@@ -63,19 +64,22 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
 
   @override
   bool get wrapWithOuterSafeArea => true;
-
   @override
   bool get wrapWithInnerSafeArea => true;
-
 }
 
 
 
 class _BottomBox extends StatelessWidget {
+  //뷰모델 가져오기
   const _BottomBox({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //뷰모델
+
+    final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
+    print("렌더링은 ${viewModel.items.name}");
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
       child: Column(
@@ -86,7 +90,7 @@ class _BottomBox extends StatelessWidget {
                 //왼쪽 정렬
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("날봄이",
+                  Text(viewModel.items.name,
                       style: FontSystem.KR26B),
                   SvgPicture.asset(
                     "assets/images/home/heart.svg",
