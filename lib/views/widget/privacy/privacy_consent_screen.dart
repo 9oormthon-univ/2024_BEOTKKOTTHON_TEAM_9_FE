@@ -1,10 +1,10 @@
 import 'dart:typed_data';
-import 'package:bommeong/views/widget/adoption/question.dart';
+import 'package:bommeong/views/widget/adoption/Question.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../home/hand_sign.dart';
-import '../adoption/button.dart';
+import '../adoption/Question2.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,18 +19,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OnboardingScreen(),
+      home: OnboardingScreen(0),
     );
   }
 }
 
 class OnboardingScreen extends StatefulWidget {
+  final int currentPage;
+  OnboardingScreen(this.currentPage);
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController _controller = PageController();
+  late final PageController _controller;
   int _currentPage = 0;
   bool isAgreed_1 = false;
   bool isSigned_1 = false;
@@ -46,6 +49,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+    _controller = PageController(initialPage: widget.currentPage);
+    _currentPage = widget.currentPage;
     Future.delayed(Duration(seconds: 3), () {
       setState(() {
         _opacity = 1.0;
@@ -104,7 +109,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
         itemBuilder: (context, index) {
           if (index == 0) {
-
             // 스크롤
             return SingleChildScrollView(
               child: Padding(
@@ -207,7 +211,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         // 서명 페이지로 이동
                         final Uint8List? result = await Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignaturePage()), // 서명 페이지를 열기 위한 가정된 코드
+                          MaterialPageRoute(builder: (context) => SignaturePage()),
                         );
                         if (result != null) {
                           setState(() {
@@ -257,7 +261,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                        ),),
+                        ),
+                        ),
                       ),
                     ),
 
@@ -267,24 +272,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             );
           } else if (index == 1){
             // 다른 페이지의 기본 텍스트 반환
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // 좌상단으로 정렬하기 위해 start를 설정합니다.
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
-                ),
-                Expanded(
-                  child: Container(), // 공간을 차지하므로 두 번째 위젯은 하단에 위치하게 됩니다.
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ButtonContainer_1(), // 하단 중앙에 정렬될 버튼 컨테이너
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // 좌상단으로 정렬하기 위해 start를 설정합니다.
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
                   ),
-                ),
-              ],
+                ],
+              ),
+            );
+          } else if (_currentPage == 2){
+            // 다른 페이지의 기본 텍스트 반환
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: QuestionScreen2(), // 상단 좌측에 정렬될 위젯
+                  ),
+                ],
+              ),
             );
           }
         },
