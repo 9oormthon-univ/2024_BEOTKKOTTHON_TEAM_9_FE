@@ -1,4 +1,5 @@
 import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
 import 'package:get/get.dart';
@@ -15,5 +16,6 @@ class RootBinding extends Bindings {
     Get.lazyPut(() => ChatViewModel());
     Get.lazyPut(() => LikeViewModel());
     Get.lazyPut(() => MyViewModel());
+    Get.lazyPut(() => DogInfoViewModel(),fenix: true);
   }
 }
