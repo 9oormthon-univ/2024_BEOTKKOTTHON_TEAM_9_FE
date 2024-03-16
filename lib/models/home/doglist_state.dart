@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 
 class DogList {
+  final int id;
   final String name;
   final String age;
   final String type;
@@ -9,6 +10,7 @@ class DogList {
   final String imagePath;
 
   DogList({
+    required this.id,
     required this.name,
     required this.age,
     required this.type,
@@ -18,6 +20,7 @@ class DogList {
 
   factory DogList.fromJson(Map<String, dynamic> json) {
     return DogList(
+      id: json['id'] as int,
       name: json['name'] as String,
       age: json['age'] as String,
       type: json['type'] as String,

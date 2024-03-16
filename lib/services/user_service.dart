@@ -23,6 +23,7 @@ class GetDogList {
       // 각 페이지마다 고유한 데이터를 생성하기 위해 pageKey와 index를 사용
       int id = pageKey * 10 + index;
       return DogList(
+        id: id,
         name:'Dog #$id',
         age: 'old', // 가정한 나이 데이터
         type: (id % 2 == 0) ? 'Labrador' : 'Beagle', // 간단한 조건으로 타입을 정함

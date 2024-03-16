@@ -1,3 +1,5 @@
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
@@ -174,59 +176,65 @@ class _DogComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
-    return Column(
-      children: [
-        Container(
-          height: Get.height * 0.15,
-          width: Get.width * 0.39,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            child: Image.network(
-              item.imagePath, // 이미지 URL
-              fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
+    return InkWell(
+      onTap: () {
+        //스크린 이동
+        Get.to(() => DogInfoScreen(), arguments: item.id);
+      },
+      child: Column(
+        children: [
+          Container(
+            height: Get.height * 0.15,
+            width: Get.width * 0.39,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: Image.network(
+                item.imagePath, // 이미지 URL
+                fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
+              ),
             ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
-          height: Get.height * 0.07,
-          width: Get.width * 0.39,
-          decoration: BoxDecoration(
-            color: Color(0xFFF0EFF4),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
+          Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
+            height: Get.height * 0.07,
+            width: Get.width * 0.39,
+            decoration: BoxDecoration(
+              color: Color(0xFFF0EFF4),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
 
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.name, style: FontSystem.KR12B,),
+                      Text("${item.age} | ${item.type}",
+                      style: FontSystem.KR10R,),
+                    ],
+                  ),
+                ),
+                SvgPicture.asset(
+                  item.favourite
+                      ? "assets/images/home/heart_fill.svg"
+                      : "assets/images/home/heart.svg",
+                  height: 20,
+                ),
+              ],
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(item.name, style: FontSystem.KR12B,),
-                    Text("${item.age} | ${item.type}",
-                    style: FontSystem.KR10R,),
-                  ],
-                ),
-              ),
-              SvgPicture.asset(
-                item.favourite
-                    ? "assets/images/home/heart_fill.svg"
-                    : "assets/images/home/heart.svg",
-                height: 20,
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
