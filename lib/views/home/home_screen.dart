@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
-
+import '../widget/privacy/privacy_consent_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
@@ -13,8 +13,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
-
-import '../widget/privacy_consent_screen.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -48,7 +46,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   bool get wrapWithOuterSafeArea => true;
   @override
   bool get wrapWithInnerSafeArea => true;
-  
 }
 
 class _Header extends StatelessWidget {
