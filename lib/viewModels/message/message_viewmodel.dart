@@ -12,7 +12,8 @@ class MessageViewModel extends GetxController {
   }
 
 
-  List<types.Message> get chatMessages => messages.map((m) => m.toChatMessage()).toList();
+  List<types.Message> get chatMessages => messages.reversed.map((m) => m.toChatMessage()).toList();
+
 
   void sendMessage(String text, String userId) {
     final userMessage = ChatMessage.fromUserInput(text, userId);

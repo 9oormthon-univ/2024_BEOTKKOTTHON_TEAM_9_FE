@@ -32,7 +32,6 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
           children: [
             Expanded(
               child: Obx(() {
-
                 // Chat 위젯을 사용하여 메시지 목록과 입력 필드를 표시합니다.
                 return Chat(
                   messages: messageViewModel.chatMessages,
