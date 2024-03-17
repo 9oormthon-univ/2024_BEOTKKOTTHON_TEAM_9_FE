@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../main_app.dart';
@@ -6,6 +7,9 @@ import '../../../utilities/app_routes.dart';
 import '../../home/home_screen.dart';
 import '../controller/responses_controller.dart';
 import '../privacy/privacy_consent_screen.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/utilities/app_routes.dart';
+
 
 class QuestionScreen2 extends StatefulWidget {
   @override
@@ -87,6 +91,7 @@ class _Q1State extends State<Q1> {
 
   @override
   Widget build(BuildContext context) {
+    RootViewModel rootViewModel = Get.put(RootViewModel());
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -420,16 +425,14 @@ class _Q1State extends State<Q1> {
               height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? Colors.black: Colors.grey,
+                  backgroundColor: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? Colors.black: Colors.grey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                   ),
                 ),
                 onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainApp(initialRoute: Routes.ROOT)),
-                  );
+                  rootViewModel.changeIndex(0);
+                  print('신청서 제출 완료');
                 }
                     : null,
                 child: Text('신청서 제출하기',

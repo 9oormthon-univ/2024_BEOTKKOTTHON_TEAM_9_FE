@@ -6,23 +6,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../home/hand_sign.dart';
 import '../adoption/Question2.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Onboarding',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: OnboardingScreen(0),
-    );
-  }
-}
 
 class OnboardingScreen extends StatefulWidget {
   final int currentPage;
@@ -265,6 +248,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 50),
 
                   ],
                 ),
@@ -280,6 +264,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: const EdgeInsets.all(30.0),
                     child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
                   ),
+                  SizedBox(height: 50),
                 ],
               ),
             );
@@ -293,8 +278,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: const EdgeInsets.all(30.0),
                     child: QuestionScreen2(), // 상단 좌측에 정렬될 위젯
                   ),
+                  SizedBox(height: 50),
+
                 ],
               ),
+
             );
           }
         },

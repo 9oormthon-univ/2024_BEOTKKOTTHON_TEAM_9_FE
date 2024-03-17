@@ -13,6 +13,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
+import 'package:bommeong/views/home/doginfo_screen.dart';
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -174,10 +177,12 @@ class _DogComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
     final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
+    final RootViewModel rootViewModel = Get.put(RootViewModel());
     return InkWell(
       onTap: () async {
         await dogInfoViewModel.fetchPage(item.id);
-        Get.to(() => DogInfoScreen());
+        // Get.to(() => DogInfoScreen());
+        rootViewModel.changeIndex(4);
       },
       child: Column(
         children: [
