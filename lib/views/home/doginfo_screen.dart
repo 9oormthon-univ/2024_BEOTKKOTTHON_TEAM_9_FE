@@ -1,6 +1,9 @@
 import 'dart:ffi';
 
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/viewModels/message/message_viewmodel.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/views/message/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/utilities/font_system.dart';
@@ -45,7 +48,9 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
                 left: Get.width * 0.03,
                   child:InkWell(
                     onTap: () {
-                      Get.back();
+                      // Get.back();
+                      RootViewModel rootViewModel = Get.put(RootViewModel());
+                      rootViewModel.changeIndex(0);
                     },
                     child: SvgPicture.asset(
                         "assets/images/home/goBack.svg",
@@ -172,10 +177,18 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MessageViewModel messageViewModel = Get.put(MessageViewModel());
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
     final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return InkWell(
-      onTap: () {
-        print('버튼 탭됨!');
+      onTap: () async {
+        //스크린 렌더링 전에 할거
+        await messageViewModel.setId(viewModel.items.id);
+        // Get.to(() => MessageScreen());
+        RootViewModel rootViewModel = Get.put(RootViewModel());
+        rootViewModel.changeIndex(5);
+
       },
       child: Container(
         width: Get.width * 0.85,
