@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:uuid/uuid.dart';
+import 'package:bommeong/utilities/font_system.dart';
 
 class MessageScreen extends BaseScreen<ChatViewModel> {
   const MessageScreen({super.key});
@@ -34,6 +35,7 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
               child: Obx(() {
                 // Chat 위젯을 사용하여 메시지 목록과 입력 필드를 표시합니다.
                 return Chat(
+                  showUserAvatars: true,
                   messages: messageViewModel.chatMessages,
                   onSendPressed: (partialText) {
                     // 메시지 전송 로직
@@ -51,6 +53,19 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
 
 
   }
+
+@override
+buildAppBar(BuildContext context) {
+  return AppBar(
+    title: Text(
+      "채팅",
+      style: FontSystem.KR20B,
+    ),
+    backgroundColor: Colors.white,
+    elevation: 0,
+    leading: Container(),
+  );
+}
 
   @override
   bool get wrapWithOuterSafeArea => true;
