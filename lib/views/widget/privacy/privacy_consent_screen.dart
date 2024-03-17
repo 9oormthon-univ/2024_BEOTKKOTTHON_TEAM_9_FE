@@ -3,7 +3,7 @@ import 'package:bommeong/views/widget/adoption/Question.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../home/hand_sign.dart';
+import 'hand_sign.dart';
 import '../adoption/Question2.dart';
 
 

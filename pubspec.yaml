@@ -45,6 +45,8 @@ flutter:
     - assets/config/.env
     - assets/data/
     - assets/images/home/
+    - assets/images/login/
+    - assets/images/chat/
     - assets/data/signtest.pdf
 
   fonts:
