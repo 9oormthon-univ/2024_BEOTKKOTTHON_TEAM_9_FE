@@ -4,7 +4,6 @@ import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
-
 class HomeViewModel extends GetxController {
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
   final GetDogList apiService = GetDogList();
