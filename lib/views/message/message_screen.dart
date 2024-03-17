@@ -41,23 +41,30 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
 @override
 buildAppBar(BuildContext context) {
   return AppBar(
-    title: Text(
-      "채팅",
-      style: FontSystem.KR20B,
-    ),
     backgroundColor: Colors.white,
     elevation: 0,
+    leadingWidth: Get.width,
     leading: Container(
-      padding: EdgeInsets.only(left: Get.width * 0.04),
-      child: InkWell(
-        onTap: () {
-          Get.back();
-        },
-        child: SvgPicture.asset(
-          "assets/images/home/goBack.svg",
-          color: Colors.grey,
-
-        ),
+      padding: EdgeInsets.only(left: Get.width * 0.03, right: Get.width * 0.03, bottom: Get.width * 0.03),
+      child: Row(
+        //정렬
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _TopButton(),
+          Spacer(
+            flex: 3,
+          ),
+          Text("채팅", style: FontSystem.KR20B),
+          Spacer(flex: 7),
+          InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: SvgPicture.asset(
+              "assets/icons/back_black.svg",
+            ),
+          ),
+        ],
       ),
     ),
   );
@@ -68,4 +75,22 @@ buildAppBar(BuildContext context) {
 
   @override
   bool get wrapWithInnerSafeArea => true;
+}
+
+class _TopButton extends StatelessWidget {
+  const _TopButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      width: Get.width * 0.3,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.5),
+      ),
+      child: Text("입양 신청서 작성 🐾", style: FontSystem.KR14R),
+    );
+  }
 }
