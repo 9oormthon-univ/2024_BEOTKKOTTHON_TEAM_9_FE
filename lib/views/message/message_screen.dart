@@ -17,19 +17,7 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
   Widget buildBody(BuildContext context) {
     final messageViewModel = Get.find<MessageViewModel>();
     final types.User user = types.User(id: const Uuid().v4());
-    return Stack(
-      children: [
-        InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: SvgPicture.asset(
-            "assets/images/home/goBack.svg",
-            height: 40,
-            color: Colors.black,
-          ),
-        ),
-        Column(
+    return Column(
           children: [
             Expanded(
               child: Obx(() {
@@ -46,11 +34,7 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
               }),
             ),
           ],
-        ),
-      ],
-    );
-
-
+        );
 
   }
 
@@ -63,7 +47,19 @@ buildAppBar(BuildContext context) {
     ),
     backgroundColor: Colors.white,
     elevation: 0,
-    leading: Container(),
+    leading: Container(
+      padding: EdgeInsets.only(left: Get.width * 0.04),
+      child: InkWell(
+        onTap: () {
+          Get.back();
+        },
+        child: SvgPicture.asset(
+          "assets/images/home/goBack.svg",
+          color: Colors.grey,
+
+        ),
+      ),
+    ),
   );
 }
 
