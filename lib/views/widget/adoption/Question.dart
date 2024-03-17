@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/responses_controller.dart';
@@ -398,10 +399,14 @@ class Q4 extends StatelessWidget {
               onPressed: () {
                 // 사용자가 입력한 텍스트를 responsesController에 저장
                 responsesController.addResponse({"question4": _controller.text});
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnboardingScreen(2)),
-                );
+                RootViewModel rootViewModel = Get.put(RootViewModel());
+                rootViewModel.changeIndex(7);
+
+                //여기 수정해야함 - :(
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OnboardingScreen(2)),
+                // );
               },
               child: Text('제출 할게요!',
                 style: TextStyle(

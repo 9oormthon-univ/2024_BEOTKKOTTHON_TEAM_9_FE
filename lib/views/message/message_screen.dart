@@ -1,4 +1,5 @@
 import 'package:bommeong/utilities/font_system.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
@@ -9,6 +10,7 @@ import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:uuid/uuid.dart';
 import 'package:bommeong/utilities/font_system.dart';
+import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
 
 class MessageScreen extends BaseScreen<ChatViewModel> {
   const MessageScreen({super.key});
@@ -82,15 +84,25 @@ class _TopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: Get.width * 0.3,
-      height: 40,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.5),
+    return InkWell(
+      onTap: () {
+        //lib/views/widget/privacy/privacy_consent_screen.dart으로 이동
+        // Get.to(OnboardingScreen(0));
+        RootViewModel rootViewModel = Get.put(RootViewModel());
+        rootViewModel.changeIndex(6);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        transformAlignment: Alignment.center,
+        //양쪽 정렬
+        width: Get.width * 0.3,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.5),
+        ),
+        child: Text("입양 신청서 작성 🐾", style: FontSystem.KR14R),
       ),
-      child: Text("입양 신청서 작성 🐾", style: FontSystem.KR14R),
     );
   }
 }
