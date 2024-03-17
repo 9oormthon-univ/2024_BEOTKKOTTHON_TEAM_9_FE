@@ -44,11 +44,11 @@ class GetDogInfo {
     return DogInfo(
         id: id,
         name:'Dog #$id',
-        age: 'old', // 가정한 나이 데이터
-        type: (id % 2 == 0) ? 'Labrador' : 'Beagle', // 간단한 조건으로 타입을 정함
+        age: 'old',
+        type: (id % 2 == 0) ? 'Labrador' : 'Beagle',
         favourite: false, // 기본값
-        tags: ['tag1', 'tag2', 'tag3'], // 가정한 태그 데이터
-        dogTalk: '멍멍입니다. 멍멍할 예정입니다.', // 가정한 개가 하는 말 데이터
+        tags: ['tag1', 'tag2', 'tag3'],
+        dogTalk: '멍멍입니다. 멍멍할 예정입니다.',
         imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
       );
 

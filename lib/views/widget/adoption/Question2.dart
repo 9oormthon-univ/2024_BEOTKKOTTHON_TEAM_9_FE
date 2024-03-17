@@ -420,7 +420,7 @@ class _Q1State extends State<Q1> {
               height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? Colors.black: Colors.grey,
+                  backgroundColor: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? Colors.black: Colors.grey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                   ),

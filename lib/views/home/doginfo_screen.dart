@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/viewModels/message/message_viewmodel.dart';
+import 'package:bommeong/views/message/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/utilities/font_system.dart';
@@ -172,10 +174,14 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MessageViewModel messageViewModel = Get.put(MessageViewModel());
+
     final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return InkWell(
-      onTap: () {
-        print('버튼 탭됨!');
+      onTap: () async {
+        //스크린 렌더링 전에 할거
+        await messageViewModel.setId(viewModel.items.id);
+        Get.to(() => MessageScreen());
       },
       child: Container(
         width: Get.width * 0.85,

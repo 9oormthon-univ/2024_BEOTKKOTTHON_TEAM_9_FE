@@ -5,12 +5,21 @@ import 'package:bommeong/views/base/base_screen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class ChatScreen extends BaseScreen<ChatViewModel> {
-  const ChatScreen({super.key});
+class MessageScreen extends BaseScreen<ChatViewModel> {
+  const MessageScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    return Text("zz");
+    return InkWell(
+      onTap: () {
+        Get.back();
+      },
+      child: SvgPicture.asset(
+        "assets/images/home/goBack.svg",
+        height: 40,
+        color: Colors.black,
+      ),
+    );
 
   }
 
@@ -20,4 +29,3 @@ class ChatScreen extends BaseScreen<ChatViewModel> {
   @override
   bool get wrapWithInnerSafeArea => true;
 }
-
