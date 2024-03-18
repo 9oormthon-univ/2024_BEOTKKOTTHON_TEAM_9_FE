@@ -17,16 +17,18 @@ class ChatScreen extends BaseScreen<ChatViewModel> {
     return Column(
       children: [
         _TopBar(),
-        viewModel.isHaveChat.value ? _ChatLogs() : Expanded(
-          flex: 7,
-          child: Column(
-            children: [
-              Spacer(flex: 7),
-              _InitScreen(),
-              Spacer(flex: 6),
-            ],
-          ),
-        ),
+        viewModel.isHaveChat.value
+            ? _ChatLogs()
+            : Expanded(
+                flex: 7,
+                child: Column(
+                  children: [
+                    Spacer(flex: 7),
+                    _InitScreen(),
+                    Spacer(flex: 6),
+                  ],
+                ),
+              ),
         _BottomButton(),
       ],
     );
@@ -132,8 +134,6 @@ class _BottomButton extends StatelessWidget {
   }
 }
 
-//이거 무한스크롤로 10개씩 나오게 만들어야겠징...
-
 class _ChatLogs extends StatelessWidget {
   const _ChatLogs({super.key});
 
@@ -149,7 +149,8 @@ class _ChatLogs extends StatelessWidget {
             itemBuilder: (context, item, index) => Container(
               // 아이템 빌드 로직
               padding: EdgeInsets.all(0),
-              child: _LogComponent(item: item), // DogComponent 대신 실제 컴포넌트를 사용하세요.
+              child:
+                  _LogComponent(item: item), // DogComponent 대신 실제 컴포넌트를 사용하세요.
             ),
           ),
         ),
@@ -160,11 +161,63 @@ class _ChatLogs extends StatelessWidget {
 
 class _LogComponent extends StatelessWidget {
   const _LogComponent({super.key, required this.item});
+
   final ChatList item;
 
   @override
   Widget build(BuildContext context) {
-    return Text("zz");
+    ChatViewModel viewModel = Get.put(ChatViewModel());
+    return Container(
+      width: Get.width,
+      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0), // 원하는 반경 값으로 조절
+                    child: Image.network(
+                      item.imagePath, // 이미지 URL
+                      height: 43,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(item.name, style: FontSystem.KR18B),
+                          ],
+                        ),
+                        Text(item.status,
+                            style: FontSystem.KR14R.copyWith(color: Color(0xFFADADAD))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Text(viewModel.formatChatDate(item.date),
+                  style:
+                  FontSystem.KR14M.copyWith(color: Color(0xFFADADAD))),
+            ],
+
+          ),
+          SizedBox(height: 15),
+          Container(
+            color: Color(0xFFE5E5E5),
+            height: Get.height * 0.001,
+          )
+        ],
+      ),
+    );
   }
 }
-
