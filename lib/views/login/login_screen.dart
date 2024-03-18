@@ -1,12 +1,22 @@
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import '../../viewModels/login/login_viewmodel.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  /* Open .env file */
+  await dotenv.load(fileName: "assets/config/.env");
+
+  // Splash Screen Duration 1.0s
+  await Future.delayed(const Duration(seconds: 1));
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
