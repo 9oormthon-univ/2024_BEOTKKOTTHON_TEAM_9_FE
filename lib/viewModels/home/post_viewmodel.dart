@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../models/home/post_state.dart';
+import 'dart:io';
 
 class PostController extends GetxController {
   final Announcement announcement = Announcement();
@@ -47,6 +48,11 @@ class PostController extends GetxController {
 
   void updateSelectedGender(String selectedGender) {
     announcement.selectedGender = selectedGender;
+    update();
+  }
+
+  void updateDogPicture(File? selectedPicture) {
+    announcement.dogPicture = selectedPicture;
     update();
   }
 

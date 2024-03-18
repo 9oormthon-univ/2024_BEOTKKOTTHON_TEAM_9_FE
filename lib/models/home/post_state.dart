@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Announcement {
   String announcementNumber;
   String name;
@@ -8,6 +10,7 @@ class Announcement {
   String shelterExperience;
   String message;
   String selectedGender;
+  File? dogPicture;
 
   Announcement({
     this.announcementNumber = '',
@@ -19,5 +22,6 @@ class Announcement {
     this.shelterExperience = '',
     this.message = '',
     this.selectedGender = '',
+    this.dogPicture = null,
   });
 }

@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../viewModels/home/post_viewmodel.dart';
 
 void main() {
@@ -12,7 +14,6 @@ class PostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: '재사용 가능한 위젯 데모',
       theme: ThemeData(
         // 앱 전체의 기본 배경색 설정
         scaffoldBackgroundColor: Color(0xFFF7F7F7),
@@ -25,16 +26,12 @@ class PostScreen extends StatelessWidget {
     );
   }
 }
-
-// StatefulWidget으로 변경
 class _PostScreen extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<_PostScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final PostController controller = Get.put(PostController());
@@ -48,6 +45,8 @@ class _MyHomePageState extends State<_PostScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ImageSelectionWidget(),
+              SizedBox(height: 30),
               Text('공고 번호', style: FontSystem.KR20B),
               SizedBox(height: 10),
               CustomTextField(onChanged: controller.updateAnnouncementNumber,),
@@ -77,7 +76,6 @@ class _MyHomePageState extends State<_PostScreen> {
                       setState(() {
                         controller.updateSelectedGender('여');
                       });
-// GetX 또는 ViewModel 사용 시
                     },
                   ),
                 ],
@@ -193,7 +191,6 @@ class SelectableButtons extends StatefulWidget {
   @override
   _SelectableButtonsState createState() => _SelectableButtonsState();
 }
-
 class _SelectableButtonsState extends State<SelectableButtons> {
   int _selectedIndex = -1; // 선택된 버튼의 인덱스
 
@@ -317,6 +314,7 @@ class _SelectableButtonsState extends State<SelectableButtons> {
   }
 }
 
+// 바텀 버튼
 class _BottomButton extends StatelessWidget {
   const _BottomButton({super.key});
 
@@ -343,5 +341,55 @@ class _BottomButton extends StatelessWidget {
       ),
     );
 
+  }
+}
+
+// 사진 고르기
+class ImageSelectionWidget extends StatefulWidget {
+  @override
+  _ImageSelectionWidgetState createState() => _ImageSelectionWidgetState();
+}
+class _ImageSelectionWidgetState extends State<ImageSelectionWidget> {
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        width: double.infinity,
+        height: 200,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey[300]!,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: _image != null
+            ? ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.file(
+            _image!,
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+        )
+            : Center(
+          child: Text('터치하여 사진을 올려주세요!', style: FontSystem.KR14R),
+        )
+      ),
+    );
   }
 }
