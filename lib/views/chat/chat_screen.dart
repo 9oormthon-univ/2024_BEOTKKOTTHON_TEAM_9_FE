@@ -1,5 +1,7 @@
 import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/utilities/font_system.dart';
+import 'package:bommeong/viewModels/message/message_viewmodel.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
@@ -112,9 +114,17 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MessageViewModel messageViewModel = Get.put(MessageViewModel());
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
     return InkWell(
-      onTap: () {
-        //스크린 렌더링 전에 할거
+      onTap: () async {
+        //스크린 렌더링 전에 할것
+        int id = 1;
+        await messageViewModel.setId(id);
+        // Get.to(() => MessageScreen());
+        RootViewModel rootViewModel = Get.put(RootViewModel());
+        rootViewModel.changeIndex(5);
       },
       child: Container(
         width: Get.width * 0.85,
