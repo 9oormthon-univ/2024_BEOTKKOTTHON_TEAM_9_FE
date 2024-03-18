@@ -89,7 +89,7 @@ class LoginScreen extends StatelessWidget {
               // 로그인 버튼 필드
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFA273FF),
+                  backgroundColor: Color(0xFFA273FF),
                   minimumSize: Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

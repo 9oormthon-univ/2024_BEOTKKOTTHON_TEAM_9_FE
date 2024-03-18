@@ -55,6 +55,25 @@ class GetDogInfo {
   }
 }
 
-class GetUserInfo{
+
+class GetChatList {
+  Future<List<ChatList>> fetchItems(int pageKey) async {
+    // 네트워크 요청을 흉내내기 위한 딜레이
+    await Future.delayed(Duration(seconds: 1));
+
+    // 더미 데이터 생성
+    List<ChatList> items = List.generate(10, (index) {
+      int id = pageKey * 10 + index;
+      return ChatList(
+        imagePath: 'https://ifh.cc/g/tBmzjl.jpg', // 가상의 이미지 경로
+        name: 'Chat Partner #$id',
+        status: id % 2 == 0 ? '아직 친구를 기다리고있어요!' : '좋은친구와 함께하게 됐어요!🎉', // 간단한 조건으로 상태를 정함
+        date: DateTime.now().subtract(Duration(days: id)), // 현재로부터 id일 전의 날짜
+      );
+    });
+
+    return items;
+  }
+
 
 }

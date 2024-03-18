@@ -63,3 +63,36 @@ class DogInfo {
     );
   }
 }
+
+
+class ChatList {
+  final String imagePath;
+  final String name;
+  final String status; // 입양 됐는지 아닌지를 알려주는 상태
+  final DateTime date; // 마지막 메시지를 받거나 보낸 날짜
+
+  ChatList({
+    required this.imagePath,
+    required this.name,
+    required this.status,
+    required this.date,
+  });
+
+  factory ChatList.fromJson(Map<String, dynamic> json) {
+    return ChatList(
+      imagePath: json['imagePath'] as String,
+      name: json['name'] as String,
+      status: json['status'] as String,
+      date: DateTime.parse(json['date'] as String),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'imagePath': imagePath,
+      'name': name,
+      'status': status,
+      'date': date.toIso8601String(),
+    };
+  }
+}
