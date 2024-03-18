@@ -28,6 +28,7 @@ dependencies:
   flutter_chat_ui: ^1.6.12
   flutter_chat_types: ^3.6.2
   uuid: ^4.3.3
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
