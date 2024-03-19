@@ -30,22 +30,22 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
                     _buildBottomNavigationBarItem(
                       index: 0,
                       size: 45,
-                      svgPath: 'assets/icons/meet_g.svg',
+                      svgPath: 'assets/icons/meet_h.svg',
                     ),
                     _buildBottomNavigationBarItem(
                       index: 1,
                       size: 45,
-                      svgPath: 'assets/icons/chat.svg',
+                      svgPath: 'assets/icons/chat_h.svg',
                     ),
                     _buildBottomNavigationBarItem(
                       index: 2,
                       size: 45,
-                      svgPath: 'assets/icons/like.svg',
+                      svgPath: 'assets/icons/like_h.svg',
                     ),
                     _buildBottomNavigationBarItem(
                       index: 3,
                       size: 45,
-                      svgPath: 'assets/icons/my.svg',
+                      svgPath: 'assets/icons/my_h.svg',
                     ),
                   ],
                 ),
