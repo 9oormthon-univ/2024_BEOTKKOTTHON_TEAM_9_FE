@@ -49,6 +49,7 @@ flutter:
     - assets/images/home/
     - assets/images/login/
     - assets/images/chat/
+    - assets/images/my/
     - assets/data/signtest.pdf
 
   fonts:
