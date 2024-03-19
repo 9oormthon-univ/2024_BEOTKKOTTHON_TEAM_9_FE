@@ -178,26 +178,28 @@ class _DogComponent extends StatelessWidget {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
     final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     final RootViewModel rootViewModel = Get.put(RootViewModel());
-    return InkWell(
-      onTap: () async {
-        await dogInfoViewModel.fetchPage(item.id);
-        // Get.to(() => DogInfoScreen());
-        rootViewModel.changeIndex(4);
-      },
+    return Material(
+      color: Colors.transparent,
       child: Column(
         children: [
-          Container(
-            height: Get.height * 0.15,
-            width: Get.width * 0.39,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+          InkWell(
+            onTap: () async {
+              await dogInfoViewModel.fetchPage(item.id);
+              rootViewModel.changeIndex(4);
+            },
+            child: Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                image: DecorationImage(
+                  image: NetworkImage(item.imagePath), // 이미지 URL
+                  fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
+                ),
               ),
-              child: Image.network(
-                item.imagePath, // 이미지 URL
-                fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
-              ),
+              height: Get.height * 0.15,
+              width: Get.width * 0.39,
             ),
           ),
           Container(

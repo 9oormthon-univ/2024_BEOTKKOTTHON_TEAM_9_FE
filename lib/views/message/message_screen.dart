@@ -60,7 +60,8 @@ buildAppBar(BuildContext context) {
           Spacer(flex: 7),
           InkWell(
             onTap: () {
-              Get.back();
+              RootViewModel rootViewModel = Get.put(RootViewModel());
+              rootViewModel.changeIndex(0);
             },
             child: SvgPicture.asset(
               "assets/icons/back_black.svg",

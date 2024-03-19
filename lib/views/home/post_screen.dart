@@ -172,8 +172,7 @@ class GenderButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected, // 부모 위젯에서 제공한 콜백을 사용합니다.
         style: ElevatedButton.styleFrom(
-          primary: isSelected ? Color(0xFFA273FF) : Colors.white,
-          onPrimary: Colors.black,
+          foregroundColor: Colors.black, backgroundColor: isSelected ? Color(0xFFA273FF) : Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
         child: Text(title, style: FontSystem.KR15R),
@@ -299,8 +298,7 @@ class _SelectableButtonsState extends State<SelectableButtons> {
                 widget.onSelected(index);
               },
             style: ElevatedButton.styleFrom(
-              primary: _selectedIndex == index ? Color(0xFFA273FF) : Colors.white,
-              onPrimary: Colors.black,
+              foregroundColor: Colors.black, backgroundColor: _selectedIndex == index ? Color(0xFFA273FF) : Colors.white,
               minimumSize: Size(double.infinity, 75), // 버튼 높이 설정
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
