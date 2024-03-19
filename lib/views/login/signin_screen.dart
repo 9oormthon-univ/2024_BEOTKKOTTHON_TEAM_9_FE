@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                         print("중복 확인 버튼 클릭됨");
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFA273FF), // 버튼 배경색
+                        backgroundColor: Color(0xFFA273FF), // 버튼 배경색
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10), // 버튼 모서리 둥글게
                         ),

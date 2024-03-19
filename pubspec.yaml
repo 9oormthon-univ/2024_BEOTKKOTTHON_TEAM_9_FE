@@ -50,6 +50,7 @@ flutter:
     - assets/images/login/
     - assets/images/chat/
     - assets/images/my/
+    - assets/images/like/
     - assets/data/signtest.pdf
 
   fonts:

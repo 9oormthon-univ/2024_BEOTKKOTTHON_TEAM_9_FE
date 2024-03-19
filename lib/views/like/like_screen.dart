@@ -11,6 +11,7 @@ import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 
+
 class LikeScreen extends BaseScreen<HomeViewModel> {
   const LikeScreen({super.key});
 
@@ -18,7 +19,7 @@ class LikeScreen extends BaseScreen<HomeViewModel> {
   Widget buildBody(BuildContext context) {
     return Column(
       children: [
-        _TopBar(),
+        _TopImage(),
         SizedBox(height: 22),
         _Header(),
         SizedBox(height: 20),
@@ -42,29 +43,24 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          //정렬
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 30),
-          child: Text("마음에 담아두셨나요?",
-            style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
-        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(width: 30),
+            SvgPicture.asset(
+              "assets/images/home/foot.svg",
+              height: 20,
+            ),
+            SizedBox(width: 5),
             Container(
-                padding: const EdgeInsets.only(left: 30),
-
                 child: RichText(
                   text: TextSpan(
                     style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)), // 기본 스타일
                     children: <TextSpan>[
-                      TextSpan(text: '다들 아직'),
+                      TextSpan(text: '유심히 '),
                       TextSpan(
-                        text: ' 당신을 ',
-                        style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
+                        text: '본 - 멍 ',
+                        style: TextStyle(color: Color(0xFFA273FF)), // '예비보호자' 부분에만 적용할 스타일
                       ),
-                      TextSpan(text: '기다리고있어요!'),
                     ],
                   ),
                 )
@@ -74,6 +70,38 @@ class _Header extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _TopImage extends StatelessWidget {
+  const _TopImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/like/topDog.png',
+            width: Get.width,
+            height: Get.height* 0.3,
+            fit: BoxFit.cover,
+          ),
+          Align(
+            heightFactor: Get.height * 0.002,
+            widthFactor: Get.width * 0.0025,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("마음에 담아두셨나요?", style: FontSystem.KR16SB.copyWith(color: Colors.white)),
+                Text("다들 아직 기다리고 있어요!", style: FontSystem.KR25EB.copyWith(color: Colors.white)),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -189,31 +217,3 @@ class _DogComponent extends StatelessWidget {
   }
 }
 
-
-class _TopBar extends StatelessWidget {
-  const _TopBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Spacer(flex: 7),
-        Container(
-          //중간으로 컴포넌트 정렬하는 코드
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 30),
-            child: Text('좋아요', style: FontSystem.KR20B)),
-        Spacer(flex: 6),
-        Container(
-          padding: const EdgeInsets.only(right: 16),
-          child: Image.asset(
-            "assets/images/home/profile.png",
-            width: 32,
-            height: 32,
-          ),
-        ),
-      ],
-    );
-  }
-}
