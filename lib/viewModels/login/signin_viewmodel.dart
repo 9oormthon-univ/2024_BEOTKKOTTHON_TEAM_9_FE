@@ -5,6 +5,7 @@ import '../../services/sign_service.dart';
 class SignInViewModel {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController membertypeController = TextEditingController();
@@ -17,7 +18,7 @@ class SignInViewModel {
     print("Phone: ${phoneController.text}");
     print("MemberType: ${membertypeController.text}");
   }
-  // 일단 관리자/멤버는 남겨둚
+
   Future<bool> attemptSignIn() async {
     return _userService.attemptSignIn(
       emailController.text,

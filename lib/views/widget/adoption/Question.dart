@@ -3,7 +3,6 @@ import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/responses_controller.dart';
-import '../privacy/privacy_consent_screen.dart';
 
 // 상태 관리를 위한 ResponsesController 인스턴스 생성
 final ResponsesController responsesController = Get.put(ResponsesController());

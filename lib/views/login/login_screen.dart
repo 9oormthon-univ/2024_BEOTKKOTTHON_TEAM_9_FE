@@ -1,4 +1,5 @@
 import 'package:bommeong/views/login/loading_screen.dart';
+import 'package:bommeong/views/login/selectmt_screen.dart';
 import 'package:bommeong/views/login/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -128,9 +129,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextButton(
-                      onPressed: () {
-                        Get.to(SignInScreen());
-                      },
+                      onPressed: () {},
                       child: Text(
                         '비밀번호 찾기',
                         textAlign: TextAlign.right, // 오른쪽 정렬
@@ -156,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {Get.to(SelectMTScreen());},
                       child: Text(
                         '회원가입',
                         textAlign: TextAlign.left, // 왼쪽 정렬
