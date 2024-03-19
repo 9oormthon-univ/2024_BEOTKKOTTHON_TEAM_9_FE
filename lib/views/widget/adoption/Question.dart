@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/responses_controller.dart';
@@ -122,7 +123,7 @@ class Q1 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -146,7 +147,7 @@ class Q1 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -201,7 +202,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -225,7 +226,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -249,7 +250,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -320,7 +321,7 @@ class Q3 extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -390,7 +391,7 @@ class Q4 extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFFF7676),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -398,10 +399,14 @@ class Q4 extends StatelessWidget {
               onPressed: () {
                 // 사용자가 입력한 텍스트를 responsesController에 저장
                 responsesController.addResponse({"question4": _controller.text});
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnboardingScreen(2)),
-                );
+                RootViewModel rootViewModel = Get.put(RootViewModel());
+                rootViewModel.changeIndex(7);
+
+                //여기 수정해야함 - :(
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OnboardingScreen(2)),
+                // );
               },
               child: Text('제출 할게요!',
                 style: TextStyle(

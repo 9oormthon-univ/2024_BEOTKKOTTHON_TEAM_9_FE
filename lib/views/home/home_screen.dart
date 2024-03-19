@@ -1,3 +1,5 @@
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
@@ -8,9 +10,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:bommeong/models/home/doglist_state.dart';
+import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
+import 'package:bommeong/views/home/doginfo_screen.dart';
+import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -171,59 +176,70 @@ class _DogComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
-    return Column(
-      children: [
-        Container(
-          height: Get.height * 0.15,
-          width: Get.width * 0.39,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            child: Image.network(
-              item.imagePath, // 이미지 URL
-              fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
-          height: Get.height * 0.07,
-          width: Get.width * 0.39,
-          decoration: BoxDecoration(
-            color: Color(0xFFF0EFF4),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(item.name, style: FontSystem.KR12B,),
-                    Text("${item.age} | ${item.type}",
-                    style: FontSystem.KR10R,),
-                  ],
+    final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
+    final RootViewModel rootViewModel = Get.put(RootViewModel());
+    return Material(
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () async {
+              await dogInfoViewModel.fetchPage(item.id);
+              rootViewModel.changeIndex(4);
+            },
+            child: Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                image: DecorationImage(
+                  image: NetworkImage(item.imagePath), // 이미지 URL
+                  fit: BoxFit.fill, // 이미지가 컨테이너를 꽉 채우도록
                 ),
               ),
-              SvgPicture.asset(
-                item.favourite
-                    ? "assets/images/home/heart_fill.svg"
-                    : "assets/images/home/heart.svg",
-                height: 20,
-              ),
-            ],
+              height: Get.height * 0.15,
+              width: Get.width * 0.39,
+            ),
           ),
-        ),
-      ],
+          Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
+            height: Get.height * 0.07,
+            width: Get.width * 0.39,
+            decoration: BoxDecoration(
+              color: Color(0xFFF0EFF4),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.name, style: FontSystem.KR12B,),
+                      Text("${item.age} | ${item.type}",
+                      style: FontSystem.KR10R,),
+                    ],
+                  ),
+                ),
+                SvgPicture.asset(
+                  item.favourite
+                      ? "assets/images/home/heart_fill.svg"
+                      : "assets/images/home/heart.svg",
+                  height: 20,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

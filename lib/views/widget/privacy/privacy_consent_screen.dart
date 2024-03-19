@@ -3,26 +3,9 @@ import 'package:bommeong/views/widget/adoption/Question.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../home/hand_sign.dart';
+import 'hand_sign.dart';
 import '../adoption/Question2.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Onboarding',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: OnboardingScreen(0),
-    );
-  }
-}
 
 class OnboardingScreen extends StatefulWidget {
   final int currentPage;
@@ -240,7 +223,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
+                          backgroundColor: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                           ),
@@ -265,6 +248,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 50),
 
                   ],
                 ),
@@ -280,6 +264,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: const EdgeInsets.all(30.0),
                     child: QuestionScreen(), // 상단 좌측에 정렬될 위젯
                   ),
+                  SizedBox(height: 50),
                 ],
               ),
             );
@@ -293,8 +278,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: const EdgeInsets.all(30.0),
                     child: QuestionScreen2(), // 상단 좌측에 정렬될 위젯
                   ),
+                  SizedBox(height: 50),
+
                 ],
               ),
+
             );
           }
         },

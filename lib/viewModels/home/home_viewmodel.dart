@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:bommeong/models/home/doglist_state.dart';
+import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 class HomeViewModel extends GetxController {
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
@@ -17,9 +18,9 @@ class HomeViewModel extends GetxController {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await apiService.fetchItems(pageKey); // API 서비스를 사용하여 데이터를 가져옵니다.
+      final newItems = await apiService.fetchItems(pageKey);
       num pageSize = 6;
-      final isLastPage = newItems.length < pageSize; // pageSize는 페이지당 아이템 수입니다.
+      final isLastPage = newItems.length < pageSize;
       if (isLastPage) {
         pagingController.appendLastPage(newItems);
       } else {
