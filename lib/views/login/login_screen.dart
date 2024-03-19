@@ -9,10 +9,7 @@ import 'package:intl/date_symbol_data_file.dart';
 import '../../viewModels/login/login_viewmodel.dart';
 
 void main() async {
-  /* Open .env file */
   await dotenv.load(fileName: "assets/config/.env");
-
-  // Splash Screen Duration 1.0s
   await Future.delayed(const Duration(seconds: 1));
 
   runApp(MyApp());
