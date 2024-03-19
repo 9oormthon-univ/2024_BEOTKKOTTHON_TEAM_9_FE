@@ -1,12 +1,21 @@
 import 'package:bommeong/views/login/loading_screen.dart';
+import 'package:bommeong/views/login/selectmt_screen.dart';
+import 'package:bommeong/views/login/signin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import '../../viewModels/login/login_viewmodel.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await dotenv.load(fileName: "assets/config/.env");
+  await Future.delayed(const Duration(seconds: 1));
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -146,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {Get.to(SelectMTScreen());},
                       child: Text(
                         '회원가입',
                         textAlign: TextAlign.left, // 왼쪽 정렬
