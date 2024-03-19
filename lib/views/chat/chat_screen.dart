@@ -53,7 +53,6 @@ class _TopBar extends StatelessWidget {
       children: [
         Spacer(flex: 7),
         Container(
-            //중간으로 컴포넌트 정렬하는 코드
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 30),
             child: Text('대화하기', style: FontSystem.KR20B)),
