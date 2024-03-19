@@ -19,7 +19,9 @@ class MyScreen extends BaseScreen<MyViewModel> {
           height: Get.height * 0.02,
           color: Color(0xFFF8F8F8),
         ),
-        _BottomBox(),
+        viewModel.isHaveDog.value
+            ? _BottomBox()
+            : _InitScreen(),
       ],
     );
   }
@@ -166,6 +168,44 @@ class _BottomImg extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+
+class _InitScreen extends StatelessWidget {
+  const _InitScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: Get.height * 0.02),
+        Text("입양 신청 내역", style: FontSystem.KR18B),
+        SizedBox(height: Get.height * 0.2),
+        Column(
+          children: [
+            SvgPicture.asset("assets/images/my/dog.svg",
+                height: Get.height * 0.08),
+
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '기다리고 있는\n친구',
+                    style: FontSystem.KR13B,
+                  ),
+                  TextSpan(
+                    text: '들이 많아요!',
+                    style: FontSystem.KR13M,
+                  ),
+                ],
+              ),
+            )
+
+          ],
+        ),
+      ],
     );
   }
 }
