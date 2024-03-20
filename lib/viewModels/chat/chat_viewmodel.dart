@@ -8,7 +8,6 @@ class ChatViewModel extends GetxController {
   final PagingController<int, ChatList> pagingController = PagingController(firstPageKey: 0);
   final GetChatList apiService = GetChatList();
 
-
   @override
   void onInit() {
     super.onInit();

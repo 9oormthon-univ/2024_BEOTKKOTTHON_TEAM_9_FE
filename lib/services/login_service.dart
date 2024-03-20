@@ -23,7 +23,9 @@ class UserService {
       // 응답에서 accessToken 추출
       var data = json.decode(response.body);
       String accessToken = data['result']['access_token'];
+      String memberId = data['result']['memberId'];
       Get.find<AuthController>().setToken(accessToken);
+      Get.find<AuthController>().setMemberId(memberId);
       return true;
     } else {
       return false;

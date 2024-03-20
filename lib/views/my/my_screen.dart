@@ -38,8 +38,6 @@ class MyScreen extends BaseScreen<MyViewModel> {
             right: Get.width * 0.03,
             bottom: Get.width * 0.03),
         child: Row(
-          //정렬
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("마이페이지", style: FontSystem.KR20B),
@@ -61,13 +59,14 @@ class _TopPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyViewModel myViewModel = Get.put(MyViewModel());
     return Container(
       padding:
           EdgeInsets.only(left: Get.width * 0.05, bottom: Get.width * 0.05),
       child: Row(
         children: [
           Image.asset(
-            "assets/images/home/face.png",
+            myViewModel.userImage.value,
             width: Get.width * 0.2,
           ),
           SizedBox(width: Get.width * 0.05),
@@ -75,7 +74,7 @@ class _TopPart extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text("황현정", style: FontSystem.KR25B),
+                  Text(myViewModel.userName.value, style: FontSystem.KR25B),
                   SizedBox(width: Get.width * 0.02),
                   Container(
                     height: Get.height * 0.03,
@@ -85,13 +84,13 @@ class _TopPart extends StatelessWidget {
                       color: Color(0xFFF4EEFF),
                       borderRadius: BorderRadius.circular(7.5),
                     ),
-                    child: Text("(예비)반려인",
+                    child: Text(myViewModel.membertype.value,
                         style: FontSystem.KR14M
                             .copyWith(color: Color(0xFFA273FF))),
                   ),
                 ],
               ),
-              Text("ghkd2271@naver.com", style: FontSystem.KR15R),
+              Text(myViewModel.useremail.value, style: FontSystem.KR15R),
             ],
           )
         ],
@@ -134,6 +133,7 @@ class _BottomImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyViewModel myViewModel = Get.put(MyViewModel());
     return ClipRRect(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(60.0), // 상단 왼쪽 모서리
@@ -142,7 +142,7 @@ class _BottomImg extends StatelessWidget {
       child: Stack(
         children: [
           Image.asset(
-            'assets/images/my/miniDog.png',
+            myViewModel.dogImage.value,
             width: Get.width,
             height: Get.height* 0.48,
             fit: BoxFit.cover,
@@ -162,7 +162,7 @@ class _BottomImg extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("심사중", style: FontSystem.KR25B.copyWith(color: Colors.white)),
-                Text("날봄이를 기다리고 있어요...", style: FontSystem.KR16R.copyWith(color: Colors.white)),
+                Text(myViewModel.dogname.value + "를 기다리고 있어요...", style: FontSystem.KR16R.copyWith(color: Colors.white)),
               ],
             ),
           )
