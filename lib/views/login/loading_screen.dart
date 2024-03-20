@@ -24,12 +24,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
       setState(() {
         _currentWidget = LoadingScreen2(onComplete: () {
           if (mounted) {
-            // Get.offAll(() => MainApp(initialRoute: Routes.ROOT));
+            //Get.offAll(HomeScreen());
             // 여기에 바텀 네비게이션 달아야됨
-            // Get.put(HomeViewModel());
-            // Get.to(HomeScreen());
-            RootViewModel rootViewModel = Get.put(RootViewModel());
-            rootViewModel.changeIndex(0);
+            // RootViewModel rootViewModel = Get.put(RootViewModel());
+            // rootViewModel.changeIndex(0);
           }
         });
       });

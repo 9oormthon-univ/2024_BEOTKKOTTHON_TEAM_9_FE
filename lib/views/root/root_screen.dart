@@ -1,6 +1,8 @@
 import 'package:bommeong/views/chat/chat_screen.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/views/like/like_screen.dart';
+import 'package:bommeong/views/login/loading_screen.dart';
+import 'package:bommeong/views/login/login_screen.dart';
 import 'package:bommeong/views/message/message_screen.dart';
 import 'package:bommeong/views/my/my_screen.dart';
 import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
@@ -18,19 +20,21 @@ class RootScreen extends BaseScreen<RootViewModel> {
   @override
   Widget buildBody(BuildContext context) {
     print(viewModel.selectedIndex);
-    print("뭐임");
     return Obx(
           () => IndexedStack(
         index: viewModel.selectedIndex,
         children: [
-          HomeScreen(),
-          ChatScreen(),
-          LikeScreen(),
-          MyScreen(),
-          DogInfoScreen(),
-          MessageScreen(),
-          OnboardingScreen(0),
-          OnboardingScreen(2),
+          HomeScreen(), //0
+          ChatScreen(), //1
+          LikeScreen(), //2
+          MyScreen(), //3
+          DogInfoScreen(), //4
+          MessageScreen(), //5
+          OnboardingScreen(0),//6
+          OnboardingScreen(2), // 7
+          LoginScreen(), //8
+          LoadingScreen(), //9
+
         ],
       ),
     );

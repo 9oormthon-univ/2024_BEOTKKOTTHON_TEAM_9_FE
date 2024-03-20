@@ -1,7 +1,11 @@
 // user_service.dart
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../providers/AuthController.dart';
 
 class UserService {
   String? loginAPI = dotenv.env['loginAPI'];
@@ -15,7 +19,15 @@ class UserService {
         'password': password,
       }),
     );
-    return response.statusCode == 200;
+    if (response.statusCode == 200) {
+      // 응답에서 accessToken 추출
+      var data = json.decode(response.body);
+      String accessToken = data['result']['access_token'];
+      Get.find<AuthController>().setToken(accessToken);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Future<bool> attemptLogIn(String email, String password) async {

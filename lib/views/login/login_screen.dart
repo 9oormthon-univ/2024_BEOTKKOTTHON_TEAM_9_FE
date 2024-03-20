@@ -1,20 +1,22 @@
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/selectmt_screen.dart';
-import 'package:bommeong/views/login/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:intl/date_symbol_data_file.dart';
+import '../../providers/AuthController.dart';
+import '../../viewModels/home/home_viewmodel.dart';
 import '../../viewModels/login/login_viewmodel.dart';
+import '../home/home_screen.dart';
 
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
   await Future.delayed(const Duration(seconds: 1));
 
   runApp(MyApp());
+  Get.put(AuthController());
 }
 
 class MyApp extends StatelessWidget {
@@ -107,6 +109,8 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () async {
                   bool isSuccess = await viewModel.attemptLogIn();
                   if (isSuccess) {
+                    // AuthController에 token 저장
+                    // 일단 임시로 acessToken() 테스트 하려고 이거 주석함
                     Get.to(LoadingScreen());
                   } else {
                     // 실패 했을 시에
