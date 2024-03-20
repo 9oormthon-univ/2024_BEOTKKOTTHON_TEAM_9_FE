@@ -4,7 +4,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../providers/AuthController.dart';
 import 'user_service.dart';
 
@@ -29,7 +28,7 @@ class UserService {
       var data = json.decode(response.body);
       String accessToken = data['result']['access_token'];
       int memberId = data['result']['memberId'];
-      
+
       authController.setToken(accessToken);
       authController.setMemberId(memberId);
 
