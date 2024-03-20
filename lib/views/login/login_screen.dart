@@ -2,7 +2,6 @@ import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/selectmt_screen.dart';
-import 'package:bommeong/views/login/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';

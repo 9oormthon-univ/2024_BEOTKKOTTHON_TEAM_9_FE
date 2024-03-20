@@ -52,6 +52,7 @@ flutter:
     - assets/images/my/
     - assets/images/like/
     - assets/data/signtest.pdf
+    - assets/images/my/miniDog.png
 
   fonts:
     - family: Pretendard

@@ -68,16 +68,21 @@ class LoadingScreen1 extends StatelessWidget {
               ),
               children: <TextSpan>[
                 TextSpan(text: '반가워요, ', style: TextStyle(fontSize: 24.0)),
-                TextSpan(text: '현정', style: TextStyle(fontSize: 24.0, color: Color(0xFFA273FF))),
+                TextSpan(
+                    text: '현정',
+                    style: TextStyle(fontSize: 24.0, color: Color(0xFFA273FF))),
                 TextSpan(text: ' 님\n\n', style: TextStyle(fontSize: 24.0)),
-                TextSpan(text: '봄 ━━ 멍', style: TextStyle(color: Color(0xFFA273FF))),
+                TextSpan(
+                    text: '봄 ━━ 멍', style: TextStyle(color: Color(0xFFA273FF))),
                 TextSpan(text: '은\n유기견의 페르소나와\n대화할 수 있는 곳이에요'),
               ],
             ),
           ),
         ),
         Spacer(),
-        Center(child: SvgPicture.asset("assets/images/login/dog.svg", height: imageHeight, width: imageWidth)),
+        Center(
+            child: SvgPicture.asset("assets/images/login/dog.svg",
+                height: imageHeight, width: imageWidth)),
         Spacer(),
       ],
     );
@@ -115,15 +120,23 @@ class _LoadingScreen2State extends State<LoadingScreen2> {
           RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
-              style: TextStyle(fontSize: 24.0, fontFamily: 'Pretendard', fontWeight: FontWeight.w500, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 24.0,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black),
               children: <TextSpan>[
                 TextSpan(text: '유기견을 관심있게\n보는 당신께\n\n'),
-                TextSpan(text: '감사를 전합니다.\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(
+                    text: '감사를 전합니다.\n\n',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
           Spacer(),
-          Center(child: SvgPicture.asset("assets/images/login/dog.svg", height: imageHeight, width: imageWidth)),
+          Center(
+              child: SvgPicture.asset("assets/images/login/dog.svg",
+                  height: imageHeight, width: imageWidth)),
           Spacer(),
         ],
       ),

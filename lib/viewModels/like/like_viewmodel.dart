@@ -6,8 +6,9 @@ import 'package:bommeong/services/user_service.dart';
 
 class LikeViewModel extends GetxController {
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
-  final GetDogList apiService = GetDogList();
+  final GetLikeDogList apiService = GetLikeDogList();
   final isHaveDog = false.obs;
+
   @override
   void onInit() {
     super.onInit();
