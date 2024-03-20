@@ -40,7 +40,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         SizedBox(height: 20),
         _DogList(),
 
-
       ],
 
     );

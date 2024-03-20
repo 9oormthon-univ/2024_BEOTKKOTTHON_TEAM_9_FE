@@ -12,7 +12,7 @@ import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 
 
-class LikeScreen extends BaseScreen<HomeViewModel> {
+class LikeScreen extends BaseScreen<LikeViewModel> {
   const LikeScreen({super.key});
 
   @override
@@ -23,8 +23,9 @@ class LikeScreen extends BaseScreen<HomeViewModel> {
         SizedBox(height: 22),
         _Header(),
         SizedBox(height: 20),
-        _DogList(),
-
+        viewModel.isHaveDog.value
+            ? _DogList()
+        : _InitScreen(),
 
       ],
 
@@ -216,4 +217,43 @@ class _DogComponent extends StatelessWidget {
     );
   }
 }
+
+class _InitScreen extends StatelessWidget {
+  const _InitScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: Get.height * 0.13),
+        SvgPicture.asset("assets/images/like/standDog.svg",
+            height: Get.height * 0.08),
+        SizedBox(height: Get.height * 0.01),
+
+        RichText(
+          //정렬
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '아직',
+                style: FontSystem.KR13M,
+              ),
+              TextSpan(
+                text: ' 마음에 담은\n',
+                style: FontSystem.KR13B,
+              ),
+              TextSpan(
+                text: '강아지가 없으시군요!',
+                style: FontSystem.KR13M,
+              ),
+            ],
+          ),
+        )
+
+      ],
+    );
+  }
+}
+
 
