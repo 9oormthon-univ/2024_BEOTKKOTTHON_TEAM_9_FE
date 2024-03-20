@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -7,6 +9,7 @@ import 'dart:convert';
 import 'package:bommeong/models/home/dog_state.dart';
 import '../providers/AuthController.dart';
 import 'dart:convert';
+import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 
 class GetDogList {
@@ -34,30 +37,25 @@ class GetDogList {
 }
 
 class GetLikeDogList {
+
   Future<List<DogList>> fetchItems(int pageKey) async {
-    String? likepageAPI = dotenv.env['likepageAPI'];
+    String? likepageAPI = dotenv.env['mainpageAPI'];
     var token = Get.find<AuthController>().token;
-    var memberId = Get.find<AuthController>().memberIdValue;
 
-    String url = '$likepageAPI/$memberId';
-
+    // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
     final response = await http.get(
-      Uri.parse(url),
+      Uri.parse('$likepageAPI?page=$pageKey&limit=10'),
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );
-
     if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
-      List<DogList> items =
-          body.map((dynamic item) => DogList.fromJson(item)).toList();
-      print("가져왔음");
-      return items;
+      String responseBody = utf8.decode(response.bodyBytes);
+      return processResponse(responseBody);
     } else {
-      // 요청 실패 처리
-      throw Exception('Failed to load data');
+      throw Exception('Failed to load items');
     }
   }
 }
@@ -127,8 +125,6 @@ class AuthService extends GetxService {
 
 
 List<DogList> processResponse(String responseBody) {
-  // JSON 문자열을 Map 객체로 디코딩
-
   List<DogList> doglists = [];
   Map<String, dynamic> decodedResponse = json.decode(responseBody);
   List<dynamic> results = decodedResponse['result'];
@@ -144,5 +140,10 @@ List<DogList> processResponse(String responseBody) {
       imagePath: item['imageUrl'],
     ));
   }
+
+  LikeViewModel likeViewModel = Get.put(LikeViewModel());
+  if(doglists.length == 0) likeViewModel.isHaveDog.value = false;
+  else likeViewModel.isHaveDog.value = true;
+
   return doglists;
 }
