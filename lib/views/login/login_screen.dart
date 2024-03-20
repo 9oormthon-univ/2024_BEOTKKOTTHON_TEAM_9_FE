@@ -1,3 +1,5 @@
+import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/selectmt_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,179 +8,157 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import '../../providers/AuthController.dart';
-import '../../viewModels/home/home_viewmodel.dart';
-import '../../viewModels/login/login_viewmodel.dart';
-import '../home/home_screen.dart';
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:bommeong/viewModels/login/login_viewmodel.dart';
 
-void main() async {
-  await dotenv.load(fileName: "assets/config/.env");
-  await Future.delayed(const Duration(seconds: 1));
-
-  runApp(MyApp());
-  Get.put(AuthController());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: LoginScreen(),
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  final viewModel = LoginViewModel();
+class LoginScreen extends BaseScreen<LoginViewModel> {
+  const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40), // 전체적인 좌우 패딩 추가
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Spacer(flex: 2), // 상단 공간
-              SvgPicture.asset(
-                "assets/images/login/foot.svg",
-                height: 30,
-              ),
-              SizedBox(height: 10),
-              Text(
-                '봄멍으로!',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.bold,
+  Widget buildBody(BuildContext context) {
+    final viewModel = LoginViewModel();
+    final RootViewModel rootViewModel = Get.find<RootViewModel>();
+    return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40), // 전체적인 좌우 패딩 추가
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Spacer(flex: 2), // 상단 공간
+                SvgPicture.asset(
+                  "assets/images/login/foot.svg",
+                  height: 30,
                 ),
-              ),
-              SizedBox(height: 40),
-              // 아이디 입력 필드
-              TextFormField(
-                controller: viewModel.emailController, // 추가: 컨트롤러 연결
-                decoration: InputDecoration(
-                  hintText: '아이디를 입력해주세요',
-                  fillColor: Color(0xFFF7F4FF),
-                  filled: true,
-                  hintStyle: TextStyle(
-                    color: Colors.grey[500],
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20), // 입력 필드 간격
-              // 비밀번호 입력 필드
-              TextFormField(
-                controller: viewModel.passwordController, // 추가: 컨트롤러 연결
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: '비밀번호를 입력해주세요',
-                  fillColor: Color(0xFFF7F4FF),
-                  filled: true,
-                  hintStyle: TextStyle(
-                    color: Colors.grey[500],
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              // 로그인 버튼 필드
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFA273FF),
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () async {
-                  bool isSuccess = await viewModel.attemptLogIn();
-                  if (isSuccess) {
-                    // AuthController에 token 저장
-                    // 일단 임시로 acessToken() 테스트 하려고 이거 주석함
-                    Get.to(LoadingScreen());
-                  } else {
-                    // 실패 했을 시에
-                  }
-                },
-                child: Text(
-                  '로그인',
+                SizedBox(height: 10),
+                Text(
+                  '봄멍으로!',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 24,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              // 밑 비밀번호 찾기 및 회원가입
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 변경: 정렬을 spaceEvenly로
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        '비밀번호 찾기',
-                        textAlign: TextAlign.right, // 오른쪽 정렬
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                SizedBox(height: 40),
+                // 아이디 입력 필드
+                TextFormField(
+                  controller: viewModel.emailController, // 추가: 컨트롤러 연결
+                  decoration: InputDecoration(
+                    hintText: '아이디를 입력해주세요',
+                    fillColor: Color(0xFFF7F4FF),
+                    filled: true,
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20), // 입력 필드 간격
+                // 비밀번호 입력 필드
+                TextFormField(
+                  controller: viewModel.passwordController, // 추가: 컨트롤러 연결
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: '비밀번호를 입력해주세요',
+                    fillColor: Color(0xFFF7F4FF),
+                    filled: true,
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                // 로그인 버튼 필드
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFA273FF),
+                    minimumSize: Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () async {
+                    bool isSuccess = await viewModel.attemptLogIn();
+                    if (isSuccess) {
+                      Get.to(LoadingScreen());
+
+                    } else {
+                      // 실패 했을 시에
+                    }
+                  },
+                  child: Text(
+                    '로그인',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                // 밑 비밀번호 찾기 및 회원가입
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 변경: 정렬을 spaceEvenly로
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '비밀번호 찾기',
+                          textAlign: TextAlign.right, // 오른쪽 정렬
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      '|',
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Pretendard',
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {Get.to(SelectMTScreen());},
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        '회원가입',
-                        textAlign: TextAlign.left, // 왼쪽 정렬
+                        '|',
                         style: TextStyle(
                           color: Colors.grey[500],
+                          fontWeight: FontWeight.bold,
                           fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Spacer(flex: 3), // 하단 공간
-            ],
-          ),
-        ),
-      ),
-    );
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {Get.to(SelectMTScreen());},
+                        child: Text(
+                          '회원가입',
+                          textAlign: TextAlign.left, // 왼쪽 정렬
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(flex: 3), // 하단 공간
+              ],
+            ),
+          );
   }
 }

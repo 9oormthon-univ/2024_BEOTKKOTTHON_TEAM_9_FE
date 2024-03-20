@@ -21,20 +21,17 @@ class RootScreen extends BaseScreen<RootViewModel> {
   Widget buildBody(BuildContext context) {
     print(viewModel.selectedIndex);
     return Obx(
-          () => IndexedStack(
+      () => IndexedStack(
         index: viewModel.selectedIndex,
         children: [
-          HomeScreen(), //0
-          ChatScreen(), //1
-          LikeScreen(), //2
-          MyScreen(), //3
-          DogInfoScreen(), //4
-          MessageScreen(), //5
-          OnboardingScreen(0),//6
-          OnboardingScreen(2), // 7
-          LoginScreen(), //8
-          LoadingScreen(), //9
-
+          HomeScreen(), //1
+          ChatScreen(), // 2
+          LikeScreen(), // 3
+          MyScreen(), // 4
+          DogInfoScreen(), // 5
+          MessageScreen(), // 6
+          OnboardingScreen(0), //7
+          OnboardingScreen(2), //8
         ],
       ),
     );

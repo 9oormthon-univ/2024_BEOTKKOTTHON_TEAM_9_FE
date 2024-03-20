@@ -7,6 +7,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:bommeong/main_app.dart';
 import 'package:bommeong/utilities/app_routes.dart';
 
+import 'services/user_service.dart';
+
 void main() async {
   /* Open .env file */
   await dotenv.load(fileName: "assets/config/.env");
@@ -14,7 +16,9 @@ void main() async {
 
   // Splash Screen Duration 1.0s
   await Future.delayed(const Duration(seconds: 1));
+  Get.lazyPut(() => AuthService());
 
-  runApp(const MainApp(initialRoute: Routes.ROOT));
-  Get.put(AuthController());
+  runApp(MainApp(
+      initialRoute:
+          Get.find<AuthService>().isLoggedIn ? Routes.ROOT : Routes.LOGIN));
 }

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   var accessToken = ''.obs; // Observable variable for access token
-  var memberId = ''.obs; // Observable variable for member ID
+  var memberId = 0.obs; // Observable variable for member ID, corrected to RxInt
 
   // Method to set the access token
   void setToken(String token) {
@@ -10,12 +10,12 @@ class AuthController extends GetxController {
   }
 
   // Method to set the member ID
-  void setMemberId(String id) { // Avoid name conflict and clarify method purpose
-    memberId.value = id; // Correctly refer to the RxString variable
+  void setMemberId(int id) {
+    memberId.value = id; // Now correctly refers to the RxInt variable
   }
 
   // Getter for member ID
-  String get memberIdValue => memberId.value; // Correct the getter to return the value
+  int get memberIdValue => memberId.value; // Name adjusted to avoid conflict
 
   // Getter for access token
   String get token => accessToken.value;

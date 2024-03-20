@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/home/dog_state.dart';
@@ -22,7 +23,8 @@ class GetDogList {
 
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
-      List<DogList> items = body.map((dynamic item) => DogList.fromJson(item)).toList();
+      List<DogList> items =
+          body.map((dynamic item) => DogList.fromJson(item)).toList();
       print("가져왔음");
       return items;
     } else {
@@ -69,7 +71,8 @@ class GetLikeDogList {
 
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
-      List<DogList> items = body.map((dynamic item) => DogList.fromJson(item)).toList();
+      List<DogList> items =
+          body.map((dynamic item) => DogList.fromJson(item)).toList();
       print("가져왔음");
       return items;
     } else {
@@ -85,19 +88,17 @@ class GetDogInfo {
     await Future.delayed(Duration(seconds: 1)); // 네트워크 요청을 흉내내기 위한 딜레이
 
     return DogInfo(
-        id: id,
-        name:'Dog #$id',
-        age: 'old',
-        type: (id % 2 == 0) ? 'Labrador' : 'Beagle',
-        favourite: false, // 기본값
-        tags: ['tag1', 'tag2', 'tag3'],
-        dogTalk: '멍멍입니다. 멍멍할 예정입니다.',
-        imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
-      );
-
+      id: id,
+      name: 'Dog #$id',
+      age: 'old',
+      type: (id % 2 == 0) ? 'Labrador' : 'Beagle',
+      favourite: false, // 기본값
+      tags: ['tag1', 'tag2', 'tag3'],
+      dogTalk: '멍멍입니다. 멍멍할 예정입니다.',
+      imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
+    );
   }
 }
-
 
 class GetChatList {
   Future<List<ChatList>> fetchItems(int pageKey) async {
@@ -110,7 +111,9 @@ class GetChatList {
       return ChatList(
         imagePath: 'https://ifh.cc/g/tBmzjl.jpg', // 가상의 이미지 경로
         name: 'Chat Partner #$id',
-        status: id % 2 == 0 ? '아직 친구를 기다리고있어요!' : '좋은친구와 함께하게 됐어요!🎉', // 간단한 조건으로 상태를 정함
+        status: id % 2 == 0
+            ? '아직 친구를 기다리고있어요!'
+            : '좋은친구와 함께하게 됐어요!🎉', // 간단한 조건으로 상태를 정함
         date: DateTime.now().subtract(Duration(days: id)), // 현재로부터 id일 전의 날짜
       );
     });
@@ -142,4 +145,26 @@ class GetChatList {
   //     throw Exception('Failed to load data');
   //   }
   // }
+}
+
+class AuthService extends GetxService {
+  // 이 예제에서는 간단하게 로그인 상태를 bool로 관리합니다.
+  // 실제 앱에서는 로컬 저장소에서 로그인 토큰의 존재 여부를 확인해야 합니다.
+  bool _isLoggedIn = false; // 기본값은 false로 설정
+
+  bool get isLoggedIn => _isLoggedIn;
+
+  // 로그인 상태를 변경하는 함수 (로그인 시)
+  void login() {
+    _isLoggedIn = true;
+    update();
+  }
+
+  // 로그아웃 함수 (로그아웃 시)
+  void logout() {
+    _isLoggedIn = false;
+    update();
+  }
+
+  void update() {}
 }
