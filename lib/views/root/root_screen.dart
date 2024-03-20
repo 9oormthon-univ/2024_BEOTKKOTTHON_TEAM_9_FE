@@ -23,14 +23,15 @@ class RootScreen extends BaseScreen<RootViewModel> {
           () => IndexedStack(
         index: viewModel.selectedIndex,
         children: [
-          HomeScreen(),
-          ChatScreen(),
-          LikeScreen(),
-          MyScreen(),
-          DogInfoScreen(),
-          MessageScreen(),
-          OnboardingScreen(0),
-          OnboardingScreen(2),
+          HomeScreen(), //1
+          ChatScreen(), // 2
+          LikeScreen(), // 3
+          MyScreen(), // 4
+          DogInfoScreen(), // 5
+          MessageScreen(), // 6
+          OnboardingScreen(0), //7
+          OnboardingScreen(2), //8
+
         ],
       ),
     );

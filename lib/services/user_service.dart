@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/home/dog_state.dart';
@@ -65,4 +66,30 @@ class GetChatList {
   }
 
 
+}
+
+
+class AuthService extends GetxService {
+  // 이 예제에서는 간단하게 로그인 상태를 bool로 관리합니다.
+  // 실제 앱에서는 로컬 저장소에서 로그인 토큰의 존재 여부를 확인해야 합니다.
+  bool _isLoggedIn = false; // 기본값은 false로 설정
+
+  bool get isLoggedIn => _isLoggedIn;
+
+  // 로그인 상태를 변경하는 함수 (로그인 시)
+  void login() {
+    _isLoggedIn = true;
+    update();
+  }
+
+  // 로그아웃 함수 (로그아웃 시)
+  void logout() {
+    _isLoggedIn = false;
+    update();
+  }
+
+  void update() {
+
+
+  }
 }
