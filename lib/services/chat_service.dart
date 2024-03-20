@@ -57,3 +57,35 @@ List<ChatList> processResponse(String responseBody) {
 
   return chatlists;
 }
+
+
+class GetGPTChat {
+  Future<String> fetchItems(String input) async {
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/2/5'; //일단 이걸로
+
+    var data = jsonEncode({
+      "input": input,
+    });
+
+
+    final response = await http.post(
+      Uri.parse(mainpageAPI),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    );
+
+    if (response.statusCode == 200) {
+      String responseBody = utf8.decode(response.bodyBytes);
+      Map<String, dynamic> decodedResponse = json.decode(responseBody);
+      dynamic results = decodedResponse['result'];
+      return results['response'];
+
+    } else {
+      throw Exception('Failed to load items');
+    }
+  }
+
+}
