@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../providers/AuthController.dart';
 import 'user_service.dart';
-
 class UserService {
   String? loginAPI = dotenv.env['loginAPI'];
 
@@ -28,10 +27,8 @@ class UserService {
       var data = json.decode(response.body);
       String accessToken = data['result']['access_token'];
       int memberId = data['result']['memberId'];
-
       authController.setToken(accessToken);
       authController.setMemberId(memberId);
-
       print("로그인 됐습니다");
       return true;
     } else {
