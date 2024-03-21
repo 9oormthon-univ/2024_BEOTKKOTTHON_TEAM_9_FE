@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:bommeong/main_app.dart';
 import 'package:bommeong/utilities/app_routes.dart';
+import 'package:bommeong/services/userpreferences_service.dart';
 
 import 'services/user_service.dart';
 
@@ -17,8 +18,11 @@ void main() async {
   // Splash Screen Duration 1.0s
   await Future.delayed(const Duration(seconds: 1));
   Get.lazyPut(() => AuthService());
+  await UserPreferences.init();
+  bool isLoggedIn = UserPreferences.getEmail().isNotEmpty;
+  print('isLoggedIn: $isLoggedIn');
 
   runApp(MainApp(
       initialRoute:
-          Get.find<AuthService>().isLoggedIn ? Routes.ROOT : Routes.LOGIN));
+      isLoggedIn ? Routes.ROOT : Routes.LOGIN));
 }
