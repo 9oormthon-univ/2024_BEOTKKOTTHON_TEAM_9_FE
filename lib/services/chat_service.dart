@@ -67,9 +67,7 @@ class GetGPTChat {
     int PostId = dogInfoViewModel.dogId.value;
 
     UserPreferences userPreferences = UserPreferences();
-    int MemberId = UserPreferences.getUserID();
-
-
+    int MemberId = UserPreferences.getMemberId();
 
     print(PostId);
     print(MemberId);

@@ -19,7 +19,10 @@ void main() async {
   await Future.delayed(const Duration(seconds: 1));
   Get.lazyPut(() => AuthService());
   await UserPreferences.init();
+  bool isLoggedIn = UserPreferences.getEmail().isNotEmpty;
+  print('isLoggedIn: $isLoggedIn');
+
   runApp(MainApp(
       initialRoute:
-          Get.find<AuthService>().isLoggedIn ? Routes.ROOT : Routes.LOGIN));
+      isLoggedIn ? Routes.ROOT : Routes.LOGIN));
 }

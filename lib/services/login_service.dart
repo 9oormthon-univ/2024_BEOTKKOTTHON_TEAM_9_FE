@@ -32,7 +32,10 @@ class UserService {
       authController.setMemberId(memberId);
 
       // 사용자 정보를 저장
-      await UserPreferences.setUserID(memberId);
+      await UserPreferences.setMemberId(memberId);
+      await UserPreferences.setEmail(data['result']['email']);
+      await UserPreferences.setName(data['result']['name']);
+      await UserPreferences.setMemberType(data['result']['memberType']);
 
 
       return true;

@@ -43,6 +43,6 @@ class MyViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchItems(0); // 클래스가 초기화될 때 데이터를 가져옴
+    fetchItems(0);
   }
 }
