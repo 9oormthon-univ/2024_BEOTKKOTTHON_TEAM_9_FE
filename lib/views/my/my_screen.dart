@@ -122,8 +122,9 @@ class _ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyViewModel myViewModel = Get.put(MyViewModel());
     return SvgPicture.asset(
-      "assets/images/my/progress1.svg",
+      myViewModel.applyAdoption.value,
     );
   }
 }
@@ -178,6 +179,7 @@ class _InitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MyViewModel myViewModel = Get.put(MyViewModel());
     return Column(
       children: [
         SizedBox(height: Get.height * 0.02),
@@ -185,7 +187,7 @@ class _InitScreen extends StatelessWidget {
         SizedBox(height: Get.height * 0.2),
         Column(
           children: [
-            SvgPicture.asset("assets/images/my/dog.svg",
+            SvgPicture.asset(myViewModel.dogImage.value,
                 height: Get.height * 0.08),
 
             RichText(
