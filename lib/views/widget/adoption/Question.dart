@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../utilities/font_system.dart';
 import '../controller/responses_controller.dart';
 
-// 상태 관리를 위한 ResponsesController 인스턴스 생성
 final ResponsesController responsesController = Get.put(ResponsesController());
 
 class QuestionScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class QuestionScreen extends StatefulWidget {
   _QuestionScreenState createState() => _QuestionScreenState();
 }
 
+// 화면 넘어가는 로직들
 class _QuestionScreenState extends State<QuestionScreen> {
   // 초기 위젯을 Q()로 설정하고, 필요에 따라 업데이트
   Widget _currentWidget;
@@ -69,6 +70,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 }
 
+// 첫 번째 화면
 class Q extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -79,12 +81,7 @@ class Q extends StatelessWidget {
           Text(
             '몇가지 간단한 질문을\n드리겠습니다\n\n입양 심사에 사용되는\n자료이므로\n성실히 답변 부탁드립니다',
             textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: FontSystem.KR20B.copyWith(color: Colors.black),
           ),
         ]
       ),
@@ -92,6 +89,7 @@ class Q extends StatelessWidget {
   }
 }
 
+// 두 번째 화면
 class Q1 extends StatelessWidget {
   late final VoidCallback onYesPressed;
   late final VoidCallback onNoPressed;
@@ -109,12 +107,7 @@ class Q1 extends StatelessWidget {
           Text(
             'Q.1\n반려동물을 키우신\n경험이 있나요?',
             textAlign: TextAlign.left, // 왼쪽 정렬 설정
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: FontSystem.KR25B.copyWith(color: Colors.black),
           ),
           SizedBox(height: 50,),
           Container(
@@ -122,22 +115,19 @@ class Q1 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
               ),
+              // Todo: 이부분 바꾸기
               onPressed: () {
                 responsesController.addResponse({"question1": "Yes"});
                 onYesPressed();
               },
               child: Text('네',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
+              ),
             ),
           ),
           SizedBox(height: 30,),
@@ -146,7 +136,7 @@ class Q1 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -156,12 +146,8 @@ class Q1 extends StatelessWidget {
                 onNoPressed();
               },
               child: Text('아니오',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
+              ),
             ),
           ),
         ],
@@ -170,6 +156,7 @@ class Q1 extends StatelessWidget {
   }
 }
 
+// 세 번째 화면
 class Q2 extends StatelessWidget {
   late final VoidCallback allPressed;
   late final VoidCallback somePressed;
@@ -188,12 +175,7 @@ class Q2 extends StatelessWidget {
           Text(
             'Q.2\n가족 구성원들은\n유기동물 입양\n찬성하시나요?',
             textAlign: TextAlign.left, // 왼쪽 정렬 설정
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: FontSystem.KR25B.copyWith(color: Colors.black),
           ),
           SizedBox(height: 50,),
           Container(
@@ -201,7 +183,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -211,12 +193,8 @@ class Q2 extends StatelessWidget {
                 allPressed();
               },
               child: Text('모두 찬성',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
+              ),
             ),
           ),
           SizedBox(height: 30,),
@@ -225,7 +203,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -235,12 +213,8 @@ class Q2 extends StatelessWidget {
                 somePressed();
               },
               child: Text('부분 찬성',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
+              ),
             ),
           ),
           SizedBox(height: 30,),
@@ -249,7 +223,7 @@ class Q2 extends StatelessWidget {
             height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
@@ -259,12 +233,8 @@ class Q2 extends StatelessWidget {
                 nonePressed();
               },
               child: Text('모두 반대',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
+              ),
             ),
           ),
         ],
@@ -273,6 +243,7 @@ class Q2 extends StatelessWidget {
   }
 }
 
+// 네 번째 화면
 class Q3 extends StatelessWidget {
   final VoidCallback donePressed;
   final TextEditingController _controller = TextEditingController();
@@ -290,27 +261,26 @@ class Q3 extends StatelessWidget {
           Text(
             'Q.3\n어떤 종류의 동물을\n얼마나 키웠나요?',
             textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: FontSystem.KR25B.copyWith(color: Colors.black),
           ),
           SizedBox(height: 20,),
           Container(
-            height: 500,
+            height: 450,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white, // 배경을 흰색으로 변경
+              borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+              border: Border.all(
+                color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+                width: 1, // 스트로크 너비 설정
+              ),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextField(
               controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
               maxLines: null, // 무제한 줄 입력 가능
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "여기에 입력하세요...",
+                hintText: "클릭하여 작성해주세요.",
               ),
             ),
           ),
@@ -320,7 +290,7 @@ class Q3 extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -331,12 +301,7 @@ class Q3 extends StatelessWidget {
                 donePressed();
               },
               child: Text('작성 완료',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -346,6 +311,7 @@ class Q3 extends StatelessWidget {
   }
 }
 
+// 다섯 번째 화면
 class Q4 extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
@@ -360,27 +326,26 @@ class Q4 extends StatelessWidget {
           Text(
             'Q.4\n현재 함께 살고 있는\n동물의 종류와 나이\n성별을 작성해주세요',
             textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: FontSystem.KR25B.copyWith(color: Colors.black),
           ),
           SizedBox(height: 20,),
           Container(
-            height: 500,
+            height: 450,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white, // 배경을 흰색으로 변경
+              borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+              border: Border.all(
+                color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+                width: 1, // 스트로크 너비 설정
+              ),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextField(
               controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
               maxLines: null, // 무제한 줄 입력 가능
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "여기에 입력하세요...",
+                hintText: "클릭하여 작성해주세요.",
               ),
             ),
           ),
@@ -390,7 +355,7 @@ class Q4 extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF7676),
+                backgroundColor: Color(0xFFA273FF),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -400,20 +365,9 @@ class Q4 extends StatelessWidget {
                 responsesController.addResponse({"question4": _controller.text});
                 RootViewModel rootViewModel = Get.put(RootViewModel());
                 rootViewModel.changeIndex(7);
-
-                //여기 수정해야함 - :(
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OnboardingScreen(2)),
-                // );
               },
               child: Text('제출 할게요!',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: FontSystem.KR16B.copyWith(color: Colors.white),
               ),
             ),
           ),

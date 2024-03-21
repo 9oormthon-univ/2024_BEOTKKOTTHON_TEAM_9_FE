@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   dotHeight: 10,
                   dotWidth: 10,
                   spacing: 5,
-                  activeDotColor: Colors.red,
+                  activeDotColor: Color(0xFFA273FF),
                 ),
                 onDotClicked: (index) {
                   _controller.animateToPage(
@@ -235,10 +235,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     SizedBox(height: 30),
                     Container(
                       width: MediaQuery.of(context).size.width - 40, // 핸드폰 가로 너비에서 40(양쪽 20씩)을 뺀 값
-                      height: 50, // 버튼의 높이를 설정, 필요에 따라 조정 가능
+                      height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: isAgreed_1 && signatureData != null ? Color(0xFFFF7676): Colors.grey,
+                          backgroundColor: isAgreed_1 && signatureData != null ? Color(0xFFA273FF): Color(0xFFCBB9F0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                           ),
@@ -262,6 +262,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             );
+
           } else if (index == 1){
             // 다른 페이지의 기본 텍스트 반환
             return SingleChildScrollView(
@@ -287,7 +288,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: QuestionScreen2(), // 상단 좌측에 정렬될 위젯
                   ),
                   SizedBox(height: 50),
-
                 ],
               ),
 
