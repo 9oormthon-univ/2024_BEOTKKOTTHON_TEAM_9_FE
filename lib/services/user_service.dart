@@ -62,7 +62,22 @@ class GetLikeDogList {
 class GetDogInfo {
   Future<DogInfo> fetchItems(int id) async {
     // API 대신 사용할 더미 데이터
-    await Future.delayed(Duration(seconds: 1)); // 네트워크 요청을 흉내내기 위한 딜레이
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/post/${id}';
+    final response = await http.get(
+      Uri.parse(mainpageAPI),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+
+    if (response.statusCode == 200) {
+      String responseBody = utf8.decode(response.bodyBytes);
+      return dogInfoProcessResponse(responseBody);
+    } else {
+      throw Exception('Failed to load items');
+    }
 
     return DogInfo(
       id: id,
@@ -122,6 +137,32 @@ List<DogList> processResponse(String responseBody) {
   else homeViewModel.isHaveDog.value = true;
 
   return doglists;
+}
+
+
+
+DogInfo dogInfoProcessResponse(String responseBody) {
+  Map<String, dynamic> decodedResponse = json.decode(responseBody);
+  dynamic results= decodedResponse['result'];
+
+  print(results['bomInfo']['infoId']);
+  print(results['bomInfo']['name']);
+  print(results['bomInfo']['age']);
+  print(results['bomInfo']['breed']);
+  print(results['bomInfo']['likes']);
+  print(results['bomInfo']['extra']);
+  print(results['imageUrl']);
+
+  return DogInfo(
+    id: results['bomInfo']['infoId'],
+    name: results['bomInfo']['name'],
+    age: results['bomInfo']['age'],
+    type: results['bomInfo']['breed'],
+    favourite: false,
+    tags: [results['bomInfo']['likes'], results['bomInfo']['breed']],
+    dogTalk: results['bomInfo']['extra'],
+    imagePath: results['imageUrl'],
+  );
 }
 
 

@@ -7,7 +7,7 @@ import 'package:bommeong/services/user_service.dart';
 class DogInfoViewModel extends GetxController {
   final GetDogInfo apiService = GetDogInfo();
   RxInt dogId = 0.obs;
-  DogInfo items = DogInfo(id: 0, name: "", age: "", type: "", tags: [], dogTalk: "", imagePath: "",favourite: false);
+  DogInfo items = DogInfo(id: 0, name: "", age: "", type: "", tags: ['',''], dogTalk: "", imagePath: "",favourite: false);
 
   @override
   void onInit() {
