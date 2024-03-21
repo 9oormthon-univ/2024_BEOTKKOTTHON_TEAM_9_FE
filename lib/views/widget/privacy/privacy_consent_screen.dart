@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:bommeong/viewModels/privacy/privacy_viewmodel.dart';
 import 'package:bommeong/views/widget/adoption/Question.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../utilities/font_system.dart';
 import 'hand_sign.dart';
 import '../adoption/Question2.dart';
 
@@ -17,6 +20,8 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late final PageController _controller;
+  final viewModel = PrivacyViewModel();
+
   int _currentPage = 0;
   bool isAgreed_1 = false;
   bool isSigned_1 = false;
@@ -44,15 +49,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 앱바는 건드릴거 X
       appBar: AppBar(
         title: Text(
-          _currentPage == 0 ? '개인 정보 동의' : (_currentPage == 1 ? '입양 신청서' : '입양 규정 고지'),
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Inter',
-            color: Colors.black,
-          ),
+          _currentPage == 0 ? '개인 정보 동의' : (_currentPage == 1 ? '입양 신청서' : '입양 규정 고지'), style: FontSystem.KR20B.copyWith(color: Colors.black)
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -101,17 +101,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     RichText(
                       text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        style: FontSystem.KR20B.copyWith(color: Colors.black),
                         children: <TextSpan>[
                           TextSpan(text: '입양을 결심해주셔서\n감사합니다\n\n더 안전한 입양을 위해\n아래 내용을\n'),
                           TextSpan(
                             text: '확인',
-                            style: TextStyle(color: Color(0xFFFF7676)),
+                            style: TextStyle(color: Color(0xFFCCB7F7)),
                           ),
                           TextSpan(text: '해주세요'),
                         ],
@@ -119,27 +114,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     SizedBox(height: 40),
 
+
                     // 개인 정보 동의서 본문 확인
                     Container(
                       padding: EdgeInsets.all(20), // 텍스트에 패딩 추가
                       width: MediaQuery.of(context).size.width - 40,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300, // 회색 배경
+                        color: Colors.white, // 배경을 흰색으로 변경
                         borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+                        border: Border.all(
+                          color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+                          width: 1, // 스트로크 너비 설정
+                        ),
                       ),
-                      child: Text(
-                        '[필수] 개인 정보 동의서 본문 확인',
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Icon(Icons.check, size: 15.0, color: Color(0xFFCCB7F7)), // 체크 표시 아이콘 추가
+                            ),
+                            TextSpan(
+                              text: '  [필수] 개인 정보 동의서 본문 확인', style: FontSystem.KR15M.copyWith(color: Colors.black),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     SizedBox(height: 30),
 
-                    // pdf 내용
+                    // Todo: PDF 본문 내용 줘야됨
                     Text(
                       '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
                           '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
@@ -153,13 +156,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
                           '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
                           '',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: 'Inter',
-                        color: Colors.black,
-                      ),
+                      style: FontSystem.KR16M.copyWith(color: Colors.black),
                     ),
 
+                    // Todo: 여기 뷰모델 연동해야됨
                     // 위 항목에 모두 동의합니다 부분.
                     SizedBox(height: 30),
                     Container(
@@ -168,20 +168,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: <Widget>[
                           Text(
                             '위 항목에 모두 동의합니다',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                            style: FontSystem.KR18B.copyWith(color: Colors.black),
                           ),
-                          Checkbox(
-                            value: isAgreed_1,
-                            onChanged: (bool? value) {
+                          InkWell(
+                            onTap: () {
                               setState(() {
-                                isAgreed_1 = value!;
+                                isAgreed_1 = !isAgreed_1;
                               });
                             },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isAgreed_1 ? Color(0xFFCCB7F7) : Colors.white,
+                                border: Border.all(color: Color(0xFFCCB7F7), width: 1,),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: isAgreed_1
+                                    ? Icon(Icons.check, size: 20.0, color: Colors.white,)
+                                    : Icon(Icons.check, size: 20.0, color: Color(0xFFCCB7F7),),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -189,6 +196,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
 
                     SizedBox(height: 30),
+                    // Todo: Uint8List -> File로 바꿔야함
+                    // Todo: 서명 페이지 꾸미기..
                     InkWell(
                       onTap: () async {
                         // 서명 페이지로 이동
@@ -199,6 +208,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         if (result != null) {
                           setState(() {
                             signatureData = result; // 서명 데이터 저장
+                            // viewModel.updateUploadFile(result as File);
                           });
                         }
                       },
@@ -206,16 +216,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: MediaQuery.of(context).size.width - 60, // 좌우 여백 30을 고려한 너비
                         height: 150, // 서명 컨테이너의 높이
                         decoration: BoxDecoration(
-                          color: Colors.grey[300], // 회색 배경
+                          color: Colors.white, // 회색 배경
                           borderRadius: BorderRadius.circular(10), // 둥근 모서리
+                          border: Border.all(
+                            color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+                            width: 1, // 스트로크 너비 설정
+                          ),
                         ),
                         child: Center(
                           child: signatureData != null
                               ? Image.memory(signatureData!) // 서명 이미지를 보여줍니다
-                              : Text('클릭해서 서명하세요', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), // 서명 전 문구
+                              : Text('클릭해서 서명하세요', style: FontSystem.KR18B.copyWith(color: Colors.black)), // 서명 전 문구
                         ),
                       ),
                     ),
+
 
                     SizedBox(height: 30),
                     Container(
@@ -236,20 +251,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               curve: Curves.easeIn,
                             );
                           }
-                        }
-                            : null, // 조건이 충족되지 않으면 버튼 비활성화
+                        } : null, // 조건이 충족되지 않으면 버튼 비활성화
                         child: Text('입양 신청서 작성하기',
-                          style: TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                          style: FontSystem.KR16B.copyWith(color: Colors.white),
                         ),
                       ),
                     ),
                     SizedBox(height: 50),
-
                   ],
                 ),
               ),
