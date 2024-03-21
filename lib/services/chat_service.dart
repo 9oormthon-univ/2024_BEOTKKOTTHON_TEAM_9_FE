@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'userpreferences_service.dart';
 
 class GetChatList {
   Future<List<ChatList>> fetchItems(int pageKey) async {
@@ -64,7 +65,14 @@ class GetGPTChat {
   Future<String> fetchItems(String input) async {
     DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     int PostId = dogInfoViewModel.dogId.value;
-    int MemberId = Get.find<AuthController>().memberIdValue;
+
+    UserPreferences userPreferences = UserPreferences();
+    int MemberId = UserPreferences.getUserID();
+
+
+
+    print(PostId);
+    print(MemberId);
 
 
     String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${PostId}/${MemberId}'; //일단 이걸로
