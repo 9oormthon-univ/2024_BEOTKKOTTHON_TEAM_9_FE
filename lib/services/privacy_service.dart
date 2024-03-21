@@ -17,16 +17,17 @@ class PrivacyService {
     var uri = Uri.parse(postpageAPI!);
     var request = http.MultipartRequest('POST', uri);
 
-    // request.fields['shelterId'] = '1';
-    // request.fields['bomInfo.name'] =
-    // request.fields['bomInfo.age'] =
-    // request.fields['bomInfo.gender'] =
-    // request.fields['bomInfo.breed'] =
-    // request.fields['bomInfo.personality'] =
-    // request.fields['bomInfo.extra'] =
-    // request.fields['bomInfo.like'] =
-    // request.fields['bomInfo.hate'] =
-    // request.fields['bomInfo.findingLocation'] =
+    // request.fields['postId'] = '1';
+    // request.fields['status'] = 'A';
+    // request.fields['adoptApplication.firstConsent'] = 'Y';
+    // request.fields['adoptApplication.firstResponse'] =
+    // request.fields['adoptApplication.secondResponse'] =
+    // request.fields['adoptApplication.thirdResponse'] =
+    // request.fields['adoptApplication.fourthResponse'] =
+    // request.fields['adoptApplication.firstAdoptionResponse'] = 'Y';
+    // request.fields['adoptApplication.secondAdoptionResponse'] = 'Y';
+    // request.fields['adoptApplication.thirdAdoptionResponse'] = 'Y';
+    // request.fields['adoptApplication.fourthAdoptionResponse'] = 'Y';
 
 
     // if (dp != null) {

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:bommeong/services/userpreferences_service.dart';
+import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -370,6 +372,9 @@ class _Q1State extends State<Q1> {
                 onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () {
                   rootViewModel.changeIndex(0);
                   print('신청서 제출 완료');
+                  //dogID든 post든 상관 없음.
+                  MessageViewModel viewModel = Get.put(MessageViewModel());
+                  UserPreferences.setDogId(viewModel.dogId as String);
                 } : null,
                 child: Text('신청서 제출하기', style: FontSystem.KR16B.copyWith(color: Colors.white),),
               ),
