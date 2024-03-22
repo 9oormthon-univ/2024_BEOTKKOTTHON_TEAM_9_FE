@@ -45,18 +45,15 @@ class LikeViewModel extends GetxController {
       postId: "$dogId",
       flag: isLiked ? "remove" : "register",
     );
+
+
     LikeService apiService = LikeService();
     bool success = await apiService.toggleLike(request);
 
-    if (!success) {
-      dogLikeStatus[dogId] = RxBool(isLiked);
-    }else
-    {
+    if (success) {
+      print("성공했습니더");
       dogLikeStatus[dogId] = RxBool(!isLiked);
     }
-
-    // 실제로는 여기에서 API 호출을 수행하고 성공 여부에 따라 상태를 업데이트합니다.
-    // 예: await yourApiService.toggleLike(requestBody);
   }
 
 
