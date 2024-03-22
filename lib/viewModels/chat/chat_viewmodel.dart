@@ -5,7 +5,7 @@ import 'package:bommeong/services/chat_service.dart';
 
 
 class ChatViewModel extends GetxController {
-  RxBool isHaveChat = false.obs;
+  RxBool isHaveChat = true.obs;
   final PagingController<int, ChatList> pagingController = PagingController(firstPageKey: 0);
   final GetChatList apiService = GetChatList();
 
@@ -21,6 +21,8 @@ class ChatViewModel extends GetxController {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await apiService.fetchItems(pageKey);
+      if(newItems.length == 0) isHaveChat.value = false;
+      else isHaveChat.value = true;
       num pageSize = 6;
       final isLastPage = newItems.length < pageSize;
       if (isLastPage) {
