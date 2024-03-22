@@ -7,8 +7,8 @@ import 'package:bommeong/services/chat_service.dart';
 class ChatViewModel extends GetxController {
   RxBool isHaveChat = true.obs;
   final PagingController<int, ChatList> pagingController = PagingController(firstPageKey: 0);
-  RxList<ChatList> chatList = RxList<ChatList>(); // 새로운 반응형 리스트 변수
   final GetChatList apiService = GetChatList();
+
 
   @override
   void onInit() {
@@ -18,27 +18,19 @@ class ChatViewModel extends GetxController {
     });
   }
 
+
   Future<void> fetchPage(int pageKey) async {
     try {
       final newItems = await apiService.fetchItems(pageKey);
-      isHaveChat.value = newItems.isNotEmpty;
-      if (newItems.isNotEmpty) {
-        if (pageKey == 0) {
-          chatList.assignAll(newItems); // 첫 페이지면 리스트를 새로 할당
-        } else {
-          chatList.addAll(newItems); // 그 외 페이지면 리스트에 추가
-        }
-
-        // PagingController 업데이트
-        final isLastPage = newItems.length < 6;
-        if (isLastPage) {
-          pagingController.appendLastPage(newItems);
-        } else {
-          final nextPageKey = pageKey + newItems.length;
-          pagingController.appendPage(newItems, nextPageKey);
-        }
-      } else if (pageKey == 0) {
-        chatList.clear(); // 첫 페이지에 데이터가 없으면 리스트를 비움
+      if(newItems.length == 0) isHaveChat.value = false;
+      else isHaveChat.value = true;
+      num pageSize = 6;
+      final isLastPage = newItems.length < pageSize;
+      if (isLastPage) {
+        pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
       pagingController.error = error;
@@ -56,6 +48,27 @@ class ChatViewModel extends GetxController {
       return '${difference.inMinutes}분 전';
     }
   }
+
+  Future<void> updateChatList() async {
+    try {
+      // 첫 번째 페이지의 데이터를 다시 가져옵니다.
+      final newItems = await apiService.fetchItems(0);
+
+      // 새로운 아이템이 있다면, 채팅 상태를 업데이트합니다.
+      if (newItems.isNotEmpty) {
+        isHaveChat.value = true;
+
+        // PagingController를 리프레시하거나 업데이트하는 로직
+        // 여기서는 간단하게 PagingController를 리프레시하는 방법을 사용합니다.
+        pagingController.refresh();
+      } else {
+        isHaveChat.value = false;
+      }
+    } catch (error) {
+      print("Error updating chat list: $error");
+    }
+  }
+
 
 
   @override
