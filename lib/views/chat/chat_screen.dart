@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../services/userpreferences_service.dart';
+
 class ChatScreen extends BaseScreen<ChatViewModel> {
   const ChatScreen({super.key});
 
@@ -135,9 +137,8 @@ class _BottomButton extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
-        //스크린 렌더링 전에 할것
-        int id = 1;
-        await messageViewModel.setId(id);
+        int? id = UserPreferences.getRandomElementFromDogList();
+        await messageViewModel.setId(id!);
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);

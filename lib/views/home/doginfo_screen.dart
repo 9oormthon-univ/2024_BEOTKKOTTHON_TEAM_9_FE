@@ -193,7 +193,6 @@ class _BottomButton extends StatelessWidget {
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);
-
       },
       child: Container(
         width: Get.width * 0.85,
