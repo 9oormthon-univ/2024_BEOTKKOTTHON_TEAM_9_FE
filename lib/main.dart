@@ -18,6 +18,7 @@ void main() async {
   // Splash Screen Duration 1.0s
   await Future.delayed(const Duration(seconds: 1));
   Get.lazyPut(() => AuthService());
+  Get.lazyPut(() => AuthController());
   await UserPreferences.init();
   bool isLoggedIn = UserPreferences.getEmail().isNotEmpty;
   print('isLoggedIn: $isLoggedIn');

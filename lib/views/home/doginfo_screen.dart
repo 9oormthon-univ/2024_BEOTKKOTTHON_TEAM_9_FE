@@ -163,14 +163,13 @@ class _TalkBox extends StatelessWidget {
           "assets/images/home/talk.svg",
           width: Get.width * 0.85,
         ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            width: Get.width * 0.85,
-            child: Positioned(
-              top: 20,
-              left: 20,
-              child: Text(viewModel.items.dogTalk),
-            ),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: Container(
+                width: Get.width * 0.85,
+                padding:  EdgeInsets.only(right: Get.width * 0.1),
+                child: Text(viewModel.items.dogTalk)),
           ),
         ]
     );

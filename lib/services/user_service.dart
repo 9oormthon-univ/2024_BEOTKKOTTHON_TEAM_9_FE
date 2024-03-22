@@ -78,17 +78,6 @@ class GetDogInfo {
     } else {
       throw Exception('Failed to load items');
     }
-
-    return DogInfo(
-      id: id,
-      name: 'Dog #$id',
-      age: 'old',
-      type: (id % 2 == 0) ? 'Labrador' : 'Beagle',
-      favourite: false, // 기본값
-      tags: ['tag1', 'tag2', 'tag3'],
-      dogTalk: '멍멍입니다. 멍멍할 예정입니다.',
-      imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
-    );
   }
 }
 
@@ -127,7 +116,6 @@ List<DogList> processResponse(String responseBody) {
       name:bomInfo['name'],
       age: bomInfo['age'],
       type: bomInfo['breed'],
-      favourite: false, // 기본값
       imagePath: item['imageUrl'],
     ));
   }
@@ -158,7 +146,6 @@ DogInfo dogInfoProcessResponse(String responseBody) {
     name: results['bomInfo']['name'],
     age: results['bomInfo']['age'],
     type: results['bomInfo']['breed'],
-    favourite: false,
     tags: [results['bomInfo']['likes'], results['bomInfo']['breed']],
     dogTalk: results['bomInfo']['extra'],
     imagePath: results['imageUrl'],
