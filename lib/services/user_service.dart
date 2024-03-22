@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -37,16 +38,15 @@ class GetDogList {
 class GetLikeDogList {
 
   Future<List<DogList>> fetchItems(int pageKey) async {
-    String? likepageAPI = dotenv.env['mainpageAPI'];
+    String? likepageAPI = '${dotenv.env['BOM_API']}/post/like/${UserPreferences.getMemberId()}';
     var token = Get.find<AuthController>().token;
 
     // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
     final response = await http.get(
-      Uri.parse('$likepageAPI?page=$pageKey&limit=10'),
+      Uri.parse(likepageAPI),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
       },
     );
     if (response.statusCode == 200) {

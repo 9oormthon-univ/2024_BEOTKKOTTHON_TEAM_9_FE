@@ -91,7 +91,7 @@ class _SignaturePageState extends State<SignaturePage> {
             rawImage.value = null;
           },
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFCCB7F7), // 버튼 배경색
+            backgroundColor: Color(0xFFCCB7F7), // 버튼 배경색
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10), // 버튼 곡률
             ),
@@ -116,7 +116,7 @@ class _SignaturePageState extends State<SignaturePage> {
             }
           },
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFCCB7F7), // 버튼 배경색
+            backgroundColor: Color(0xFFCCB7F7), // 버튼 배경색
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10), // 버튼 곡률
             ),
