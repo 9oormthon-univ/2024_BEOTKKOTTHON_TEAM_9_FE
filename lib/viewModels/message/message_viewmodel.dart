@@ -37,11 +37,8 @@ Future<void> setId(int id) async{
     this.dogId.value = id;
   }
 
-
   @override
   void onClose() {
     super.onClose();
   }
-
-
 }
