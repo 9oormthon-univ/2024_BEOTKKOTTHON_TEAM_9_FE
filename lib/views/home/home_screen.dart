@@ -1,4 +1,5 @@
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -179,6 +180,7 @@ class _DogComponent extends StatelessWidget {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
     final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     final RootViewModel rootViewModel = Get.put(RootViewModel());
+    final LikeViewModel likeViewModel = Get.put(LikeViewModel());
     return Material(
       color: Colors.transparent,
       child: Column(
@@ -230,12 +232,23 @@ class _DogComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                SvgPicture.asset(
-                  true
-                      ? "assets/images/home/heart_fill.svg"
-                      : "assets/images/home/heart.svg",
-                  height: 20,
-                ),
+                InkWell(
+                  onTap: () {
+                    // 여기에 탭했을 때 실행하고 싶은 코드를 작성하세요.
+                    print("Heart icon tapped!");
+                    //여기에서 해당하는 포스트의 좋아요가 변경되도록
+                    likeViewModel.toggleLike(item.id);
+
+                  },
+                  child: Obx(() => SvgPicture.asset(
+                    likeViewModel.dogLikeStatus[item.id]?.value ?? false // 여기의 좋아요 상태 변수
+                        ? "assets/images/home/heart_fill.svg"
+                        : "assets/images/home/heart.svg",
+                    height: 20,
+                  ),
+                  ),
+                )
+
               ],
             ),
           ),

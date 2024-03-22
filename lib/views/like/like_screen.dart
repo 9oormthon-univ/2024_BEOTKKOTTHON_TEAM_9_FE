@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
-import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
