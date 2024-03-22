@@ -143,7 +143,7 @@ class _BottomImg extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Image.asset(
+          Image.network(
             myViewModel.dogImage.value,
             width: Get.width,
             height: Get.height* 0.48,
@@ -205,7 +205,6 @@ class _InitScreen extends StatelessWidget {
                 ],
               ),
             )
-
           ],
         ),
       ],

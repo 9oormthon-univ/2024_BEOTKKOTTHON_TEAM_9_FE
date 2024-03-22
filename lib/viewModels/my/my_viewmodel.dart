@@ -20,18 +20,18 @@ class MyViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //fetchUserAndDogInfo();
+    fetchUserAndDogInfo();
   }
 
   void fetchUserAndDogInfo() async {
     try {
       UserInfoModel userInfo = await UserService.fetchItems();
-      // isHaveDog.value = userInfo.isHaveDog ?? false; // null일 경우 기본값으로 false 설정
-      // userName.value = userInfo.userName ?? "황현정"; // null일 경우 기본값 설정
-      // membertype.value = userInfo.membertype ?? "(예비)반려인"; // null일 경우 기본값 설정
-      // useremail.value = userInfo.useremail ?? "ghkd2271@naver.com";
-      // applyAdoption.value = userInfo.applyAdoption ?? "assets/images/my/progress1.svg"; // null일 경우 기본값 설정
-      // dogImage.value = userInfo.dogImage ?? "assets/images/my/miniDog.png"; // null일 경우 기본값 설정
+      isHaveDog.value = userInfo.isHaveDog ?? false; // null일 경우 기본값으로 false 설정
+      userName.value = userInfo.userName ?? "황현정"; // null일 경우 기본값 설정
+      membertype.value = userInfo.membertype == "B" ? "(예비)반려인" : "입양 공고자"; // null일 경우 기본값 설정
+      useremail.value = userInfo.useremail ?? "ghkd2271@naver.com";
+      applyAdoption.value = userInfo.applyAdoption == "A" ? "assets/images/my/progress2.svg" : "assets/images/my/progress1.svg"; // null일 경우 기본값 설정
+      dogImage.value = userInfo.dogImage ?? "assets/images/my/miniDog.png"; // null일 경우 기본값 설정
       // dogname.value = userInfo.dogname ?? "날봄이"; // null일 경우 기본값 설정
     } catch (e) {
       // 에러 처리
