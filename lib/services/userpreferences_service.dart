@@ -6,6 +6,7 @@ class UserPreferences {
   static const _keyName = 'name';
   static const _keyEmail = 'email';
   static const _keyMemberId = 'memberId';
+  static const _keyPostId = 'postId';
   static const _keyMemberType = 'memberType';
   static const _applyDog = 'DogID';
 
@@ -31,4 +32,7 @@ class UserPreferences {
 
   static String getDogId() => _preferences.getString(_applyDog) ?? '';
 
+  static Future setPostId(String postId) async => await _preferences.setString(_keyPostId, postId);
+
+  static String getPostId() => _preferences.getString(_keyPostId) ?? '';
 }

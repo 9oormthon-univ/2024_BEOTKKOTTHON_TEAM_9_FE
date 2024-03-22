@@ -379,7 +379,7 @@ class _Q1State extends State<Q1> {
 
                   print('신청서 제출 완료');
                   MessageViewModel viewModel = Get.put(MessageViewModel());
-                  UserPreferences.setDogId(viewModel.dogId as String);
+                  UserPreferences.setDogId(viewModel.dogId.toString());
                 } : null,
                 child: Text('신청서 제출하기', style: FontSystem.KR16B.copyWith(color: Colors.white),),
               ),

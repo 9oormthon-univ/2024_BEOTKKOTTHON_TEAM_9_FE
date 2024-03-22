@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -15,11 +16,14 @@ class PrivacyService {
   async {
     String? baseAPI = dotenv.env['MainAPI'];
     String? postpageAPI = "${baseAPI}/adopt";
+    String memberId = UserPreferences.getMemberId().toString();
+    String PostId = UserPreferences.getPostId().toString();
+
     var uri = Uri.parse(postpageAPI!);
     var request = http.MultipartRequest('POST', uri);
 
-    request.fields['postId'] = '15';
-    request.fields['memberId'] = '1';
+    request.fields['postId'] = PostId;
+    request.fields['memberId'] = memberId;
     request.fields['status'] = 'A';
     request.fields['adoptApplication.firstConsent'] = 'Y';
     request.fields['adoptApplication.firstResponse'] = firstResponse;

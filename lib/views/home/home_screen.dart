@@ -17,6 +17,7 @@ import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+import 'package:bommeong/services/userpreferences_service.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -185,6 +186,7 @@ class _DogComponent extends StatelessWidget {
         children: [
           InkWell(
             onTap: () async {
+              await UserPreferences.setPostId(item.id.toString());
               await dogInfoViewModel.fetchPage(item.id);
               rootViewModel.changeIndex(4);
             },
