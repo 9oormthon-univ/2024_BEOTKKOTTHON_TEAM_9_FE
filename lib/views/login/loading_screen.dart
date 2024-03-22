@@ -102,7 +102,7 @@ class _LoadingScreen2State extends State<LoadingScreen2> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 6), () => widget.onComplete());
+    Timer(Duration(seconds: 2), () => widget.onComplete());
   }
 
   @override

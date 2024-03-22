@@ -1,27 +1,27 @@
 import 'dart:io';
 
 class Announcement {
-  String announcementNumber;
   String name;
+  String age;
   String character;
-  String likes;
-  String fears;
-  String foundLocation;
-  String shelterExperience;
-  String message;
+  String extra;
+  String breed;
+  String like;
+  String hate;
+  String findingLocation;
   String selectedGender;
   File? dogPicture;
 
   Announcement({
-    this.announcementNumber = '',
     this.name = '',
+    this.age = '',
     this.character = '',
-    this.likes = '',
-    this.fears = '',
-    this.foundLocation = '',
-    this.shelterExperience = '',
-    this.message = '',
+    this.extra = '',
+    this.breed = '',
+    this.like = '',
+    this.hate = '',
+    this.findingLocation = '',
     this.selectedGender = '',
-    this.dogPicture = null,
+    this.dogPicture,
   });
 }

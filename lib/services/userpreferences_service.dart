@@ -6,7 +6,9 @@ class UserPreferences {
   static const _keyName = 'name';
   static const _keyEmail = 'email';
   static const _keyMemberId = 'memberId';
+  static const _keyPostId = 'postId';
   static const _keyMemberType = 'memberType';
+  static const _applyDog = 'DogID';
 
   static Future init() async => _preferences = await SharedPreferences.getInstance();
 
@@ -25,4 +27,12 @@ class UserPreferences {
   static Future setMemberType(String memberType) async => await _preferences.setString(_keyMemberType, memberType);
 
   static String getMemberType() => _preferences.getString(_keyMemberType) ?? '';
+
+  static Future setDogId(String dogID) async => await _preferences.setString(_applyDog, dogID);
+
+  static String getDogId() => _preferences.getString(_applyDog) ?? '';
+
+  static Future setPostId(String postId) async => await _preferences.setString(_keyPostId, postId);
+
+  static String getPostId() => _preferences.getString(_keyPostId) ?? '';
 }

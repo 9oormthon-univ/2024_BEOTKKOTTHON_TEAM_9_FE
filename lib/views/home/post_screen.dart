@@ -1,12 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:bommeong/utilities/font_system.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../providers/AuthController.dart';
+import '../../services/user_service.dart';
 import '../../viewModels/home/post_viewmodel.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: "assets/config/.env");
+  Get.lazyPut(()=>AuthController());
   runApp(PostScreen());
 }
 
@@ -49,37 +55,43 @@ class _MyHomePageState extends State<_PostScreen> {
               SizedBox(height: 30),
               Text('공고 번호', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateAnnouncementNumber,),
+              CustomTextField(C: controller.PostIdController),
               SizedBox(height: 30),
               Text('이름', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateName,),
+              CustomTextField(C: controller.nameController),
+              SizedBox(height: 30),
+              Text('나이', style: FontSystem.KR20B),
+              SizedBox(height: 10),
+              CustomTextField(C: controller.ageController),
               SizedBox(height: 20),
               Row(
                 children: [
                   GenderButton(
                     title: '남',
-                    isSelected: controller.announcement.selectedGender == '남',
+                    isSelected: controller.genderController.text == '남',
                     onSelected: () {
                       setState(() {
-                        controller.updateSelectedGender('남');
+                        controller.genderController.text = '남';
                       });
-
-                      print(controller.announcement.selectedGender);
                     },
                   ),
                   SizedBox(width: 20), // 버튼 사이 간격
                   GenderButton(
                     title: '여',
-                    isSelected: controller.announcement.selectedGender == '여', // 선택 상태에 따라 isSelected 값을 결정
+                    isSelected: controller.genderController.text == '여', // 선택 상태에 따라 isSelected 값을 결정
                     onSelected: () {
                       setState(() {
-                        controller.updateSelectedGender('여');
+                        controller.genderController.text = '여';
                       });
                     },
                   ),
                 ],
               ),
+              SizedBox(height: 30),
+              Text('종', style: FontSystem.KR20B),
+              SizedBox(height: 10),
+              CustomTextField(C:controller.breedController),
               SizedBox(height: 30),
               Text('성격', style: FontSystem.KR20B),
               SizedBox(height: 10),
@@ -87,23 +99,19 @@ class _MyHomePageState extends State<_PostScreen> {
               SizedBox(height: 30),
               Text('좋아하는 것', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateLikes,),
+              CustomTextField(C:controller.likeController),
               SizedBox(height: 30),
-              Text('무서워하는 것', style: FontSystem.KR20B),
+              Text('싫어하는 것', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateFears),
+              CustomTextField(C:controller.hateController),
               SizedBox(height: 30),
-              Text('유기된 장소', style: FontSystem.KR20B),
+              Text('강아지를 찾은 위치', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateFoundLocation),
-              SizedBox(height: 30),
-              Text('보호소에 들어온 날 어땠나요?', style: FontSystem.KR20B),
-              SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateShelterExperience),
+              CustomTextField(C:controller.findinglocationController),
               SizedBox(height: 30),
               Text('전하고 싶은 한 마디', style: FontSystem.KR20B),
               SizedBox(height: 10),
-              CustomTextField(onChanged: controller.updateMessage),
+              CustomTextField(C:controller.extraController),
               SizedBox(height: 30),
               _BottomButton(),
             ],
@@ -118,20 +126,21 @@ class _MyHomePageState extends State<_PostScreen> {
 class CustomTextField extends StatelessWidget {
   final String placeholder;
   final double height;
-  final void Function(String) onChanged;
+  final TextEditingController C;
 
   const CustomTextField({
     Key? key,
     this.placeholder = '',
     this.height = 40, // 기본 높이
-    required this.onChanged,
+    required this.C,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final PostController controller = Get.put(PostController());
     return Container(
       child: TextField(
-        onChanged: onChanged, // 여기에서 onChanged 콜백을 사용합니다.
+        controller: C, // 여기에서 onChanged 콜백을 사용합니다.
         maxLines: null,
         textAlign: TextAlign.left,
         textAlignVertical: TextAlignVertical.top,
@@ -293,7 +302,6 @@ class _SelectableButtonsState extends State<SelectableButtons> {
                   _selectedIndex = index;
                   postController.announcement.character = "${_selectedIndex}";
                   postController.matchCharacter("${index}");
-
                 });
                 widget.onSelected(index);
               },
@@ -320,9 +328,14 @@ class _BottomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     PostController controller = Get.put(PostController());
     return InkWell(
-      onTap: () {
-        controller.printValue();
-
+      onTap: () async {
+        // Call the submitAnnouncement method and await its result
+        bool success = await controller.attemptpost();
+        if (success) {
+          // Handle success, e.g., showing a Snackbar
+        } else {
+          // Handle failure, e.g., showing a Snackbar
+        }
       },
       child: Container(
         width: Get.width * 0.8,
@@ -338,7 +351,6 @@ class _BottomButton extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 
@@ -347,15 +359,17 @@ class ImageSelectionWidget extends StatefulWidget {
   @override
   _ImageSelectionWidgetState createState() => _ImageSelectionWidgetState();
 }
+
 class _ImageSelectionWidgetState extends State<ImageSelectionWidget> {
-  File? _image;
+  final PostController postController = Get.find<PostController>();
 
   Future<void> _pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
+      File selectedImage = File(pickedFile.path);
+      // PostController에 이미지 파일 업데이트
+      postController.updateDogPicture(selectedImage);
+      setState(() {});
     }
   }
 
@@ -374,19 +388,19 @@ class _ImageSelectionWidgetState extends State<ImageSelectionWidget> {
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: _image != null
+        child: postController.announcement.dogPicture != null
             ? ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.file(
-            _image!,
+            postController.announcement.dogPicture!,
             width: double.infinity,
             height: 200,
             fit: BoxFit.cover,
           ),
         )
             : Center(
-          child: Text('터치하여 사진을 올려주세요!', style: FontSystem.KR14R),
-        )
+          child: Text('터치하여 사진을 올려주세요!', style: TextStyle(fontSize: 14)),
+        ),
       ),
     );
   }
