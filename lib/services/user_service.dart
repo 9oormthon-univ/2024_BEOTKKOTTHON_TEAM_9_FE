@@ -13,7 +13,6 @@ import 'dart:convert';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 
-
 class GetDogList {
   Future<List<DogList>> fetchItems(int pageKey) async {
    String? mainpageAPI = '${dotenv.env['BOM_API']}/post';

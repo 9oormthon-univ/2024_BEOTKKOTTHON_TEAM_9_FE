@@ -2,7 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
   static late SharedPreferences _preferences;
-
   static const _keyName = 'name';
   static const _keyEmail = 'email';
   static const _keyMemberId = 'memberId';

@@ -119,6 +119,7 @@ class _BottomButton extends StatelessWidget {
     return InkWell(
       onTap: () async {
         //스크린 렌더링 전에 할것
+
         int id = 1;
         await messageViewModel.setId(id);
         // Get.to(() => MessageScreen());
