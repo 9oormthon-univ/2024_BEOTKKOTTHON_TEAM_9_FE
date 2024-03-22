@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/like/like_state.dart';
 
+import 'userpreferences_service.dart';
+
 class LikeService {
   Future<bool> toggleLike(LikeRequest request) async {
     var url = Uri.parse('${dotenv.env['BOM_API']}/post/like');
@@ -22,6 +24,19 @@ class LikeService {
       // 에러 처리
       print('Failed to toggle like');
       return false;
+    }
+  }
+
+  Future<List<int>> fetchAllPostIds() async {
+    final url = Uri.parse('${dotenv.env['BOM_API']}/post/like/${UserPreferences.getMemberId()}');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body)["result"];
+      List<int> postIds = body.map<int>((item) => item["postId"] as int).toList();
+      return postIds;
+    } else {
+      throw Exception('Failed to load post IDs');
     }
   }
 }

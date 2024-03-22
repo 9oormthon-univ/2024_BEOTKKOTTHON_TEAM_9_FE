@@ -9,6 +9,7 @@ import 'package:bommeong/services/user_service.dart';
 class LikeViewModel extends GetxController {
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
   final GetLikeDogList apiService = GetLikeDogList();
+  final LikeService likeService = LikeService();
   final isHaveDog = true.obs;
   var dogLikeStatus = <int, RxBool>{}.obs;
 
@@ -17,6 +18,7 @@ class LikeViewModel extends GetxController {
     super.onInit();
     pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
+      _initializeDogLikes();
     });
   }
 
@@ -57,7 +59,17 @@ class LikeViewModel extends GetxController {
     }
   }
 
-
+  Future<void> _initializeDogLikes() async {
+    try {
+      List<int> postIds = await likeService.fetchAllPostIds();
+      // 각 postId에 대해 좋아요 상태를 false로 초기화
+      for (int postId in postIds) {
+        dogLikeStatus[postId] = true.obs;
+      }
+    } catch (e) {
+      print("Error initializing dog likes: $e");
+    }
+  }
 
   @override
   void onClose() {
