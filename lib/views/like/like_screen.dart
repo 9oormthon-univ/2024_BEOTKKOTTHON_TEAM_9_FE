@@ -112,7 +112,7 @@ class _DogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
+    final LikeViewModel viewModel = Get.put(LikeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
 
     return Expanded(
       child: Container(
