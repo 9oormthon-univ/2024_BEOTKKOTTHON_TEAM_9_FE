@@ -3,6 +3,7 @@ import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utilities/font_system.dart';
+import '../../../viewModels/privacy/privacy_viewmodel.dart';
 import '../controller/responses_controller.dart';
 
 final ResponsesController responsesController = Get.put(ResponsesController());
@@ -81,7 +82,7 @@ class Q extends StatelessWidget {
           Text(
             '몇가지 간단한 질문을\n드리겠습니다\n\n입양 심사에 사용되는\n자료이므로\n성실히 답변 부탁드립니다',
             textAlign: TextAlign.left,
-            style: FontSystem.KR20B.copyWith(color: Colors.black),
+            style: FontSystem.KR25B.copyWith(color: Colors.black),
           ),
         ]
       ),
@@ -95,6 +96,8 @@ class Q1 extends StatelessWidget {
   late final VoidCallback onNoPressed;
 
   Q1({required this.onYesPressed, required this.onNoPressed});
+
+  final viewModel = PrivacyViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +123,8 @@ class Q1 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                 ),
               ),
-              // Todo: 이부분 바꾸기
               onPressed: () {
-                responsesController.addResponse({"question1": "Yes"});
+                viewModel.firstResponse.text = "Y";
                 onYesPressed();
               },
               child: Text('네',
@@ -142,7 +144,7 @@ class Q1 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                responsesController.addResponse({"question1": "No"});
+                viewModel.firstResponse.text = "N";
                 onNoPressed();
               },
               child: Text('아니오',
@@ -163,6 +165,8 @@ class Q2 extends StatelessWidget {
   late final VoidCallback nonePressed;
 
   Q2({required this.allPressed, required this.somePressed, required this.nonePressed});
+
+  final viewModel = PrivacyViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +193,7 @@ class Q2 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                responsesController.addResponse({"question2": "모두 찬성"});
+                viewModel.secondResponse.text = "모두 찬성";
                 allPressed();
               },
               child: Text('모두 찬성',
@@ -209,7 +213,7 @@ class Q2 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                responsesController.addResponse({"question2": "부분 찬성"});
+                viewModel.secondResponse.text = "부분 찬성";
                 somePressed();
               },
               child: Text('부분 찬성',
@@ -229,7 +233,7 @@ class Q2 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                responsesController.addResponse({"question2": "모두 반대"});
+                viewModel.secondResponse.text = "모두 반대";
                 nonePressed();
               },
               child: Text('모두 반대',
@@ -247,6 +251,7 @@ class Q2 extends StatelessWidget {
 class Q3 extends StatelessWidget {
   final VoidCallback donePressed;
   final TextEditingController _controller = TextEditingController();
+  final viewModel = PrivacyViewModel();
 
   Q3({required this.donePressed});
 
@@ -296,8 +301,7 @@ class Q3 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // 사용자가 입력한 텍스트를 responsesController에 저장
-                responsesController.addResponse({"question3": _controller.text});
+                viewModel.thirdResponse.text = _controller.text;
                 donePressed();
               },
               child: Text('작성 완료',
@@ -314,6 +318,7 @@ class Q3 extends StatelessWidget {
 // 다섯 번째 화면
 class Q4 extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+  final viewModel = PrivacyViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +367,7 @@ class Q4 extends StatelessWidget {
               ),
               onPressed: () {
                 // 사용자가 입력한 텍스트를 responsesController에 저장
-                responsesController.addResponse({"question4": _controller.text});
+                viewModel.fourthResponse.text = _controller.text;
                 RootViewModel rootViewModel = Get.put(RootViewModel());
                 rootViewModel.changeIndex(7);
               },

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../main_app.dart';
 import '../../../utilities/app_routes.dart';
 import '../../../utilities/font_system.dart';
+import '../../../viewModels/privacy/privacy_viewmodel.dart';
 import '../../home/home_screen.dart';
 import '../controller/responses_controller.dart';
 import '../privacy/privacy_consent_screen.dart';
@@ -89,6 +90,8 @@ class _Q1State extends State<Q1> {
   @override
   Widget build(BuildContext context) {
     RootViewModel rootViewModel = Get.put(RootViewModel());
+    final privacyviewmodel = PrivacyViewModel();
+
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -369,10 +372,12 @@ class _Q1State extends State<Q1> {
                     borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
                   ),
                 ),
-                onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () {
+                onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () async {
                   rootViewModel.changeIndex(0);
+
+                  bool success = await privacyviewmodel.attemptpost();
+
                   print('신청서 제출 완료');
-                  //dogID든 post든 상관 없음.
                   MessageViewModel viewModel = Get.put(MessageViewModel());
                   UserPreferences.setDogId(viewModel.dogId as String);
                 } : null,

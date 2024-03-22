@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:bommeong/viewModels/privacy/privacy_viewmodel.dart';
 import 'package:bommeong/views/widget/adoption/Question.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   bool isAgreed_1 = false;
   bool isSigned_1 = false;
-  Uint8List? signatureData;
+  File? signatureData;
   double _opacity = 0.0;
 
   final signcontroller = HandSignatureControl(
@@ -144,18 +143,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                     // Todo: PDF 본문 내용 줘야됨
                     Text(
-                      '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!봄멍조아!'
-                          '',
+                          '❶ 수집 · 조회 이용 목적 유기견입양신청 및 유기견입양심사와 관련하여 개인정보를 수집·조회 이용\n\n'
+                          '❷ 수집 · 조회 · 이용 항목 : 생년월일, 성명, 주소, 전화번호, 유기견과의 대화내역, 유기견입양신청서\n\n'
+                          '❸ 개인정보 보유 및 이용기간 신청일로부터 5년 <보유기간 경과시 파기>\n\n'
+                          '❹ 동의하지 않을 권리 및 미동의시 불이익 귀하는 본건 유기견입양 및 입양심사와 관련하여 귀하의 개인정보 수집 · 조회 · 이용에 대하여 거부할 권리가 있으며, 동의를 거부할 경우(입양 심사 결과 등)의 불이익을 받을 수 있습니다.\n\n'
+                          '위 개인정보의 수집 조회 이용과 같은 내용으로 개인정보를 처리하고 있습니다.\n\n'
+                          '귀하로부터 취득한 개인정보는 개인정보보호법 제 15조, 제17조, 제18조, 제23조 및 제24조에서 정하는 바에 따라 처리 목적 이외에는 사용되지 않으며 변경 시에는 사전 동의를 구할 것입니다.',
                       style: FontSystem.KR16M.copyWith(color: Colors.black),
                     ),
 
@@ -197,18 +190,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                     SizedBox(height: 30),
                     // Todo: Uint8List -> File로 바꿔야함
-                    // Todo: 서명 페이지 꾸미기..
                     InkWell(
                       onTap: () async {
-                        // 서명 페이지로 이동
-                        final Uint8List? result = await Navigator.push(
+                        // 서명 페이지로 이동하고 File로 서명 결과를 받아옴
+                        final File? result = await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => SignaturePage()),
                         );
                         if (result != null) {
                           setState(() {
-                            signatureData = result; // 서명 데이터 저장
-                            // viewModel.updateUploadFile(result as File);
+                            signatureData = result;
+                            viewModel.updateUploadFile(result);
                           });
                         }
                       },
@@ -225,7 +217,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         child: Center(
                           child: signatureData != null
-                              ? Image.memory(signatureData!) // 서명 이미지를 보여줍니다
+                              ? Image.file(signatureData!) // File 객체를 직접 사용
                               : Text('클릭해서 서명하세요', style: FontSystem.KR18B.copyWith(color: Colors.black)), // 서명 전 문구
                         ),
                       ),

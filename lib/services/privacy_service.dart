@@ -13,30 +13,32 @@ class PrivacyService {
       String firstAdoptionResponse, String secondAdoptionResopnse, File? uploadFile
       )
   async {
-    String? postpageAPI = dotenv.env['postpageAPI'];
+    String? baseAPI = dotenv.env['MainAPI'];
+    String? postpageAPI = "${baseAPI}/adopt";
     var uri = Uri.parse(postpageAPI!);
     var request = http.MultipartRequest('POST', uri);
 
-    // request.fields['postId'] = '1';
-    // request.fields['status'] = 'A';
-    // request.fields['adoptApplication.firstConsent'] = 'Y';
-    // request.fields['adoptApplication.firstResponse'] =
-    // request.fields['adoptApplication.secondResponse'] =
-    // request.fields['adoptApplication.thirdResponse'] =
-    // request.fields['adoptApplication.fourthResponse'] =
-    // request.fields['adoptApplication.firstAdoptionResponse'] = 'Y';
-    // request.fields['adoptApplication.secondAdoptionResponse'] = 'Y';
-    // request.fields['adoptApplication.thirdAdoptionResponse'] = 'Y';
-    // request.fields['adoptApplication.fourthAdoptionResponse'] = 'Y';
+    request.fields['postId'] = '15';
+    request.fields['memberId'] = '1';
+    request.fields['status'] = 'A';
+    request.fields['adoptApplication.firstConsent'] = 'Y';
+    request.fields['adoptApplication.firstResponse'] = firstResponse;
+    request.fields['adoptApplication.secondResponse'] = secondResponse;
+    request.fields['adoptApplication.thirdResponse'] = thirdResponse;
+    request.fields['adoptApplication.fourthResponse'] = fourthResponse;
+    request.fields['adoptApplication.firstAdoptionResponse'] = 'Y';
+    request.fields['adoptApplication.secondAdoptionResponse'] = 'Y';
+    request.fields['adoptApplication.thirdAdoptionResponse'] = 'Y';
+    request.fields['adoptApplication.fourthAdoptionResponse'] = 'Y';
 
 
-    // if (dp != null) {
-    //   request.files.add(await http.MultipartFile.fromPath(
-    //     'uploadFile',
-    //     dp!.path,
-    //     contentType: MediaType('image', path.extension(dp!.path).substring(1)),
-    //   ));
-    // }
+    if (uploadFile != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'uploadFile',
+        uploadFile!.path,
+        contentType: MediaType('image', path.extension(uploadFile!.path).substring(1)),
+      ));
+    }
 
     final response = await request.send();
     final respStr = await response.stream.bytesToString();
@@ -46,6 +48,7 @@ class PrivacyService {
       return true;
     } else {
       print('Failed to submit announcement');
+      print(respStr);
       return false;
     }
   }
