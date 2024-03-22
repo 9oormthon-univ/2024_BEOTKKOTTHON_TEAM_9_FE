@@ -203,7 +203,7 @@ class _DogComponent extends StatelessWidget {
                   ),
                 ),
                 SvgPicture.asset(
-                  item.favourite
+                  false
                       ? "assets/images/home/heart_fill.svg"
                       : "assets/images/home/heart.svg",
                   height: 20,

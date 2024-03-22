@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
@@ -187,7 +188,7 @@ class _InitScreen extends StatelessWidget {
         SizedBox(height: Get.height * 0.2),
         Column(
           children: [
-            SvgPicture.asset(myViewModel.dogImage.value,
+            Image.asset(myViewModel.dogImage.value,
                 height: Get.height * 0.08),
 
             RichText(

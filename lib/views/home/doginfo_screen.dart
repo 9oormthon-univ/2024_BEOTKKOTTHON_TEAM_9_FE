@@ -4,6 +4,7 @@ import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/views/message/message_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/utilities/font_system.dart';
@@ -14,8 +15,10 @@ import 'package:get/get.dart';
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   const DogInfoScreen({super.key});
 
+
   @override
   Widget buildBody(BuildContext context) {
+    final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -27,7 +30,7 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   image: DecorationImage(
-                    image: NetworkImage('https://ifh.cc/g/tBmzjl.jpg'), // 원하는 이미지 URL 사용
+                    image: NetworkImage(viewModel.items.imagePath), // 원하는 이미지 URL 사용
                     fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록
                   ),
                 ),
@@ -114,7 +117,6 @@ class _BottomBox extends StatelessWidget {
               children: [
                 _Tag(text: viewModel.items.tags[0]),
                 _Tag(text: viewModel.items.tags[1]),
-                _Tag(text: viewModel.items.tags[2]),
               ],
             ),
             SizedBox(height: 15),
@@ -164,7 +166,10 @@ class _TalkBox extends StatelessWidget {
           Positioned(
             top: 20,
             left: 20,
-            child: Text(viewModel.items.dogTalk),
+            child: Container(
+                width: Get.width * 0.85,
+                padding:  EdgeInsets.only(right: Get.width * 0.1),
+                child: Text(viewModel.items.dogTalk)),
           ),
         ]
     );
