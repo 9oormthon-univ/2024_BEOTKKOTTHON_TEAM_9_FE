@@ -1,3 +1,4 @@
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -85,12 +86,17 @@ class _TopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MessageViewModel viewModel = Get.put(MessageViewModel());
     return InkWell(
       onTap: () {
-        //lib/views/widget/privacy/privacy_consent_screen.dart으로 이동
-        // Get.to(OnboardingScreen(0));
-        RootViewModel rootViewModel = Get.put(RootViewModel());
-        rootViewModel.changeIndex(6);
+
+        if(UserPreferences.getDogId() == viewModel.dogId.toString()) {
+          Get.snackbar("Error", "입양 신청을 이미 완료하셨습니다.");
+        }
+        else {
+          RootViewModel rootViewModel = Get.put(RootViewModel());
+          rootViewModel.changeIndex(6);
+        }
       },
       child: Container(
         alignment: Alignment.center,
