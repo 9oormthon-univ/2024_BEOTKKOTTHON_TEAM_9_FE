@@ -19,7 +19,6 @@ class MessageViewModel extends GetxController {
   void sendMessage(String text, String userId) {
     final userMessage = ChatMessage.fromUserInput(text, userId);
     messages.add(userMessage);
-    // OpenAI 또는 다른 API로부터의 응답을 시뮬레이션
     fetchReplyFromDummyAPI(text, userId);
   }
 

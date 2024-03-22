@@ -12,11 +12,10 @@ import 'userpreferences_service.dart';
 class GetChatList {
   Future<List<ChatList>> fetchItems(int pageKey) async {
 
-    String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${Get.find<AuthController>().memberIdValue}'; //일단 이걸로
-
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${UserPreferences.getMemberId()}'; //일단 이걸로
 
     final response = await http.get(
-      Uri.parse('$mainpageAPI?page=$pageKey&limit=10'),
+      Uri.parse(mainpageAPI),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -28,6 +27,7 @@ class GetChatList {
       return processResponse(responseBody);
     } else {
       throw Exception('Failed to load items');
+
     }
   }
 

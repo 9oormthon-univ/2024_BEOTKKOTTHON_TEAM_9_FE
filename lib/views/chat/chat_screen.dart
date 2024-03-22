@@ -15,7 +15,9 @@ class ChatScreen extends BaseScreen<ChatViewModel> {
 
   @override
   Widget buildBody(BuildContext context) {
+
     ChatViewModel viewModel = Get.put(ChatViewModel());
+
     return Column(
       children: [
         _TopBar(),

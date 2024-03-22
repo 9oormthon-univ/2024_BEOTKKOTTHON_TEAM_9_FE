@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
-import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
@@ -112,7 +111,7 @@ class _DogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
+    final LikeViewModel viewModel = Get.put(LikeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
 
     return Expanded(
       child: Container(
@@ -151,6 +150,7 @@ class _DogComponent extends StatelessWidget {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
     final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     final RootViewModel rootViewModel = Get.put(RootViewModel());
+    final LikeViewModel likeViewModel = Get.put(LikeViewModel());
     return Material(
       color: Colors.transparent,
       child: Column(
@@ -202,12 +202,22 @@ class _DogComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                SvgPicture.asset(
-                  false
-                      ? "assets/images/home/heart_fill.svg"
-                      : "assets/images/home/heart.svg",
-                  height: 20,
-                ),
+                InkWell(
+                  onTap: () {
+                    // 여기에 탭했을 때 실행하고 싶은 코드를 작성하세요.
+                    print("Heart icon tapped!");
+                    //여기에서 해당하는 포스트의 좋아요가 변경되도록
+                    likeViewModel.toggleLike(item.id);
+
+                  },
+                  child: Obx(() => SvgPicture.asset(
+                    likeViewModel.dogLikeStatus[item.id]?.value ?? false // 여기의 좋아요 상태 변수
+                        ? "assets/images/home/heart_fill.svg"
+                        : "assets/images/home/heart.svg",
+                    height: 20,
+                  ),
+                  ),
+                )
               ],
             ),
           ),
