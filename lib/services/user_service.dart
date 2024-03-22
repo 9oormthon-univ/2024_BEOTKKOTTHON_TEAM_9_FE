@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -28,11 +27,26 @@ class GetDogList {
 
     if (response.statusCode == 200) {
       String responseBody = utf8.decode(response.bodyBytes);
+      List<int> postIdList = extractPostIds(responseBody);
+      print(postIdList);
+      UserPreferences.setDogList(postIdList);
       return processResponse(responseBody);
     } else {
       throw Exception('Failed to load items');
     }
   }
+}
+
+// PostId들 다 가져오는거
+List<int> extractPostIds(String jsonResponse) {
+  List<int> postIdList = [];
+  Map<String, dynamic> parsedResponse = json.decode(jsonResponse);
+  List<dynamic> resultList = parsedResponse['result'];
+  for (var item in resultList) {
+    int postId = item['postId'];
+    postIdList.add(postId);
+  }
+  return postIdList;
 }
 
 class GetLikeDogList {

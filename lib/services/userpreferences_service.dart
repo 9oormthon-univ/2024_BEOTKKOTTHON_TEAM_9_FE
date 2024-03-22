@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
@@ -8,6 +10,7 @@ class UserPreferences {
   static const _keyPostId = 'postId';
   static const _keyMemberType = 'memberType';
   static const _applyDog = 'DogID';
+  static const _keyDogList = ''; // 추가된 키
 
   static Future init() async => _preferences = await SharedPreferences.getInstance();
 
@@ -34,4 +37,25 @@ class UserPreferences {
   static Future setPostId(String postId) async => await _preferences.setString(_keyPostId, postId);
 
   static String getPostId() => _preferences.getString(_keyPostId) ?? '';
+
+  static Future setDogList(List<int> postIdList) async {
+    List<String> stringList = postIdList.map((id) => id.toString()).toList();
+    await _preferences.setStringList(_keyDogList, stringList);
+  }
+
+  static List<int> getDogList() {
+    List<String> stringList = _preferences.getStringList(_keyDogList) ?? [];
+    List<int> postIdList = stringList.map((str) => int.parse(str)).toList();
+    return postIdList;
+  }
+
+  static int? getRandomElementFromDogList() {
+    List<int> dogList = getDogList();
+    if (dogList.isEmpty) {
+      return null;
+    }
+    Random random = Random();
+    int randomIndex = random.nextInt(dogList.length);
+    return dogList[randomIndex];
+  }
 }
