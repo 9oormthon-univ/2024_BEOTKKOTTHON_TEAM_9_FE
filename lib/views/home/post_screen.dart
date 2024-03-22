@@ -53,6 +53,10 @@ class _MyHomePageState extends State<_PostScreen> {
             children: [
               ImageSelectionWidget(),
               SizedBox(height: 30),
+              Text('공고 번호', style: FontSystem.KR20B),
+              SizedBox(height: 10),
+              CustomTextField(C: controller.PostIdController),
+              SizedBox(height: 30),
               Text('이름', style: FontSystem.KR20B),
               SizedBox(height: 10),
               CustomTextField(C: controller.nameController),
@@ -65,7 +69,7 @@ class _MyHomePageState extends State<_PostScreen> {
                 children: [
                   GenderButton(
                     title: '남',
-                    isSelected: controller.genderController == '남',
+                    isSelected: controller.genderController.text == '남',
                     onSelected: () {
                       setState(() {
                         controller.genderController.text = '남';
@@ -75,7 +79,7 @@ class _MyHomePageState extends State<_PostScreen> {
                   SizedBox(width: 20), // 버튼 사이 간격
                   GenderButton(
                     title: '여',
-                    isSelected: controller.genderController == '여', // 선택 상태에 따라 isSelected 값을 결정
+                    isSelected: controller.genderController.text == '여', // 선택 상태에 따라 isSelected 값을 결정
                     onSelected: () {
                       setState(() {
                         controller.genderController.text = '여';
@@ -347,7 +351,6 @@ class _BottomButton extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 

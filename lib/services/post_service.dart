@@ -8,13 +8,13 @@ import 'package:get/get.dart';
 import '../providers/AuthController.dart';
 
 class PostService {
-  Future<bool> submitAnnouncement(String name, String character, String extra, String age, String breed, String gender, String like, String hate, String fd, File? dp) async {
+  Future<bool> submitAnnouncement(String postId, String name, String character, String extra, String age, String breed, String gender, String like, String hate, String fd, File? dp) async {
     String? postpageAPI = dotenv.env['postpageAPI'];
     var uri = Uri.parse(postpageAPI!);
 
     var request = http.MultipartRequest('POST', uri);
 
-    request.fields['shelterId'] = '1';
+    request.fields['shelterId'] = postId;
     request.fields['bomInfo.name'] = name;
     request.fields['bomInfo.age'] = age;
     request.fields['bomInfo.gender'] = gender;
@@ -33,11 +33,6 @@ class PostService {
         contentType: MediaType('image', path.extension(dp!.path).substring(1)),
       ));
     }
-
-    // request.headers.addAll({
-    //   'Content-Type': 'multipart/form-data'
-    // });
-
 
     final response = await request.send();
     final respStr = await response.stream.bytesToString();
