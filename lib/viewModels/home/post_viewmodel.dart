@@ -8,7 +8,7 @@ class PostController extends GetxController {
   final Announcement announcement = Announcement();
   final PostService _userService = PostService();
   final TextEditingController nameController = TextEditingController();
-  // final TextEditingController characterController = TextEditingController();
+  final TextEditingController PostIdController = TextEditingController();
   final TextEditingController extraController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController breedController = TextEditingController();
@@ -37,6 +37,7 @@ class PostController extends GetxController {
 
   Future<bool> attemptpost() async {
     return _userService.submitAnnouncement(
+        PostIdController.text,
         nameController.text,
         announcement.character,
         extraController.text,
