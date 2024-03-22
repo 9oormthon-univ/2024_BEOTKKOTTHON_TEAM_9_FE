@@ -53,6 +53,7 @@ class LikeViewModel extends GetxController {
     if (success) {
       print("성공했습니더");
       dogLikeStatus[dogId] = RxBool(!isLiked);
+      print(dogLikeStatus[dogId]);
     }
   }
 

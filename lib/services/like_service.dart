@@ -16,7 +16,7 @@ class LikeService {
 
     if (response.statusCode == 200) {
       print("좋아요 갔습니다.");
-      return request.flag == "register";
+      return true;
 
     } else {
       // 에러 처리
