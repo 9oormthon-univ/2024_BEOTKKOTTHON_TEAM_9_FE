@@ -14,7 +14,7 @@ class PrivacyService {
       String firstAdoptionResponse, String secondAdoptionResopnse, File? uploadFile
       )
   async {
-    String? baseAPI = dotenv.env['MainAPI'];
+    String? baseAPI = dotenv.env['BOM_API'];
     String? postpageAPI = "${baseAPI}/adopt";
     String memberId = UserPreferences.getMemberId().toString();
     String PostId = UserPreferences.getPostId().toString();
