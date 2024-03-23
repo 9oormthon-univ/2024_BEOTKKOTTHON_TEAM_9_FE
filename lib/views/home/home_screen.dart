@@ -27,7 +27,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildBody(BuildContext context) {
 
-    if (UserPreferences.getMemberType() == "B") return Column(
+    if (UserPreferences.getMemberType() == "S") return Column(
       children: [
         const SizedBox(height: 16),
         Container(
