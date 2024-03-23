@@ -1,5 +1,6 @@
 import 'package:bommeong/views/chat/chat_screen.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
+import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/like/like_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
@@ -24,14 +25,14 @@ class RootScreen extends BaseScreen<RootViewModel> {
       () => IndexedStack(
         index: viewModel.selectedIndex,
         children: [
-          HomeScreen(), //1
-          ChatScreen(), // 2
-          LikeScreen(), // 3
-          MyScreen(), // 4
-          DogInfoScreen(), // 5
-          MessageScreen(), // 6
-          OnboardingScreen(0), //7
-          OnboardingScreen(2), //8
+          HomeScreen(), //0
+          ChatScreen(), // 1
+          LikeScreen(), // 2
+          MyScreen(), // 3
+          DogInfoScreen(), // 4
+          MessageScreen(), // 5
+          OnboardingScreen(0), //6
+          OnboardingScreen(2), //7
         ],
       ),
     );

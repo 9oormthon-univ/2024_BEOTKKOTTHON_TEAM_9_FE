@@ -65,7 +65,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 300),
       child: _currentWidget,
     );
   }
