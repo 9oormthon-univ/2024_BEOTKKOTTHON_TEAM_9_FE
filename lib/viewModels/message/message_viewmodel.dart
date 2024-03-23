@@ -6,6 +6,7 @@ import 'package:bommeong/services/chat_service.dart';
 class MessageViewModel extends GetxController {
   RxInt dogId = 0.obs;
   RxList<ChatMessage> messages = <ChatMessage>[].obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -18,7 +19,6 @@ class MessageViewModel extends GetxController {
 
   List<types.Message> get chatMessages => messages.reversed.map((m) => m.toChatMessage()).toList();
 
-
   void sendMessage(String text, String userId) {
     final userMessage = ChatMessage.fromUserInput(text, userId);
     messages.add(userMessage);
@@ -27,13 +27,13 @@ class MessageViewModel extends GetxController {
 
   void fetchReplyFromDummyAPI(String text, String userId) async {
     // 실제 HTTP 요청으로 대체
+    isLoading.value = true;
     GetGPTChat apiService = GetGPTChat();
     String response = await apiService.fetchItems(text);
     final aiMessage = ChatMessage.fromOpenAIResponse(response, '5');
     messages.add(aiMessage);
+    isLoading.value = false;
   }
-
-
 
 Future<void> setId(int id) async{
     print("아이디는 : ${id}");

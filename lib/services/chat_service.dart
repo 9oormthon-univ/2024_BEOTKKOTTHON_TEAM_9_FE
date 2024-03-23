@@ -10,10 +10,7 @@ import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'userpreferences_service.dart';
 
 class GetChatList {
-  bool hasFetched = false;
   Future<List<ChatList>> fetchItems(int pageKey) async {
-
-    if (hasFetched) return [];
 
     String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${UserPreferences.getMemberId()}'; //일단 이걸로
 
@@ -27,7 +24,6 @@ class GetChatList {
 
     if (response.statusCode == 200) {
       String responseBody = utf8.decode(response.bodyBytes);
-      hasFetched = true;
       return processResponse(responseBody);
     } else {
       throw Exception('Failed to load items');
