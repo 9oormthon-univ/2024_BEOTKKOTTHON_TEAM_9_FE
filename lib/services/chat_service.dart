@@ -27,10 +27,8 @@ class GetChatList {
       return processResponse(responseBody);
     } else {
       throw Exception('Failed to load items');
-
     }
   }
-
 }
 
 List<ChatList> processResponse(String responseBody) {
