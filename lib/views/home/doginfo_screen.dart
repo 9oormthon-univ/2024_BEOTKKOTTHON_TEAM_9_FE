@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
@@ -14,7 +13,6 @@ import 'package:get/get.dart';
 
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   const DogInfoScreen({super.key});
-
 
   @override
   Widget buildBody(BuildContext context) {
@@ -76,8 +74,6 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   bool get wrapWithInnerSafeArea => true;
 }
 
-
-
 class _BottomBox extends StatelessWidget {
   //뷰모델 가져오기
   const _BottomBox({super.key});
@@ -123,8 +119,6 @@ class _BottomBox extends StatelessWidget {
             _TalkBox(),
             SizedBox(height: 15),
             _BottomButton(),
-
-
           ]
       ),
     );
@@ -159,21 +153,25 @@ class _TalkBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     return Stack(
-        children: [SvgPicture.asset(
+      children: [
+        SvgPicture.asset(
           "assets/images/home/talk.svg",
-          width: Get.width * 0.85,
+          width: Get.width * 0.95,
         ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Container(
-                width: Get.width * 0.85,
-                padding:  EdgeInsets.only(right: Get.width * 0.1),
-                child: Text(viewModel.items.dogTalk)),
+        Positioned(
+          top: 20,
+          left: 20, // 오른쪽 여백을 이렇게 지정합니다.
+          child: Container(
+            width: Get.width * 0.85,
+            padding: EdgeInsets.only(right: Get.width * 0.1),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical, // 세로 스크롤 가능
+              child: Text(viewModel.items.dogTalk),
+            ),
           ),
-        ]
+        ),
+      ],
     );
-
   }
 }
 
@@ -208,6 +206,5 @@ class _BottomButton extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

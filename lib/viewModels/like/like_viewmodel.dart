@@ -71,7 +71,6 @@ class LikeViewModel extends GetxController {
     }
   }
 
-
   Future<void> updateLikeList() async {
     try {
       // 첫 번째 페이지의 데이터를 다시 가져옵니다.

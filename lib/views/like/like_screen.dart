@@ -101,7 +101,7 @@ class _TopImage extends StatelessWidget {
           Image.asset(
             'assets/images/like/topDog.png',
             width: Get.width,
-            height: Get.height* 0.3,
+            height: Get.height * 0.3,
             fit: BoxFit.cover,
           ),
           Align(

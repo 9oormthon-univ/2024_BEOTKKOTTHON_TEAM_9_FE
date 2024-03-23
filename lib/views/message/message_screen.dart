@@ -38,11 +38,12 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
             ),
           ],
         );
-
   }
+
 
 @override
 buildAppBar(BuildContext context) {
+  final messageViewModel = Get.find<MessageViewModel>();
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 0,
@@ -61,6 +62,7 @@ buildAppBar(BuildContext context) {
           Spacer(flex: 7),
           InkWell(
             onTap: () {
+              messageViewModel.clearChatMessages();
               RootViewModel rootViewModel = Get.put(RootViewModel());
               rootViewModel.changeIndex(0);
             },
