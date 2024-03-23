@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
@@ -14,7 +13,6 @@ import 'package:get/get.dart';
 
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   const DogInfoScreen({super.key});
-
 
   @override
   Widget buildBody(BuildContext context) {
@@ -75,8 +73,6 @@ class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   @override
   bool get wrapWithInnerSafeArea => true;
 }
-
-
 
 class _BottomBox extends StatelessWidget {
   //뷰모델 가져오기
@@ -210,6 +206,5 @@ class _BottomButton extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

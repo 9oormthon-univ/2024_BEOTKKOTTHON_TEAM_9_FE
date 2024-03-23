@@ -12,6 +12,9 @@ class MessageViewModel extends GetxController {
     super.onInit();
   }
 
+  void clearChatMessages() {
+    messages.clear();
+  }
 
   List<types.Message> get chatMessages => messages.reversed.map((m) => m.toChatMessage()).toList();
 

@@ -25,7 +25,6 @@ class MyViewModel extends GetxController {
   void fetchUserAndDogInfo() async {
     try {
       UserInfoModel userInfo = await UserService.fetchItems();
-
       print("저 됐어용");
 
       isHaveDog.value = userInfo.isHaveDog ?? false; // null일 경우 기본값으로 false 설정
