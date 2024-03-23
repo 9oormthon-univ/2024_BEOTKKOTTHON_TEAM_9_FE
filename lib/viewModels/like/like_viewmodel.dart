@@ -10,7 +10,7 @@ class LikeViewModel extends GetxController {
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
   final GetLikeDogList apiService = GetLikeDogList();
   final LikeService likeService = LikeService();
-  final isHaveDog = true.obs;
+  final isHaveDog = false.obs;
   var dogLikeStatus = <int, RxBool>{}.obs;
 
   @override
@@ -34,6 +34,7 @@ class LikeViewModel extends GetxController {
         pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
+      isHaveDog.value = false;
       pagingController.error = error;
     }
   }
@@ -53,7 +54,6 @@ class LikeViewModel extends GetxController {
     bool success = await apiService.toggleLike(request);
 
     if (success) {
-      print("성공했습니더");
       dogLikeStatus[dogId] = RxBool(!isLiked);
       print(dogLikeStatus[dogId]);
     }
@@ -71,10 +71,27 @@ class LikeViewModel extends GetxController {
     }
   }
 
+
+  Future<void> updateLikeList() async {
+    try {
+      // 첫 번째 페이지의 데이터를 다시 가져옵니다.
+      final newItems = await apiService.fetchItems(0);
+      if (newItems.isNotEmpty) {
+        isHaveDog.value = true;
+        pagingController.refresh();
+      } else {
+        isHaveDog.value = false;
+      }
+    } catch (error) {
+      print("Error updating chat list: $error");
+    }
+  }
+
   @override
   void onClose() {
     pagingController.dispose();
     super.onClose();
   }
+
 
 }

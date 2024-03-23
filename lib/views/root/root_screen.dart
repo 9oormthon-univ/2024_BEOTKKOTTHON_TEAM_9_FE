@@ -33,6 +33,7 @@ class RootScreen extends BaseScreen<RootViewModel> {
           MessageScreen(), // 5
           OnboardingScreen(0), //6
           OnboardingScreen(2), //7
+          LoginScreen(), //8
         ],
       ),
     );

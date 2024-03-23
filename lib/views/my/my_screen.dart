@@ -1,7 +1,9 @@
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
@@ -93,7 +95,16 @@ class _TopPart extends StatelessWidget {
               ),
               Text(myViewModel.useremail.value, style: FontSystem.KR15R),
             ],
-          )
+          ),
+          Spacer(),
+          InkWell(
+            onTap: () {
+              UserPreferences.logout();
+              RootViewModel rootViewModel = Get.put(RootViewModel());
+              rootViewModel.changeIndex(8);
+
+            },
+              child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
         ],
       ),
     );
@@ -188,7 +199,7 @@ class _InitScreen extends StatelessWidget {
         SizedBox(height: Get.height * 0.2),
         Column(
           children: [
-            Image.asset(myViewModel.dogImage.value,
+            SvgPicture.asset('assets/images/my/dog.svg',
                 height: Get.height * 0.08),
 
             RichText(

@@ -22,8 +22,6 @@ class ChatViewModel extends GetxController {
   Future<void> fetchPage(int pageKey) async {
     try {
       final newItems = await apiService.fetchItems(pageKey);
-      if(newItems.length == 0) isHaveChat.value = false;
-      else isHaveChat.value = true;
       num pageSize = 6;
       final isLastPage = newItems.length < pageSize;
       if (isLastPage) {
@@ -33,6 +31,7 @@ class ChatViewModel extends GetxController {
         pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
+      isHaveChat.value = false;
       pagingController.error = error;
     }
   }
