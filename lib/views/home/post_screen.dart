@@ -10,34 +10,15 @@ import '../../services/user_service.dart';
 import '../../viewModels/home/post_viewmodel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> main() async {
-  await dotenv.load(fileName: "assets/config/.env");
-  Get.lazyPut(()=>AuthController());
-  runApp(PostScreen());
-}
+import '../../viewModels/root/root_viewmodel.dart';
+import 'home_screen.dart';
 
-class PostScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-        // 앱 전체의 기본 배경색 설정
-        scaffoldBackgroundColor: Color(0xFFF7F7F7),
-        // AppBar의 기본 스타일 설정
-        appBarTheme: AppBarTheme(
-          color: Color(0xFFF7F7F7), // AppBar 배경색 설정
-        ),
-      ),
-      home: _PostScreen(),
-    );
-  }
-}
-class _PostScreen extends StatefulWidget {
+class PostScreen extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<_PostScreen> {
+class _MyHomePageState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     final PostController controller = Get.put(PostController());
@@ -327,14 +308,16 @@ class _BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PostController controller = Get.put(PostController());
+    RootViewModel rootViewModel = Get.put(RootViewModel());
     return InkWell(
       onTap: () async {
         // Call the submitAnnouncement method and await its result
         bool success = await controller.attemptpost();
         if (success) {
-          // Handle success, e.g., showing a Snackbar
+          rootViewModel.changeIndex(0);
+          goBack(context);
         } else {
-          // Handle failure, e.g., showing a Snackbar
+          showErrorDialog(context);
         }
       },
       child: Container(
@@ -352,6 +335,35 @@ class _BottomButton extends StatelessWidget {
       ),
     );
   }
+
+  void goBack(BuildContext context) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    } else {
+      // 더 이상 뒤로 갈 화면이 없을 때의 로직
+    }
+  }
+
+  void showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('오류', style: FontSystem.KR25B.copyWith(color: Colors.black),),
+          content: Text('등록에 실패했습니다. 다시 시도해주세요.', style: FontSystem.KR15M.copyWith(color: Colors.black),),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기', style: FontSystem.KR15M.copyWith(color: Colors.black),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
 
 // 사진 고르기
@@ -405,3 +417,4 @@ class _ImageSelectionWidgetState extends State<ImageSelectionWidget> {
     );
   }
 }
+

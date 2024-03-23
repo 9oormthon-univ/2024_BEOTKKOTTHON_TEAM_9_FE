@@ -28,7 +28,7 @@ class GetDogList {
     if (response.statusCode == 200) {
       String responseBody = utf8.decode(response.bodyBytes);
       List<int> postIdList = extractPostIds(responseBody);
-      print(postIdList);
+      print('멍멍이들: ${postIdList}');
       UserPreferences.setDogList(postIdList);
       return processResponse(responseBody);
     } else {

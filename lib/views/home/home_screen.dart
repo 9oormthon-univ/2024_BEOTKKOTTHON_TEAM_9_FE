@@ -1,6 +1,7 @@
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
+import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildBody(BuildContext context) {
 
-    return Column(
+    if (UserPreferences.getMemberType() == "B") return Column(
       children: [
         const SizedBox(height: 16),
         Container(
@@ -43,9 +44,28 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         _Middle(),
         SizedBox(height: 20),
         _DogList(),
-
+        _BottomButton(),
       ],
+    );
 
+    else return Column(
+      children: [
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.only(left: 30, right: 16),
+          alignment: Alignment.centerLeft,
+          child: SvgPicture.asset(
+            "assets/images/home/BOMMEONG.svg",
+            height: 16,
+          ),
+        ),
+        SizedBox(height: 22),
+        _Header(),
+        SizedBox(height: 30),
+        _Middle(),
+        SizedBox(height: 20),
+        _DogList(),
+      ],
     );
   }
   @override
@@ -80,7 +100,7 @@ class _Header extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: '만나서 반가워요, '),
                     TextSpan(
-                      text: '예비보호자',
+                      text: UserPreferences.getName(),
                       style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
                     ),
                     TextSpan(text: '님!'),
@@ -250,7 +270,6 @@ class _DogComponent extends StatelessWidget {
                   ),
                   ),
                 )
-
               ],
             ),
           ),
@@ -260,3 +279,35 @@ class _DogComponent extends StatelessWidget {
   }
 }
 
+
+class _BottomButton extends StatelessWidget {
+  const _BottomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
+    return InkWell(
+      onTap: () {
+        // RootViewModel rootViewModel = Get.put(RootViewModel());
+        // rootViewModel.changeIndex(9);
+        Get.to(() => PostScreen());
+
+      },
+      child: Container(
+        width: Get.width * 0.85,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        // 패딩 조정으로 버튼 크기 조정
+        decoration: BoxDecoration(
+          color: Color(0xFFA273FF), // 배경색 설정
+          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+        ),
+        child: Text(
+          '유기견 공고하기', // 버튼 텍스트
+          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
+          textAlign: TextAlign.center, // 텍스트 정렬
+        ),
+      ),
+    );
+  }
+}
