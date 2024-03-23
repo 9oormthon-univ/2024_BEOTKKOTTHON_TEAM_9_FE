@@ -11,6 +11,7 @@ class UserPreferences {
   static const _keyMemberType = 'memberType';
   static const _applyDog = 'DogID';
   static const _keyDogList = ''; // 추가된 키
+  static const _isfetch = true;
 
   static Future init() async => _preferences = await SharedPreferences.getInstance();
 
@@ -37,6 +38,8 @@ class UserPreferences {
   static Future setPostId(String postId) async => await _preferences.setString(_keyPostId, postId);
 
   static String getPostId() => _preferences.getString(_keyPostId) ?? '';
+
+  // static bool setIsFetch() =>
 
   static Future setDogList(List<int> postIdList) async {
     List<String> stringList = postIdList.map((id) => id.toString()).toList();
