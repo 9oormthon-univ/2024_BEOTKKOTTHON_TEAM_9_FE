@@ -36,8 +36,6 @@ class UserService {
       await UserPreferences.setEmail(data['result']['email']);
       await UserPreferences.setName(data['result']['name']);
       await UserPreferences.setMemberType(data['result']['memberType']);
-
-
       return true;
     } else {
       return false;
