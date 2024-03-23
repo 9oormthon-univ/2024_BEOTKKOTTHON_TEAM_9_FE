@@ -91,9 +91,8 @@ class _TopButton extends StatelessWidget {
     MessageViewModel viewModel = Get.put(MessageViewModel());
     return InkWell(
       onTap: () {
-
-        if(UserPreferences.getDogId() == viewModel.dogId.toString()) {
-          Get.snackbar("Error", "입양 신청을 이미 완료하셨습니다.");
+        if(UserPreferences.getDogId() != "DogID") {
+          Get.snackbar("잠깐만요 🐾", "입양 신청을 이미 완료하셨습니다.");
         }
         else {
           RootViewModel rootViewModel = Get.put(RootViewModel());

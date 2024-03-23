@@ -374,9 +374,7 @@ class _Q1State extends State<Q1> {
                 ),
                 onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () async {
                   rootViewModel.changeIndex(0);
-
                   bool success = await privacyviewmodel.attemptpost();
-
                   print('신청서 제출 완료');
                   MessageViewModel viewModel = Get.put(MessageViewModel());
                   UserPreferences.setDogId(viewModel.dogId.toString());
