@@ -31,7 +31,6 @@ class ChatScreen extends BaseScreen<ChatViewModel> {
         if (snapshot.hasError) {
           return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
         }
-
         // 데이터 로딩 완료
         return Column(
           children: [
