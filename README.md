@@ -77,7 +77,7 @@ flutter run
 
 ### 💻 demonstration video
  
-
+https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/9116a501-c58c-4937-84aa-5f21ddeaf2f9
 
 ### ✨ Screen
 | Title         | Img                                   | Title         | Img                                   |
