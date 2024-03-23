@@ -10,7 +10,6 @@ class UserService {
   static Future<UserInfoModel> fetchItems() async {
 
     String? mypageAPI = '${dotenv.env['BOM_API']}/user/info/${UserPreferences.getMemberId()}';
-    var token = Get.find<AuthController>().token;
 
     final response = await http.get(
       Uri.parse(mypageAPI),
@@ -20,16 +19,9 @@ class UserService {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200){
       var data = json.decode(response.body);
       UserInfoModel userInfo = UserInfoModel.fromJson(data['result']);
-      print(userInfo.isHaveDog);
-      print(userInfo.userName);
-      print(userInfo.membertype);
-      print(userInfo.useremail);
-      print(userInfo.applyAdoption);
-      print(userInfo.dogImage);
-      print(userInfo.dogname);
 
       return userInfo;
     } else {

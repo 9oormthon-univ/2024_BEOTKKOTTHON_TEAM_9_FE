@@ -54,13 +54,15 @@ class UserInfoModel {
   });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) {
+
+
     return UserInfoModel(
       isHaveDog: json['adoption'] != null,// 기본값으로 false 설정
       userName: json['name'] as String,
       membertype: json['memberType'] as String,
       useremail: json['email'] as String,
-      applyAdoption: json['adoption']['status'] as String? ?? "assets/images/my/progress1.svg", // 기본값 설정
-      dogImage: json['adoption']['imageUrl'] as String? ?? "assets/images/my/miniDog.png", // 기본 이미지 경로 설정
+      applyAdoption: json['adoption'] != null ? json['adoption']['status'] as String? : "assets/images/my/progress1.svg", // 기본값 설정
+      dogImage: json['adoption'] != null ? json['adoption']['imageUrl'] as String? : "assets/images/my/miniDog.png", // 기본 이미지 경로 설정
       dogname: "날봄", // 기본 이름 설정
       adoption: json['adoption'] != null ? AdoptionInfo.fromJson(json['adoption']) : null, // adoption 처리
     );
