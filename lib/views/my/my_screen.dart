@@ -1,3 +1,4 @@
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
@@ -93,7 +94,16 @@ class _TopPart extends StatelessWidget {
               ),
               Text(myViewModel.useremail.value, style: FontSystem.KR15R),
             ],
-          )
+          ),
+          Spacer(),
+          InkWell(
+            onTap: () {
+              UserPreferences.logout();
+              RootViewModel rootViewModel = Get.put(RootViewModel());
+              rootViewModel.changeIndex(8);
+
+            },
+              child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
         ],
       ),
     );

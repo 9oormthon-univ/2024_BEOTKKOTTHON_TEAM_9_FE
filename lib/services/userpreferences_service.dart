@@ -58,4 +58,9 @@ class UserPreferences {
     int randomIndex = random.nextInt(dogList.length);
     return dogList[randomIndex];
   }
+  static Future<void> logout() async {
+    await _preferences.clear();
+  }
+
 }
+

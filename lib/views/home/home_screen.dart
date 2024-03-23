@@ -79,6 +79,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(UserPreferences.getName());
     return Column(
       children: [
         Container(
@@ -100,7 +101,7 @@ class _Header extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: '만나서 반가워요, '),
                     TextSpan(
-                      text: UserPreferences.getName(),
+                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "공고등록자" + '님!',
                       style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
                     ),
                     TextSpan(text: '님!'),
