@@ -88,15 +88,6 @@ class SignInScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
 
-              // ElevatedButton(
-              //   onPressed: () => viewModel.printAllControllerValues(),
-              //   style: ElevatedButton.styleFrom(
-              //     foregroundColor: Colors.black, backgroundColor: Color(0xFFA273FF),
-              //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              //   ),
-              //   child: Text('출력값 확인'),
-              // ),
-
               Spacer(flex: 3,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -141,13 +132,13 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-  final double? width; // 가로 길이를 설정하기 위한 선택적 파라미터
+  final double? width;
 
   const CustomTextFormField({
     Key? key,
     required this.controller,
     required this.hintText,
-    this.obscureText = false, // 기본값은 false입니다.
+    this.obscureText = false,
     this.width,
   }) : super(key: key);
 
