@@ -21,8 +21,8 @@ class PostService {
     request.fields['bomInfo.breed'] = breed;
     request.fields['bomInfo.personality'] = character;
     request.fields['bomInfo.extra'] = extra;
-    request.fields['bomInfo.like'] = like;
-    request.fields['bomInfo.hate'] = hate;
+    request.fields['bomInfo.likes'] = like;
+    request.fields['bomInfo.hates'] = hate;
     request.fields['bomInfo.findingLocation'] = fd;
 
 
