@@ -137,6 +137,9 @@ List<DogList> processResponse(String responseBody) {
   if(doglists.length == 0) homeViewModel.isHaveDog.value = false;
   else homeViewModel.isHaveDog.value = true;
 
+  LikeViewModel likeViewModel = Get.put(LikeViewModel());
+  likeViewModel.isHaveDog.value = homeViewModel.isHaveDog.value;
+
   return doglists;
 }
 

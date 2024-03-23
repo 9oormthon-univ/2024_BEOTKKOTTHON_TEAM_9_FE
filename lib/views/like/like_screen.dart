@@ -16,18 +16,35 @@ class LikeScreen extends BaseScreen<LikeViewModel> {
 
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
-      children: [
-        _TopImage(),
-        SizedBox(height: 22),
-        _Header(),
-        SizedBox(height: 20),
-        viewModel.isHaveDog.value
-            ? _DogList()
-        : _InitScreen(),
+    // Assuming 'LikeViewModel' has been initialized somewhere in your app lifecycle
+    final LikeViewModel viewModel = Get.put(LikeViewModel());
 
-      ],
+    return FutureBuilder(
+      future: viewModel.updateLikeList(), // This should be your method to update or fetch likes
+      builder: (context, snapshot) {
+        // 데이터 로딩 중 상태 처리
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+        }
 
+        // 에러가 발생한 경우 처리
+        if (snapshot.hasError) {
+          return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
+        }
+
+        // 데이터 로딩 완료
+        return Column(
+          children: [
+            _TopImage(),
+            SizedBox(height: 22),
+            _Header(),
+            SizedBox(height: 20),
+            viewModel.isHaveDog.value
+                ? _DogList()
+                : _InitScreen(),
+          ],
+        );
+      },
     );
   }
   @override

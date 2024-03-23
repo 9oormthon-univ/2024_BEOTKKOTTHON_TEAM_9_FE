@@ -79,7 +79,6 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(UserPreferences.getName());
     return Column(
       children: [
         Container(
