@@ -250,7 +250,7 @@ class _DogComponent extends StatelessWidget {
                     children: [
                       Text(item.name, style: FontSystem.KR12B,),
                       Text("${item.age} | ${item.type}",
-                      style: FontSystem.KR10R,),
+                      style: FontSystem.KR8R,),
                     ],
                   ),
                 ),

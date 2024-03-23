@@ -14,8 +14,13 @@ import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 
 class GetDogList {
+  bool hasFetched = false; // API 호출 여부를 추적하는 변수 추가
+
   Future<List<DogList>> fetchItems(int pageKey) async {
-   String? mainpageAPI = '${dotenv.env['BOM_API']}/post';
+    // 이미 API 호출이 성공적으로 수행되었다면 더 이상 진행하지 않습니다.
+    if (hasFetched) return [];
+
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/post';
     // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
     final response = await http.get(
       Uri.parse('$mainpageAPI?page=$pageKey&limit=10'),
@@ -29,7 +34,9 @@ class GetDogList {
       String responseBody = utf8.decode(response.bodyBytes);
       List<int> postIdList = extractPostIds(responseBody);
       print('멍멍이들: ${postIdList}');
+
       UserPreferences.setDogList(postIdList);
+      hasFetched = true; // API 호출이 성공했음을 표시합니다.
       return processResponse(responseBody);
     } else {
       throw Exception('Failed to load items');
