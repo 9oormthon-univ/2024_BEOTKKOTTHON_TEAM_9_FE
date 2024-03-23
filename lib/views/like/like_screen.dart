@@ -106,7 +106,7 @@ class _TopImage extends StatelessWidget {
           ),
           Align(
             heightFactor: Get.height * 0.002,
-            widthFactor: Get.width * 0.0025,
+            widthFactor: Get.width * 0.0028,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

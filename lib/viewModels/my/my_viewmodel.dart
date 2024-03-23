@@ -22,7 +22,7 @@ class MyViewModel extends GetxController {
     fetchUserAndDogInfo();
   }
 
-  void fetchUserAndDogInfo() async {
+  Future<void> fetchUserAndDogInfo() async {
     try {
       UserInfoModel userInfo = await UserService.fetchItems();
 
