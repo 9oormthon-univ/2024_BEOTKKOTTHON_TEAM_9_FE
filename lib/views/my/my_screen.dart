@@ -14,20 +14,39 @@ class MyScreen extends BaseScreen<MyViewModel> {
 
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
-      children: [
-        _TopPart(),
-        Container(
-          width: Get.width,
-          height: Get.height * 0.02,
-          color: Color(0xFFF8F8F8),
-        ),
-        viewModel.isHaveDog.value
-            ? _BottomBox()
-            : _InitScreen(),
-      ],
+    final viewModel = Get.put(MyViewModel());
+
+    return FutureBuilder(
+      future: viewModel.fetchUserAndDogInfo(), // Replace with your method to update or fetch data
+      builder: (context, snapshot) {
+        // 데이터 로딩 중 상태 처리
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+        }
+
+        // 에러가 발생한 경우 처리
+        if (snapshot.hasError) {
+          return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
+        }
+
+        // 데이터 로딩 완료
+        return Column(
+          children: [
+            _TopPart(),
+            Container(
+              width: Get.width,
+              height: Get.height * 0.02,
+              color: Color(0xFFF8F8F8),
+            ),
+            viewModel.isHaveDog.value
+                ? _BottomBox()
+                : _InitScreen(),
+          ],
+        );
+      },
     );
   }
+
 
   @override
   buildAppBar(BuildContext context) {
