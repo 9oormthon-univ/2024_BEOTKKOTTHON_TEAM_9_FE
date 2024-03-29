@@ -8,7 +8,7 @@
 | [황현정](https://github.com/bunju20)       | 동국대학교 | 팀장, 프론트엔드 | ghkd4009@gmail.com |
 | [여은동](https://github.com/sillonjeu) | 동국대학교     | 프론트엔드 | pius0316@gmail.com |
 | [김나령](https://github.com/nar0ng) | 덕성여자대학교     | 백엔드 | criticalpxint@naver.com |
-| [황현정](https://github.com/kwon416) | 단국대학교    | 백엔드 | kbg990416@gmail.com |
+| [권보궁](https://github.com/kwon416) | 단국대학교    | 백엔드 | kbg990416@gmail.com |
 | 정민지 | 동덕여자대학교     | 기획 | pop0080@naver.com |
 | 이지혜 | 서울여자대학교    | 디자인 | fox8128@naver.com |
 
