@@ -3,6 +3,7 @@ import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
+import 'package:bommeong/views/privacy/privacy_consent_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
@@ -107,8 +108,8 @@ class _Header extends StatelessWidget {
                   ],
                 ),
               )
-
             ),
+
             Container(
               padding: const EdgeInsets.only(right: 16),
               child: Image.asset(
@@ -117,6 +118,27 @@ class _Header extends StatelessWidget {
                 height: 32,
               ),
             ),
+
+            // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
+            InkWell(
+              onTap: () {
+                Get.to(() => PrivacyConsentScreen());
+              },
+              child: Container(
+                width: Get.width * 0.10,
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                // 패딩 조정으로 버튼 크기 조정
+                decoration: BoxDecoration(
+                  color: Color(0xFFA273FF), // 배경색 설정
+                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+                ),
+                child: Text(
+                  '테스트', // 버튼 텍스트
+                  style: FontSystem.KR10B.copyWith(color: Colors.black), // 텍스트 스타일
+                  textAlign: TextAlign.center, // 텍스트 정렬
+                ),
+              ),
+            )
 
           ],
         ),
@@ -278,7 +300,6 @@ class _DogComponent extends StatelessWidget {
     );
   }
 }
-
 
 class _BottomButton extends StatelessWidget {
   const _BottomButton({super.key});

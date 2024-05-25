@@ -8,7 +8,6 @@ import '../../../utilities/font_system.dart';
 import 'hand_sign.dart';
 import '../adoption/Question2.dart';
 
-
 class OnboardingScreen extends StatefulWidget {
   final int currentPage;
   OnboardingScreen(this.currentPage);

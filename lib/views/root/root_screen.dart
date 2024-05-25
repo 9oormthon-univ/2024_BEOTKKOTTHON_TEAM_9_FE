@@ -15,6 +15,8 @@ import 'package:bommeong/views/root/custom_bottom_navigation_bar.dart';
 import '../../viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
 
+import '../privacy/privacy_consent_screen.dart';
+
 class RootScreen extends BaseScreen<RootViewModel> {
   const RootScreen({super.key});
 
@@ -34,6 +36,7 @@ class RootScreen extends BaseScreen<RootViewModel> {
           OnboardingScreen(0), //6
           OnboardingScreen(2), //7
           LoginScreen(), //8
+          PrivacyConsentScreen(), //9
         ],
       ),
     );
