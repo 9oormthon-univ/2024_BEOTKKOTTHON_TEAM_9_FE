@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utilities/font_system.dart';
-import 'hand_sign.dart';
+import '../../privacy/hand_sign_screen.dart';
 import '../adoption/Question2.dart';
 
 class OnboardingScreen extends StatefulWidget {

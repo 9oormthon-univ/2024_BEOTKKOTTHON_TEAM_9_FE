@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hand_signature/signature.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../utilities/font_system.dart';
+import '../../utilities/font_system.dart';
 
 class SignaturePage extends StatefulWidget {
   @override
