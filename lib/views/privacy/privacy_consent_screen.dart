@@ -26,7 +26,7 @@ class PrivacyConsentScreen extends BaseScreen<PrivacyViewModel> {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: _Header(),
                 ),
                 Padding(
@@ -251,14 +251,14 @@ class _Signature extends StatelessWidget {
 class _Completebutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       children: [
-        Obx(() => Container(
+        Container(
           width: MediaQuery.of(context).size.width - 40, // 핸드폰 가로 너비에서 40(양쪽 20씩)을 뺀 값
           height: 50,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: isAgreed_1.value && signatureData.value != null ? Color(0xFFA273FF): Color(0xFFCBB9F0),
+              backgroundColor: isAgreed_1.value && signatureData.value != null ? Color(0xFFA273FF) : Color(0xFFCBB9F0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // 곡률을 10으로 설정
               ),
@@ -268,12 +268,13 @@ class _Completebutton extends StatelessWidget {
               Get.to(() => AdoptionScreen());
             }
                 : null, // 조건이 충족되지 않으면 버튼 비활성화
-            child: Text('입양 신청서 작성하기',
+            child: Text(
+              '입양 신청서 작성하기',
               style: FontSystem.KR16B.copyWith(color: Colors.white),
             ),
           ),
-        )),
+        ),
       ],
-    );
+    ));
   }
 }
