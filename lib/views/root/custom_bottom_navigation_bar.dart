@@ -87,8 +87,6 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
         )
             : Container(),
       );
-
-
 }
 
 
