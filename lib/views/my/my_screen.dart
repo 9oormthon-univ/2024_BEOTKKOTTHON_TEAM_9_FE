@@ -82,6 +82,7 @@ class _TopPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MyViewModel myViewModel = Get.put(MyViewModel());
+
     return Container(
       padding:
           EdgeInsets.only(left: Get.width * 0.05, bottom: Get.width * 0.05),
@@ -121,7 +122,6 @@ class _TopPart extends StatelessWidget {
               UserPreferences.logout();
               RootViewModel rootViewModel = Get.put(RootViewModel());
               rootViewModel.changeIndex(8);
-
             },
               child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
         ],

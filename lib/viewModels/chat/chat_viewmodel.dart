@@ -75,6 +75,4 @@ class ChatViewModel extends GetxController {
     super.onClose();
     pagingController.dispose();
   }
-
-
 }

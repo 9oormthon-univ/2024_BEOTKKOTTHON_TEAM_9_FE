@@ -9,8 +9,6 @@ class MessageViewModel extends GetxController {
   var isLoading = false.obs;
   var typingUsers = <types.User>[].obs;
 
-
-
   @override
   void onInit() {
     super.onInit();
@@ -20,8 +18,8 @@ class MessageViewModel extends GetxController {
     messages.clear();
   }
 
-  List<types.Message> get chatMessages => messages.reversed.map((m) => m.toChatMessage()).toList();
-
+  List<types.Message> get chatMessages =>
+      messages.reversed.map((m) => m.toChatMessage()).toList();
 
   void sendMessage(String text, String userId) {
     // 상대방이 타이핑 중인 것으로 가정하여 인디케이터를 활성화합니다.
@@ -29,20 +27,19 @@ class MessageViewModel extends GetxController {
     final userMessage = ChatMessage.fromUserInput(text, userId);
     messages.add(userMessage);
     fetchReplyFromDummyAPI(text, userId);
-
   }
 
   void fetchReplyFromDummyAPI(String text, String userId) async {
     // 실제 HTTP 요청으로 대체
+    isLoading.value = true;
     GetGPTChat apiService = GetGPTChat();
     String response = await apiService.fetchItems(text);
     final aiMessage = ChatMessage.fromOpenAIResponse(response, '5');
     messages.add(aiMessage);
+    isLoading.value = false;
   }
 
-
-
-Future<void> setId(int id) async{
+  Future<void> setId(int id) async {
     print("아이디는 : ${id}");
     this.dogId.value = id;
   }

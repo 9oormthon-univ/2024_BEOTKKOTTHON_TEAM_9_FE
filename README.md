@@ -8,7 +8,7 @@
 | [황현정](https://github.com/bunju20)       | 동국대학교 | 팀장, 프론트엔드 | ghkd4009@gmail.com |
 | [여은동](https://github.com/sillonjeu) | 동국대학교     | 프론트엔드 | pius0316@gmail.com |
 | [김나령](https://github.com/nar0ng) | 덕성여자대학교     | 백엔드 | criticalpxint@naver.com |
-| [황현정](https://github.com/kwon416) | 단국대학교    | 백엔드 | kbg990416@gmail.com |
+| [권보궁](https://github.com/kwon416) | 단국대학교    | 백엔드 | kbg990416@gmail.com |
 | 정민지 | 동덕여자대학교     | 기획 | pop0080@naver.com |
 | 이지혜 | 서울여자대학교    | 디자인 | fox8128@naver.com |
 
@@ -77,14 +77,14 @@ flutter run
 
 ### 💻 demonstration video
  
-
+https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/9116a501-c58c-4937-84aa-5f21ddeaf2f9
 
 ### ✨ Screen
 | Title         | Img                                   | Title         | Img                                   |
 | ------------ | ---------------------------------------- | ------------ | ---------------------------------------- |
-| 메인 스크린    | | 유기견 상세 스크린  |  |
-| 유기견과 채팅 스크린    | | 대화하기 스크린   |  |
-| 좋아요 스크린 | | 마이페이지 스크린   |  |
+| 메인 스크린    | <img width="344" alt="스크린샷 2024-03-24 오전 4 18 39" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/f736e79b-a258-4c28-b141-5a343818f368">| 유기견 상세 스크린  | <img width="344" alt="스크린샷 2024-03-24 오전 4 19 24" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/9e0824dd-427c-4afa-8bab-db0d7439de65">|
+| 유기견과 채팅 스크린    |<img width="344" alt="image" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/d3f0b851-9e4c-4e41-b380-1b6ffe180779">| 대화하기 스크린   | <img width="344" alt="스크린샷 2024-03-24 오전 4 21 17" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/1086b69a-30ca-4a99-9cfc-07f024d09a66">|
+| 좋아요 스크린 | <img width="344" alt="스크린샷 2024-03-24 오전 4 22 23" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/67a72203-baa0-445d-8a80-0e04e34c7ba0">| 마이페이지 스크린   | <img width="344" alt="스크린샷 2024-03-24 오전 4 22 40" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/b812d729-309a-4688-87ad-a86da2a16b50">|
 
 
 ---

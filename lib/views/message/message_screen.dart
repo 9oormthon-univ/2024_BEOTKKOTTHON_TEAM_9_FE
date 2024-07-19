@@ -21,59 +21,77 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
     final messageViewModel = Get.find<MessageViewModel>();
     final types.User user = types.User(id: const Uuid().v4());
     return Column(
-          children: [
-            Expanded(
-              child: Obx(() {
-                return Chat(
-                  showUserAvatars: true,
-                  messages: messageViewModel.chatMessages,
-                  onSendPressed: (partialText) {
-                    // 메시지 전송 로직
-                    messageViewModel.sendMessage(partialText.text, user.id);
-                  },
-                  user: user,
-                );
-              }),
-            ),
-          ],
-        );
+      children: [
+        Expanded(
+          child: Obx(() {
+            if (messageViewModel.isLoading.value) {
+              // isLoading이 true일 때 로딩 인디케이터를 보여줍니다.
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(), // 로딩 인디케이터
+                    SizedBox(height: 20), // 인디케이터와 텍스트 사이의 공간
+                    Text('강아지가 대답을 골똘히 생각중이에요..! 🐾',
+                        style: FontSystem.KR18B), // 사용자 메시지
+                  ],
+                ),
+              );
+            }
+            // Chat 위젯을 사용하여 메시지 목록과 입력 필드를 표시합니다.
+            else
+              return Chat(
+                showUserAvatars: true,
+                messages: messageViewModel.chatMessages,
+                onSendPressed: (partialText) {
+                  // 메시지 전송 로직
+                  messageViewModel.sendMessage(partialText.text, user.id);
+                },
+                user: user,
+              );
+          }),
+        ),
+      ],
+    );
   }
 
-
-@override
-buildAppBar(BuildContext context) {
-  final messageViewModel = Get.find<MessageViewModel>();
-  return AppBar(
-    backgroundColor: Colors.white,
-    elevation: 0,
-    leadingWidth: Get.width,
-    leading: Container(
-      padding: EdgeInsets.only(left: Get.width * 0.03, right: Get.width * 0.03, bottom: Get.width * 0.03),
-      child: Row(
-        //정렬
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _TopButton(),
-          Spacer(
-            flex: 3,
-          ),
-          Text("채팅", style: FontSystem.KR20B),
-          Spacer(flex: 7),
-          InkWell(
-            onTap: () {
-              messageViewModel.clearChatMessages();
-              RootViewModel rootViewModel = Get.put(RootViewModel());
-              rootViewModel.changeIndex(0);
-            },
-            child: SvgPicture.asset(
-              "assets/icons/back_black.svg",
+  @override
+  buildAppBar(BuildContext context) {
+    final messageViewModel = Get.find<MessageViewModel>();
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leadingWidth: Get.width,
+      leading: Container(
+        padding: EdgeInsets.only(
+            left: Get.width * 0.03,
+            right: Get.width * 0.03,
+            bottom: Get.width * 0.03),
+        child: Row(
+          //정렬
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _TopButton(),
+            Spacer(
+              flex: 3,
             ),
-          ),
-        ],
+            Text("채팅", style: FontSystem.KR20B),
+            Spacer(flex: 7),
+            InkWell(
+              onTap: () {
+                messageViewModel.clearChatMessages();
+                RootViewModel rootViewModel = Get.put(RootViewModel());
+                rootViewModel.changeIndex(0);
+              },
+              child: SvgPicture.asset(
+                "assets/icons/back_black.svg",
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   bool get wrapWithOuterSafeArea => true;
@@ -90,11 +108,10 @@ class _TopButton extends StatelessWidget {
     MessageViewModel viewModel = Get.put(MessageViewModel());
     return InkWell(
       onTap: () {
-
-        if(UserPreferences.getDogId() == viewModel.dogId.toString()) {
-          Get.snackbar("Error", "입양 신청을 이미 완료하셨습니다.");
-        }
-        else {
+        if (UserPreferences.getDogId() != "") {
+          print(UserPreferences.getDogId());
+          Get.snackbar("잠깐만요 🐾", "입양 신청을 이미 완료하셨습니다.");
+        } else {
           RootViewModel rootViewModel = Get.put(RootViewModel());
           rootViewModel.changeIndex(6);
         }

@@ -231,7 +231,7 @@ class _DogComponent extends StatelessWidget {
                     likeViewModel.dogLikeStatus[item.id]?.value ?? false // 여기의 좋아요 상태 변수
                         ? "assets/images/home/heart_fill.svg"
                         : "assets/images/home/heart.svg",
-                    height: 20,
+                    height: 15,
                   ),
                   ),
                 )
