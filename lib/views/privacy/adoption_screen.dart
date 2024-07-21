@@ -7,7 +7,6 @@ import 'package:bommeong/views/base/base_screen.dart';
 import '../../viewModels/privacy/privacy_viewmodel.dart';
 
 final QuestionNum = 0.obs;
-
 class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
   const AdoptionScreen({super.key});
 
@@ -23,32 +22,33 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
               padding: const EdgeInsets.all(10.0),
               child: _Header(),
             ),
-            if (QuestionNum.value == 0)
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: _Question(),
-              ),
-            if (QuestionNum.value == 1)
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: _FirstQuestion(),
-              ),
-            if (QuestionNum.value == 2)
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: _SecondQuestion(),
-              ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 40, 25, 0),
+              child: QuestionNum.value == 0 ? _Question() :
+              QuestionNum.value == 1 ? _FirstQuestion() :
+              QuestionNum.value == 2 ? _SecondQuestion() :
+              QuestionNum.value == 3 ? _ThirdQuestion() :
+              QuestionNum.value == 4 ? _FourthQuestion() :
+              QuestionNum.value == 5 ? _FifthQuestion() :
+              QuestionNum.value == 6 ? _SixthQuestion() :
+              QuestionNum.value == 7 ? _SeventhQuestion() : _EighthQuestion()
+            ),
           ],
         ),
         Positioned(
-          bottom: 30, // 아래 패딩 30
+          bottom: 140,
           left: 0,
           right: 0,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0), // 좌우 패딩 30
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: QuestionNum.value == 0 ? _StartButton() :
                     QuestionNum.value == 1 ? _FirstButton() :
-                     QuestionNum.value == 2 ? _SecondShortAnswer() : _FirstButton(),
+                     QuestionNum.value == 2 ? _SecondButton() :
+                      QuestionNum.value == 3 ? _ThirdButton() :
+                        QuestionNum.value == 4 ? _FourthButton() :
+                          QuestionNum.value == 5 ? _FifthButton() :
+                            QuestionNum.value == 6 ? _SixthButton() :
+                              QuestionNum.value == 7 ? _SeventhButton() : _EighthButton()
           ),
         ),
       ],
@@ -141,17 +141,17 @@ class _FirstQuestion extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 40,
           child: RichText(
             text: TextSpan(
-              style: FontSystem.KR22B.copyWith(color: Colors.black),
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
               children: <TextSpan>[
                 TextSpan(text: 'Q.\n'),
                 TextSpan(
                   text: '반려 동물',
-                  style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF)),
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
                 ),
                 TextSpan(text: '을\n키우신 '),
                 TextSpan(
                   text: '경험',
-                  style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF)),
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
                 ),
                 TextSpan(text: '이 있습니까?'),
               ],
@@ -164,7 +164,8 @@ class _FirstQuestion extends StatelessWidget {
 }
 // 2
 class _SecondQuestion extends StatelessWidget {
-  const _SecondQuestion({super.key});
+  _SecondQuestion({super.key});
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -176,19 +177,353 @@ class _SecondQuestion extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 40,
           child: RichText(
             text: TextSpan(
-              style: FontSystem.KR22B.copyWith(color: Colors.black),
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
               children: <TextSpan>[
                 TextSpan(text: 'Q.\n'),
                 TextSpan(
                   text: '어떤 종류',
-                  style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF)),
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
                 ),
                 TextSpan(text: '의 동물을\n'),
                 TextSpan(
                   text: '얼마나',
-                  style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF)),
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
                 ),
                 TextSpan(text: ' 키웠나요?'),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 370,
+          decoration: BoxDecoration(
+            color: Colors.white, // 배경을 흰색으로 변경
+            borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+            border: Border.all(
+              color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+              width: 1, // 스트로크 너비 설정
+            ),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: TextField(
+            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            maxLines: null, // 무제한 줄 입력 가능
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: "클릭하여 작성해주세요.",
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 3
+class _ThirdQuestion extends StatelessWidget {
+  const _ThirdQuestion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n'),
+                TextSpan(
+                  text: '현재 ',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '집에\n'),
+                TextSpan(
+                  text: '다른 반려 동물',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '이\n있습니까?'),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 4
+class _FourthQuestion extends StatelessWidget {
+  _FourthQuestion({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n현재 함께 살고 있는\n동물의 '),
+                TextSpan(
+                  text: '정보 ',
+                  style: TextStyle(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '를 알려주세요\n'),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('반려 동물의 종류는 무엇인가요?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
+              TextField(
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFA273FF)),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text('반려 동물의 나이는?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
+              TextField(
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFA273FF)),
+                  ),
+                  suffixText: '살',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20),
+              Text('반려 동물의 성별은?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
+              Obx(() => Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('암컷'),
+                      leading: Radio<String>(
+                        value: '암컷',
+                        groupValue: viewModel.gender.value,
+                        onChanged: (value) {
+                          viewModel.setGender(value!);
+                        },
+                        activeColor: Color(0xFFA273FF),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('수컷'),
+                      leading: Radio<String>(
+                        value: '수컷',
+                        groupValue: viewModel.gender.value,
+                        onChanged: (value) {
+                          viewModel.setGender(value!);
+                        },
+                        activeColor: Color(0xFFA273FF),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+              SizedBox(height: 20),
+              Text('반려 동물은 중성화 수술을 했나요?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
+              Obx(() => Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('네'),
+                      leading: Radio<String>(
+                        value: '네',
+                        groupValue: viewModel.neutered.value,
+                        onChanged: (value) {
+                          viewModel.setNeutered(value!);
+                        },
+                        activeColor: Color(0xFFA273FF),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('아니요'),
+                      leading: Radio<String>(
+                        value: '아니요',
+                        groupValue: viewModel.neutered.value,
+                        onChanged: (value) {
+                          viewModel.setNeutered(value!);
+                        },
+                        activeColor: Color(0xFFA273FF),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 5
+class _FifthQuestion extends StatelessWidget {
+  const _FifthQuestion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n현재 '),
+                TextSpan(
+                  text: '함께 살고 있는\n가족 구성원',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '이 있나요?\n'),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 6
+class _SixthQuestion extends StatelessWidget {
+  const _SixthQuestion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n가족 구성원들은\n'),
+                TextSpan(
+                  text: '유기동물 입양',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '에\n'),
+                TextSpan(
+                  text: '찬성 ',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '하시나요?'),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 7
+class _SeventhQuestion extends StatelessWidget {
+  _SeventhQuestion({super.key});
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n'),
+                TextSpan(
+                  text: '입양',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '을 원하는 '),
+                TextSpan(
+                  text: '이유',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '는\n무엇인가요?'),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          // Todo : 높이 수정
+          height: 370,
+          decoration: BoxDecoration(
+            color: Colors.white, // 배경을 흰색으로 변경
+            borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+            border: Border.all(
+              color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+              width: 1, // 스트로크 너비 설정
+            ),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: TextField(
+            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            maxLines: null, // 무제한 줄 입력 가능
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: "클릭하여 작성해주세요.",
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 8
+class _EighthQuestion extends StatelessWidget {
+  const _EighthQuestion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width - 40,
+          child: RichText(
+            text: TextSpan(
+              style: FontSystem.KR25B.copyWith(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(text: 'Q.\n'),
+                TextSpan(
+                  text: '입양 후 ',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '입양 동물의\n'),
+                TextSpan(
+                  text: '사진 및 소식',
+                  style: FontSystem.KR25B.copyWith(color: Color(0xFFA273FF)),
+                ),
+                TextSpan(text: '을 전해주실 수\n있으신가요?'),
               ],
             ),
           ),
@@ -256,7 +591,7 @@ class _FirstButton extends StatelessWidget {
             },
             child: Text(
               '네, 있습니다.',
-              style: FontSystem.KR16B.copyWith(
+              style: FontSystem.KR16M.copyWith(
                 color: Colors.black,
               ),
             ),
@@ -279,7 +614,7 @@ class _FirstButton extends StatelessWidget {
             },
             child: Text(
               '아니오, 없습니다.',
-              style: FontSystem.KR16B.copyWith(
+              style: FontSystem.KR16M.copyWith(
                 color: Colors.black,
               ),
             ),
@@ -289,38 +624,16 @@ class _FirstButton extends StatelessWidget {
     );
   }
 }
-// 2(주관식)
-class _SecondShortAnswer extends StatelessWidget {
-  const _SecondShortAnswer({super.key});
+// 2(주관식) -> 3
+class _SecondButton extends StatelessWidget {
+  const _SecondButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 450,
-          decoration: BoxDecoration(
-            color: Colors.white, // 배경을 흰색으로 변경
-            borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
-            border: Border.all(
-              color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
-              width: 1, // 스트로크 너비 설정
-            ),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: TextField(
-            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
-            maxLines: null, // 무제한 줄 입력 가능
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: "클릭하여 작성해주세요.",
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
         Container(
           width: MediaQuery.of(context).size.width - 40,
           height: 50,
@@ -333,11 +646,330 @@ class _SecondShortAnswer extends StatelessWidget {
             ),
             onPressed: () {
               // viewModel.thirdResponse.value = _controller.text;
-              QuestionNum.value = 4;
+              QuestionNum.value = 3;
             },
             child: Text(
               '작성 완료',
               style: FontSystem.KR16B.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 3 -> 4(예) or 3 -> 5(아니오)
+class _ThirdButton extends StatelessWidget {
+  const _ThirdButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 4;
+            },
+            child: Text(
+              '네, 있습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 5;
+            },
+            child: Text(
+              '아니오, 없습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 4 -> 5
+class _FourthButton extends StatelessWidget {
+  const _FourthButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFA273FF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 5;
+            },
+            child: Text(
+              '작성 완료',
+              style: FontSystem.KR16B.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 5 -> 6(예) or 5 -> 7(아니오)
+class _FifthButton extends StatelessWidget {
+  const _FifthButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 6;
+            },
+            child: Text(
+              '네, 있습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '아니오, 없습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 6 -> 7
+class _SixthButton extends StatelessWidget {
+  const _SixthButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '모두 찬성',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '부분 찬성',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '모두 반대',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 7 -> 8
+class _SeventhButton extends StatelessWidget {
+  const _SeventhButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFA273FF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 8;
+            },
+            child: Text(
+              '작성 완료',
+              style: FontSystem.KR16B.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+// 8
+class _EighthButton extends StatelessWidget {
+  const _EighthButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '네, 있습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 50,
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: Color(0xFFA273FF)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              QuestionNum.value = 7;
+            },
+            child: Text(
+              '아니오, 없습니다.',
+              style: FontSystem.KR16M.copyWith(
+                color: Colors.black,
+              ),
             ),
           ),
         ),
