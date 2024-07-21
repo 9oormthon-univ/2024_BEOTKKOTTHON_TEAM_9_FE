@@ -90,13 +90,14 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                     ),
                   ),
                   onPressed: () async {
-                    bool isSuccess = await viewModel.attemptLogIn();
-                    if (isSuccess) {
-                      Get.to(LoadingScreen());
-
-                    } else {
-                      // 실패 했을 시에
-                    }
+                    // Todo: 실제로는 주석 풀기
+                    // bool isSuccess = await viewModel.attemptLogIn();
+                    Get.to(LoadingScreen());
+                    // if (isSuccess) {
+                    //   Get.to(LoadingScreen());
+                    // } else {
+                    //   // 실패 했을 시에
+                    // }
                   },
                   child: Text(
                     '로그인',
