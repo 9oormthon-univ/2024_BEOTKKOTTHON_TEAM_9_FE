@@ -1,79 +1,178 @@
+import 'dart:ffi';
+import 'package:bommeong/services/userpreferences_service.dart';
+import 'package:bommeong/viewModels/home/home_viewmodel.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/home/dog_state.dart';
+import '../providers/AuthController.dart';
+import 'dart:convert';
+import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 
 class GetDogList {
-  // Future<List<DogList>> fetchItems(int pageKey) async {
-  //   final response = await http.get(Uri.parse('YOUR_API_ENDPOINT'));
-  //
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> body = json.decode(response.body);
-  //     List<DogList> items = body.map((dynamic item) => DogList.fromJson(item)).toList();
-  //     return items;
-  //   } else {
-  //     throw Exception('Failed to load items');
-  //   }
-  // }
+  bool hasFetched = false; // API 호출 여부를 추적하는 변수 추가
+
   Future<List<DogList>> fetchItems(int pageKey) async {
-    // API 대신 사용할 더미 데이터
-    await Future.delayed(Duration(seconds: 1)); // 네트워크 요청을 흉내내기 위한 딜레이
+    // 이미 API 호출이 성공적으로 수행되었다면 더 이상 진행하지 않습니다.
+    if (hasFetched) return [];
 
-    List<DogList> items = List.generate(10, (index) {
-      // 각 페이지마다 고유한 데이터를 생성하기 위해 pageKey와 index를 사용
-      int id = pageKey * 10 + index;
-      return DogList(
-        id: id,
-        name:'Dog #$id',
-        age: 'old', // 가정한 나이 데이터
-        type: (id % 2 == 0) ? 'Labrador' : 'Beagle', // 간단한 조건으로 타입을 정함
-        favourite: false, // 기본값
-        imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
-      );
-    });
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/post';
+    // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
+    final response = await http.get(
+      Uri.parse('$mainpageAPI?page=$pageKey&limit=10'),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
 
-    return items;
+    if (response.statusCode == 200) {
+      String responseBody = utf8.decode(response.bodyBytes);
+      List<int> postIdList = extractPostIds(responseBody);
+      print('멍멍이들: ${postIdList}');
+
+      UserPreferences.setDogList(postIdList);
+      hasFetched = true; // API 호출이 성공했음을 표시합니다.
+      return processResponse(responseBody);
+    } else {
+      throw Exception('Failed to load items');
+    }
+  }
+}
+
+// PostId들 다 가져오는거
+List<int> extractPostIds(String jsonResponse) {
+  List<int> postIdList = [];
+  Map<String, dynamic> parsedResponse = json.decode(jsonResponse);
+  List<dynamic> resultList = parsedResponse['result'];
+  for (var item in resultList) {
+    int postId = item['postId'];
+    postIdList.add(postId);
+  }
+  return postIdList;
+}
+
+class GetLikeDogList {
+
+  Future<List<DogList>> fetchItems(int pageKey) async {
+    String? likepageAPI = '${dotenv.env['BOM_API']}/post/like/${UserPreferences.getMemberId()}';
+    var token = Get.find<AuthController>().token;
+
+    // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
+    final response = await http.get(
+      Uri.parse(likepageAPI),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      String responseBody = utf8.decode(response.bodyBytes);
+      return processResponse(responseBody);
+    } else {
+      throw Exception('Failed to load items');
+    }
   }
 }
 
 class GetDogInfo {
   Future<DogInfo> fetchItems(int id) async {
     // API 대신 사용할 더미 데이터
-    await Future.delayed(Duration(seconds: 1)); // 네트워크 요청을 흉내내기 위한 딜레이
+    String? mainpageAPI = '${dotenv.env['BOM_API']}/post/${id}';
+    final response = await http.get(
+      Uri.parse(mainpageAPI),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
 
-    return DogInfo(
-        id: id,
-        name:'Dog #$id',
-        age: 'old',
-        type: (id % 2 == 0) ? 'Labrador' : 'Beagle',
-        favourite: false, // 기본값
-        tags: ['tag1', 'tag2', 'tag3'],
-        dogTalk: '멍멍입니다. 멍멍할 예정입니다.',
-        imagePath: 'https://ifh.cc/g/tBmzjl.jpg',
-      );
 
+    if (response.statusCode == 200) {
+      String responseBody = utf8.decode(response.bodyBytes);
+      return dogInfoProcessResponse(responseBody);
+    } else {
+      throw Exception('Failed to load items');
+    }
   }
 }
 
+class AuthService extends GetxService {
+  // 이 예제에서는 간단하게 로그인 상태를 bool로 관리합니다.
+  // 실제 앱에서는 로컬 저장소에서 로그인 토큰의 존재 여부를 확인해야 합니다.
+  bool _isLoggedIn = false; // 기본값은 false로 설정
 
-class GetChatList {
-  Future<List<ChatList>> fetchItems(int pageKey) async {
-    // 네트워크 요청을 흉내내기 위한 딜레이
-    await Future.delayed(Duration(seconds: 1));
+  bool get isLoggedIn => _isLoggedIn;
 
-    // 더미 데이터 생성
-    List<ChatList> items = List.generate(10, (index) {
-      int id = pageKey * 10 + index;
-      return ChatList(
-        imagePath: 'https://ifh.cc/g/tBmzjl.jpg', // 가상의 이미지 경로
-        name: 'Chat Partner #$id',
-        status: id % 2 == 0 ? '아직 친구를 기다리고있어요!' : '좋은친구와 함께하게 됐어요!🎉', // 간단한 조건으로 상태를 정함
-        date: DateTime.now().subtract(Duration(days: id)), // 현재로부터 id일 전의 날짜
-      );
-    });
-
-    return items;
+  // 로그인 상태를 변경하는 함수 (로그인 시)
+  void login() {
+    _isLoggedIn = true;
+    update();
   }
 
+  // 로그아웃 함수 (로그아웃 시)
+  void logout() {
+    _isLoggedIn = false;
+    update();
+  }
 
+  void update() {}
 }
+
+
+List<DogList> processResponse(String responseBody) {
+  List<DogList> doglists = [];
+  Map<String, dynamic> decodedResponse = json.decode(responseBody);
+  List<dynamic> results = decodedResponse['result'];
+
+  for (var item in results) {
+    Map<String, dynamic> bomInfo = item['bomInfo'];
+    doglists.add(DogList(
+      id: bomInfo['infoId'],
+      name:bomInfo['name'],
+      age: bomInfo['age'],
+      type: bomInfo['breed'],
+      imagePath: item['imageUrl'],
+    ));
+  }
+
+  HomeViewModel homeViewModel = Get.put(HomeViewModel());
+  if(doglists.length == 0) homeViewModel.isHaveDog.value = false;
+  else homeViewModel.isHaveDog.value = true;
+
+  LikeViewModel likeViewModel = Get.put(LikeViewModel());
+  likeViewModel.isHaveDog.value = homeViewModel.isHaveDog.value;
+
+  return doglists;
+}
+
+
+
+DogInfo dogInfoProcessResponse(String responseBody) {
+  Map<String, dynamic> decodedResponse = json.decode(responseBody);
+  dynamic results= decodedResponse['result'];
+
+  print(results['bomInfo']['infoId']);
+  print(results['bomInfo']['name']);
+  print(results['bomInfo']['age']);
+  print(results['bomInfo']['breed']);
+  print(results['bomInfo']['likes']);
+  print(results['bomInfo']['extra']);
+  print(results['imageUrl']);
+
+  return DogInfo(
+    id: results['bomInfo']['infoId'],
+    name: results['bomInfo']['name'],
+    age: results['bomInfo']['age'],
+    type: results['bomInfo']['breed'],
+    tags: [results['bomInfo']['likes'], results['bomInfo']['breed']],
+    dogTalk: results['bomInfo']['extra'],
+    imagePath: results['imageUrl'],
+  );
+}
+
+

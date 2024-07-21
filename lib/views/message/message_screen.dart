@@ -1,3 +1,4 @@
+import 'package:bommeong/services/userpreferences_service.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,21 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
           children: [
             Expanded(
               child: Obx(() {
+                if (messageViewModel.isLoading.value) {
+                  // isLoading이 true일 때 로딩 인디케이터를 보여줍니다.
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(), // 로딩 인디케이터
+                        SizedBox(height: 20), // 인디케이터와 텍스트 사이의 공간
+                        Text('강아지가 대답을 골똘히 생각중이에요..! 🐾', style: FontSystem.KR18B), // 사용자 메시지
+                      ],
+                    ),
+                  );
+                }
                 // Chat 위젯을 사용하여 메시지 목록과 입력 필드를 표시합니다.
-                return Chat(
+                else return Chat(
                   showUserAvatars: true,
                   messages: messageViewModel.chatMessages,
                   onSendPressed: (partialText) {
@@ -37,11 +51,11 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
             ),
           ],
         );
-
   }
 
 @override
 buildAppBar(BuildContext context) {
+  final messageViewModel = Get.find<MessageViewModel>();
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 0,
@@ -60,6 +74,7 @@ buildAppBar(BuildContext context) {
           Spacer(flex: 7),
           InkWell(
             onTap: () {
+              messageViewModel.clearChatMessages();
               RootViewModel rootViewModel = Get.put(RootViewModel());
               rootViewModel.changeIndex(0);
             },
@@ -85,12 +100,17 @@ class _TopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MessageViewModel viewModel = Get.put(MessageViewModel());
     return InkWell(
       onTap: () {
-        //lib/views/widget/privacy/privacy_consent_screen.dart으로 이동
-        // Get.to(OnboardingScreen(0));
-        RootViewModel rootViewModel = Get.put(RootViewModel());
-        rootViewModel.changeIndex(6);
+        if(UserPreferences.getDogId() != "") {
+          print(UserPreferences.getDogId());
+          Get.snackbar("잠깐만요 🐾", "입양 신청을 이미 완료하셨습니다.");
+        }
+        else {
+          RootViewModel rootViewModel = Get.put(RootViewModel());
+          rootViewModel.changeIndex(6);
+        }
       },
       child: Container(
         alignment: Alignment.center,

@@ -10,29 +10,47 @@ import 'package:get/get.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../services/userpreferences_service.dart';
+
 class ChatScreen extends BaseScreen<ChatViewModel> {
   const ChatScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    ChatViewModel viewModel = Get.put(ChatViewModel());
-    return Column(
-      children: [
-        _TopBar(),
-        viewModel.isHaveChat.value
-            ? _ChatLogs()
-            : Expanded(
-                flex: 7,
-                child: Column(
-                  children: [
-                    Spacer(flex: 7),
-                    _InitScreen(),
-                    Spacer(flex: 6),
-                  ],
-                ),
+    final ChatViewModel viewModel = Get.put(ChatViewModel());
+
+    return FutureBuilder(
+      future: viewModel.updateChatList(),
+      builder: (context, snapshot) {
+        // 데이터 로딩 중 상태 처리
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+        }
+
+        // 에러가 발생한 경우 처리
+        if (snapshot.hasError) {
+          return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
+        }
+        // 데이터 로딩 완료
+        return Column(
+          children: [
+            _TopBar(),
+            viewModel.isHaveChat.isTrue
+                ? _ChatLogs()
+                : Expanded(
+              flex: 7,
+              child: Column(
+                children: [
+                  Spacer(flex: 7),
+                  _InitScreen(),
+                  Spacer(flex: 6),
+                ],
               ),
-        _BottomButton(),
-      ],
+            ),
+            _BottomButton(),
+          ],
+        );
+      },
     );
   }
 
@@ -53,7 +71,6 @@ class _TopBar extends StatelessWidget {
       children: [
         Spacer(flex: 7),
         Container(
-            //중간으로 컴포넌트 정렬하는 코드
             alignment: Alignment.center,
             padding: const EdgeInsets.only(left: 30),
             child: Text('대화하기', style: FontSystem.KR20B)),
@@ -119,9 +136,8 @@ class _BottomButton extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
-        //스크린 렌더링 전에 할것
-        int id = 1;
-        await messageViewModel.setId(id);
+        int? id = UserPreferences.getRandomElementFromDogList();
+        await messageViewModel.setId(id!);
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);

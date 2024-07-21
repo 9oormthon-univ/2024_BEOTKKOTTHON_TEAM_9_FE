@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
-import 'package:bommeong/services/user_service.dart';
+import 'package:bommeong/services/chat_service.dart';
+
 
 class ChatViewModel extends GetxController {
   RxBool isHaveChat = true.obs;
@@ -13,12 +14,12 @@ class ChatViewModel extends GetxController {
   void onInit() {
     super.onInit();
     pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      fetchPage(pageKey);
     });
   }
 
 
-  Future<void> _fetchPage(int pageKey) async {
+  Future<void> fetchPage(int pageKey) async {
     try {
       final newItems = await apiService.fetchItems(pageKey);
       num pageSize = 6;
@@ -30,6 +31,7 @@ class ChatViewModel extends GetxController {
         pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
+      isHaveChat.value = false;
       pagingController.error = error;
     }
   }
@@ -46,12 +48,31 @@ class ChatViewModel extends GetxController {
     }
   }
 
+  Future<void> updateChatList() async {
+    try {
+      // 첫 번째 페이지의 데이터를 다시 가져옵니다.
+      final newItems = await apiService.fetchItems(0);
+
+      // 새로운 아이템이 있다면, 채팅 상태를 업데이트합니다.
+      if (newItems.isNotEmpty) {
+        isHaveChat.value = true;
+
+        // PagingController를 리프레시하거나 업데이트하는 로직
+        // 여기서는 간단하게 PagingController를 리프레시하는 방법을 사용합니다.
+        pagingController.refresh();
+      } else {
+        isHaveChat.value = false;
+      }
+    } catch (error) {
+      print("Error updating chat list: $error");
+    }
+  }
+
+
 
   @override
   void onClose() {
     super.onClose();
     pagingController.dispose();
   }
-
-
 }

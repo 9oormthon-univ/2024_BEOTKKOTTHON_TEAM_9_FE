@@ -5,6 +5,7 @@ import 'package:bommeong/services/user_service.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 class HomeViewModel extends GetxController {
+  RxBool isHaveDog = true.obs;
   final PagingController<int, DogList> pagingController = PagingController(firstPageKey: 0);
   final GetDogList apiService = GetDogList();
 

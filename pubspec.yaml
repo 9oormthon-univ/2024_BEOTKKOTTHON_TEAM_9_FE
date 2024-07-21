@@ -30,6 +30,8 @@ dependencies:
   uuid: ^4.3.3
   image_picker: ^1.0.7
   shared_preferences: ^2.2.2
+  flutter_secure_storage: ^4.2.1
+  rive: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +51,11 @@ flutter:
     - assets/images/home/
     - assets/images/login/
     - assets/images/chat/
+    - assets/images/my/
+    - assets/images/like/
     - assets/data/signtest.pdf
+    - assets/images/my/miniDog.png
+    - assets/images/like/standDog.svg
 
   fonts:
     - family: Pretendard

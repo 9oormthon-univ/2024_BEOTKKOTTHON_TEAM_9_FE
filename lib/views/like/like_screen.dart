@@ -6,27 +6,45 @@ import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
-import 'package:bommeong/services/user_service.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 
-class LikeScreen extends BaseScreen<HomeViewModel> {
+
+class LikeScreen extends BaseScreen<LikeViewModel> {
   const LikeScreen({super.key});
 
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
-      children: [
-        _TopBar(),
-        SizedBox(height: 22),
-        _Header(),
-        SizedBox(height: 20),
-        _DogList(),
+    // Assuming 'LikeViewModel' has been initialized somewhere in your app lifecycle
+    final LikeViewModel viewModel = Get.put(LikeViewModel());
 
+    return FutureBuilder(
+      future: viewModel.updateLikeList(), // This should be your method to update or fetch likes
+      builder: (context, snapshot) {
+        // 데이터 로딩 중 상태 처리
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // 로딩 인디케이터 표시
+        }
 
-      ],
+        // 에러가 발생한 경우 처리
+        if (snapshot.hasError) {
+          return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
+        }
 
+        // 데이터 로딩 완료
+        return Column(
+          children: [
+            _TopImage(),
+            SizedBox(height: 22),
+            _Header(),
+            SizedBox(height: 20),
+            viewModel.isHaveDog.value
+                ? _DogList()
+                : _InitScreen(),
+          ],
+        );
+      },
     );
   }
   @override
@@ -42,38 +60,64 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          //정렬
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 30),
-          child: Text("마음에 담아두셨나요?",
-            style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
-        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(width: 30),
+            SvgPicture.asset(
+              "assets/images/home/foot.svg",
+              height: 20,
+            ),
+            SizedBox(width: 5),
             Container(
-                padding: const EdgeInsets.only(left: 30),
-
                 child: RichText(
                   text: TextSpan(
                     style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)), // 기본 스타일
                     children: <TextSpan>[
-                      TextSpan(text: '다들 아직'),
+                      TextSpan(text: '유심히 '),
                       TextSpan(
-                        text: ' 당신을 ',
-                        style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
+                        text: '본 - 멍 ',
+                        style: TextStyle(color: Color(0xFFA273FF)), // '예비보호자' 부분에만 적용할 스타일
                       ),
-                      TextSpan(text: '기다리고있어요!'),
                     ],
                   ),
                 )
-
             ),
 
           ],
         ),
       ],
+    );
+  }
+}
+
+class _TopImage extends StatelessWidget {
+  const _TopImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/like/topDog.png',
+            width: Get.width,
+            height: Get.height * 0.3,
+            fit: BoxFit.cover,
+          ),
+          Align(
+            heightFactor: Get.height * 0.002,
+            widthFactor: Get.width * 0.0028,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("마음에 담아두셨나요?", style: FontSystem.KR16SB.copyWith(color: Colors.white)),
+                Text("다들 아직 기다리고 있어요!", style: FontSystem.KR25EB.copyWith(color: Colors.white)),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -84,7 +128,7 @@ class _DogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
+    final LikeViewModel viewModel = Get.put(LikeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
 
     return Expanded(
       child: Container(
@@ -123,6 +167,7 @@ class _DogComponent extends StatelessWidget {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
     final DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
     final RootViewModel rootViewModel = Get.put(RootViewModel());
+    final LikeViewModel likeViewModel = Get.put(LikeViewModel());
     return Material(
       color: Colors.transparent,
       child: Column(
@@ -174,12 +219,22 @@ class _DogComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                SvgPicture.asset(
-                  item.favourite
-                      ? "assets/images/home/heart_fill.svg"
-                      : "assets/images/home/heart.svg",
-                  height: 20,
-                ),
+                InkWell(
+                  onTap: () {
+                    // 여기에 탭했을 때 실행하고 싶은 코드를 작성하세요.
+                    print("Heart icon tapped!");
+                    //여기에서 해당하는 포스트의 좋아요가 변경되도록
+                    likeViewModel.toggleLike(item.id);
+
+                  },
+                  child: Obx(() => SvgPicture.asset(
+                    likeViewModel.dogLikeStatus[item.id]?.value ?? false // 여기의 좋아요 상태 변수
+                        ? "assets/images/home/heart_fill.svg"
+                        : "assets/images/home/heart.svg",
+                    height: 15,
+                  ),
+                  ),
+                )
               ],
             ),
           ),
@@ -189,31 +244,42 @@ class _DogComponent extends StatelessWidget {
   }
 }
 
-
-class _TopBar extends StatelessWidget {
-  const _TopBar({super.key});
+class _InitScreen extends StatelessWidget {
+  const _InitScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Spacer(flex: 7),
-        Container(
-          //중간으로 컴포넌트 정렬하는 코드
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(left: 30),
-            child: Text('좋아요', style: FontSystem.KR20B)),
-        Spacer(flex: 6),
-        Container(
-          padding: const EdgeInsets.only(right: 16),
-          child: Image.asset(
-            "assets/images/home/profile.png",
-            width: 32,
-            height: 32,
+        SizedBox(height: Get.height * 0.13),
+        SvgPicture.asset("assets/images/like/standDog.svg",
+            height: Get.height * 0.08),
+        SizedBox(height: Get.height * 0.01),
+
+        RichText(
+          //정렬
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '아직',
+                style: FontSystem.KR13M,
+              ),
+              TextSpan(
+                text: ' 마음에 담은\n',
+                style: FontSystem.KR13B,
+              ),
+              TextSpan(
+                text: '강아지가 없으시군요!',
+                style: FontSystem.KR13M,
+              ),
+            ],
           ),
-        ),
+        )
+
       ],
     );
   }
 }
+
+
