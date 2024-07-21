@@ -9,8 +9,6 @@ import '../../../utilities/app_routes.dart';
 import '../../../utilities/font_system.dart';
 import '../../../viewModels/privacy/privacy_viewmodel.dart';
 import '../../home/home_screen.dart';
-import '../controller/responses_controller.dart';
-import '../privacy/privacy_consent_screen.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/utilities/app_routes.dart';
 
@@ -374,7 +372,7 @@ class _Q1State extends State<Q1> {
                 ),
                 onPressed: _isCheckedYes_1 && _isCheckedYes_2 && _isCheckedYes_3 && _isCheckedYes_4 ? () async {
                   rootViewModel.changeIndex(0);
-                  bool success = await privacyviewmodel.attemptpost();
+                  // bool success = await privacyviewmodel.attemptpost();
                   print('신청서 제출 완료');
                   MessageViewModel viewModel = Get.put(MessageViewModel());
                   UserPreferences.setDogId(viewModel.dogId.toString());
