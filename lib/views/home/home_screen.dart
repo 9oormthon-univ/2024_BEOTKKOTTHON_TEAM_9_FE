@@ -21,6 +21,7 @@ import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/services/userpreferences_service.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});
@@ -62,6 +63,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
         SizedBox(height: 22),
         _Header(),
+        SearchInput(),
         SizedBox(height: 30),
         _Middle(),
         SizedBox(height: 20),
@@ -73,6 +75,44 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   bool get wrapWithOuterSafeArea => true;
   @override
   bool get wrapWithInnerSafeArea => true;
+}
+
+class SearchInput extends GetView<HomeViewModel> {
+  const SearchInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: controller.searchAddress,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 30),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: Color(0xFFF0EFF4),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: Color(0xFF979797)),
+            SizedBox(width: 8),
+            Expanded(
+              child: Obx(() => Text(
+                controller.selectedAddress.value.isEmpty
+                    ? '주소를 검색해주세요'
+                    : controller.selectedAddress.value,
+                style: FontSystem.KR14R.copyWith(
+                  color: controller.selectedAddress.value.isEmpty
+                      ? Color(0xFF979797)
+                      : Colors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
+              )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _Header extends StatelessWidget {
@@ -101,7 +141,7 @@ class _Header extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: '만나서 반가워요, '),
                     TextSpan(
-                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "공고등록자" + '님!',
+                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "사용자",
                       style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
                     ),
                     TextSpan(text: '님!'),
@@ -180,8 +220,6 @@ class _Middle extends StatelessWidget {
 }
 
 class _DogList extends StatelessWidget {
-  const _DogList({super.key});
-
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
@@ -211,6 +249,40 @@ class _DogList extends StatelessWidget {
       ),
     );
 
+  }
+
+  const _DogList({super.key});
+}
+
+class _BottomButton extends StatelessWidget {
+  const _BottomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
+    return InkWell(
+      onTap: () {
+        // RootViewModel rootViewModel = Get.put(RootViewModel());
+        // rootViewModel.changeIndex(9);
+        Get.to(() => PostScreen());
+
+      },
+      child: Container(
+        width: Get.width * 0.85,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        // 패딩 조정으로 버튼 크기 조정
+        decoration: BoxDecoration(
+          color: Color(0xFFA273FF), // 배경색 설정
+          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+        ),
+        child: Text(
+          '유기견 공고하기', // 버튼 텍스트
+          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
+          textAlign: TextAlign.center, // 텍스트 정렬
+        ),
+      ),
+    );
   }
 }
 
@@ -296,38 +368,6 @@ class _DogComponent extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _BottomButton extends StatelessWidget {
-  const _BottomButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    RootViewModel rootViewModel = Get.put(RootViewModel());
-
-    return InkWell(
-      onTap: () {
-        // RootViewModel rootViewModel = Get.put(RootViewModel());
-        // rootViewModel.changeIndex(9);
-        Get.to(() => PostScreen());
-
-      },
-      child: Container(
-        width: Get.width * 0.85,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        // 패딩 조정으로 버튼 크기 조정
-        decoration: BoxDecoration(
-          color: Color(0xFFA273FF), // 배경색 설정
-          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
-        ),
-        child: Text(
-          '유기견 공고하기', // 버튼 텍스트
-          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
-          textAlign: TextAlign.center, // 텍스트 정렬
-        ),
       ),
     );
   }

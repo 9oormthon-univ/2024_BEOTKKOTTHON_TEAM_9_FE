@@ -7,11 +7,12 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:bommeong/main_app.dart';
 import 'package:bommeong/utilities/app_routes.dart';
 import 'package:bommeong/services/userpreferences_service.dart';
-
 import 'services/user_service.dart';
 
 void main() async {
   /* Open .env file */
+
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/config/.env");
   await initializeDateFormatting();
 

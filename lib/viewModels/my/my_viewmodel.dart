@@ -13,7 +13,7 @@ class MyViewModel extends GetxController {
   RxString membertype = "(예비)반려인".obs;
   RxString useremail = "ghkd2271@nate.com".obs;
   RxString applyAdoption = "assets/images/my/progress1.svg".obs;
-  RxString dogImage = "assets/images/my/dog.svg".obs;
+  RxString dogImage = "".obs;
   RxString dogname = "날봄이".obs;
 
   @override

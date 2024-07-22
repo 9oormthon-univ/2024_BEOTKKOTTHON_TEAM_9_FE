@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
@@ -219,6 +218,7 @@ class _InitScreen extends StatelessWidget {
         Column(
           children: [
             SvgPicture.asset('assets/images/my/dog.svg',
+                width: Get.height * 0.08,
                 height: Get.height * 0.08),
 
             RichText(
