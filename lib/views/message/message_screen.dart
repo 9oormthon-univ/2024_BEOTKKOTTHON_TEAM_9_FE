@@ -11,7 +11,6 @@ import 'package:bommeong/viewModels/message/message_viewmodel.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:uuid/uuid.dart';
 import 'package:bommeong/utilities/font_system.dart';
-import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
 
 class MessageScreen extends BaseScreen<ChatViewModel> {
   const MessageScreen({super.key});
@@ -112,6 +111,7 @@ class _TopButton extends StatelessWidget {
           print(UserPreferences.getDogId());
           Get.snackbar("잠깐만요 🐾", "입양 신청을 이미 완료하셨습니다.");
         } else {
+          // Todo: 이거 바꿔야함
           RootViewModel rootViewModel = Get.put(RootViewModel());
           rootViewModel.changeIndex(6);
         }
