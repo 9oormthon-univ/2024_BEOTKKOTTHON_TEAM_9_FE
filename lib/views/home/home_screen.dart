@@ -79,7 +79,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
 class SearchInput extends GetView<HomeViewModel> {
   const SearchInput({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -88,8 +87,15 @@ class SearchInput extends GetView<HomeViewModel> {
         margin: EdgeInsets.symmetric(horizontal: 30),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Color(0xFFF0EFF4),
-          borderRadius: BorderRadius.circular(8),
+          color: Color(0xFFFFFFFF), // 박스 색상을 FFFFFF로 변경
+          borderRadius: BorderRadius.circular(25), // 둥글기를 25로 변경
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x1F000000), // 000000 색상의 12% 투명도
+              blurRadius: 10, // Blur를 10으로 설정
+              offset: Offset(0, 2), // 그림자 위치 조정 (선택사항)
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -122,12 +128,37 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          //정렬
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 30),
-          child: Text("처음 오셨네요!",
-          style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
+        // 여백 추가 (높이 10
+        Row(
+          children: [
+            Container(
+              //정렬
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 30),
+              child: Text("처음 오셨네요!",
+              style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
+            ),
+            // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
+            InkWell(
+              onTap: () {
+                Get.to(() => PrivacyConsentScreen());
+              },
+              child: Container(
+                width: Get.width * 0.10,
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                // 패딩 조정으로 버튼 크기 조정
+                decoration: BoxDecoration(
+                  color: Color(0xFFA273FF), // 배경색 설정
+                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+                ),
+                child: Text(
+                  '테스트', // 버튼 텍스트
+                  style: FontSystem.KR10B.copyWith(color: Colors.black), // 텍스트 스타일
+                  textAlign: TextAlign.center, // 텍스트 정렬
+                ),
+              ),
+            )
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,29 +190,9 @@ class _Header extends StatelessWidget {
               ),
             ),
 
-            // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
-            InkWell(
-              onTap: () {
-                Get.to(() => PrivacyConsentScreen());
-              },
-              child: Container(
-                width: Get.width * 0.10,
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                // 패딩 조정으로 버튼 크기 조정
-                decoration: BoxDecoration(
-                  color: Color(0xFFA273FF), // 배경색 설정
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
-                ),
-                child: Text(
-                  '테스트', // 버튼 텍스트
-                  style: FontSystem.KR10B.copyWith(color: Colors.black), // 텍스트 스타일
-                  textAlign: TextAlign.center, // 텍스트 정렬
-                ),
-              ),
-            )
-
           ],
         ),
+        SizedBox(height: Get.height * 0.030),
       ],
     );
   }
