@@ -3,6 +3,7 @@ import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/login_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -17,8 +18,24 @@ class LoginViewModel extends GetxController {
 
   bool get isAuthenticated => _token.value.isNotEmpty;
 
-  void setToken(String newToken) {
+  @override
+  void onInit() {
+    super.onInit();
+    _loadToken();
+  }
+
+  Future<void> _loadToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedToken = prefs.getString('access_token');
+    if (savedToken != null) {
+      setToken(savedToken);
+    }
+  }
+
+  void setToken(String newToken) async {
     _token.value = newToken;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', newToken);
   }
 
   Future<bool> attemptLogIn() async {
@@ -40,7 +57,6 @@ class LoginViewModel extends GetxController {
       return false;
     }
   }
-
 
   Future<void> signInWithApple() async {
     try {

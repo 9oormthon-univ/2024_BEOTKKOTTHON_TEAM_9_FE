@@ -16,7 +16,7 @@ class HomeViewModel extends GetxController {
 
   final PagingController<int, DogList> pagingController = PagingController(
       firstPageKey: 0);
-  final GetDogList apiService = GetDogList();
+  final GetDogList apiService = GetDogList(Get.find());
 
   // 주소 관련 변수
   final RxString postcode = ''.obs;
