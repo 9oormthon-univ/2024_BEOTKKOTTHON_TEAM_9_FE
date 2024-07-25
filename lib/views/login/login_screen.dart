@@ -92,14 +92,17 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               ),
             ),
             onPressed: () async {
-              // Todo: 실제로는 주석 풀기
-              // bool isSuccess = await viewModel.attemptLogIn();
-              Get.to(LoadingScreen());
-              // if (isSuccess) {
-              //   Get.to(LoadingScreen());
-              // } else {
-              //   // 실패 했을 시에
-              // }
+              try {
+                bool isSuccess = await viewModel.attemptLogIn();
+                if (isSuccess) {
+                  Get.to(LoadingScreen());
+                } else {
+                  Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요.');
+                }
+              } catch (e) {
+                print('Error during login: $e');
+                Get.snackbar('오류', '로그인 중 오류가 발생했습니다.');
+              }
             },
             child: Text(
               '로그인',

@@ -11,12 +11,36 @@ class LoginViewModel extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final UserService _userService = UserService();
 
-  Future<bool> attemptLogIn() async {
-    return _userService.attemptLogIn(
-      emailController.text,
-      passwordController.text,
-    );
+  final _token = RxString('');
+
+  String get token => _token.value;
+
+  bool get isAuthenticated => _token.value.isNotEmpty;
+
+  void setToken(String newToken) {
+    _token.value = newToken;
   }
+
+  Future<bool> attemptLogIn() async {
+    try {
+      String? token = await _userService.attemptLogIn(
+        emailController.text,
+        passwordController.text,
+      );
+      print('Received token: $token'); // 디버깅을 위한 로그 추가
+      if (token != null && token.isNotEmpty) {
+        setToken(token);
+        return true;
+      } else {
+        print('Login failed: Token is null or empty');
+        return false;
+      }
+    } catch (e) {
+      print('Error during login attempt: $e');
+      return false;
+    }
+  }
+
 
   Future<void> signInWithApple() async {
     try {

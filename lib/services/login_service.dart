@@ -10,35 +10,39 @@ import 'userpreferences_service.dart';
 class UserService {
   String? loginAPI = dotenv.env['loginAPI'];
 
-  Future<bool> attemptLogIn(String email, String password) async {
-      AuthService authService = AuthService();
-      authService.login();
-      final authController = Get.put(AuthController());
+  Future<String?> attemptLogIn(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse(loginAPI!),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'email': email,
+          'password': password,
+        }),
+      );
 
-    final response = await http.post(
-      Uri.parse(loginAPI!),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'email': email,
-        'password': password,
-      }),
-    );
-    if (response.statusCode == 200) {
-      // 응답에서 accessToken 추출
-      var data = json.decode(response.body);
-      String accessToken = data['result']['access_token'];
-      int memberId = data['result']['memberId'];
-      authController.setToken(accessToken);
-      authController.setMemberId(memberId);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        if (data['result'] != null && data['result']['accessToken'] != null) {
+          String accessToken = data['result']['accessToken'];
+          int memberId = data['result']['memberId'];
 
-      // 사용자 정보를 저장
-      await UserPreferences.setMemberId(memberId);
-      await UserPreferences.setEmail(data['result']['email']);
-      await UserPreferences.setName(data['result']['name']);
-      await UserPreferences.setMemberType(data['result']['memberType']);
-      return true;
-    } else {
-      return false;
+          // 사용자 정보 저장
+          await UserPreferences.setMemberId(memberId);
+          await UserPreferences.setEmail(data['result']['email']);
+          await UserPreferences.setName(data['result']['name']);
+          await UserPreferences.setMemberType(data['result']['memberType']);
+
+          return accessToken;
+        }
+      }
+
+      print('Login failed. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return null;
+    } catch (e) {
+      print('Error during login: $e');
+      return null;
     }
   }
 
