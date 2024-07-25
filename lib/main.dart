@@ -13,8 +13,12 @@ import 'services/user_service.dart';
 
 void main() async {
   /* Open .env file */
+
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/config/.env");
   await initializeDateFormatting();
+  //await UserPreferences.clearUserData();
+
   // Splash Screen Duration 1.0s
   await Future.delayed(const Duration(seconds: 1));
   Get.lazyPut(() => AuthService());
@@ -24,7 +28,5 @@ void main() async {
   print('isLoggedIn: $isLoggedIn');
   KakaoSdk.init(nativeAppKey: '65e4736c1c1b3b1415a369d14adfadc2');
 
-  runApp(MainApp(
-      initialRoute:
-      isLoggedIn ? Routes.ROOT : Routes.LOGIN));
+  runApp(MainApp(initialRoute: isLoggedIn ? Routes.ROOT : Routes.LOGIN));
 }

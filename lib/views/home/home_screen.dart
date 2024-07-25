@@ -62,6 +62,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
         SizedBox(height: 22),
         _Header(),
+        SearchInput(),
         SizedBox(height: 30),
         _Middle(),
         SizedBox(height: 20),
@@ -75,6 +76,50 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   bool get wrapWithInnerSafeArea => true;
 }
 
+class SearchInput extends GetView<HomeViewModel> {
+  const SearchInput({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: controller.searchAddress,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 30),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF), // 박스 색상을 FFFFFF로 변경
+          borderRadius: BorderRadius.circular(25), // 둥글기를 25로 변경
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x1F000000), // 000000 색상의 12% 투명도
+              blurRadius: 10, // Blur를 10으로 설정
+              offset: Offset(0, 2), // 그림자 위치 조정 (선택사항)
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: Color(0xFF979797)),
+            SizedBox(width: 8),
+            Expanded(
+              child: Obx(() => Text(
+                controller.selectedAddress.value.isEmpty
+                    ? '주소를 검색해주세요'
+                    : controller.selectedAddress.value,
+                style: FontSystem.KR14R.copyWith(
+                  color: controller.selectedAddress.value.isEmpty
+                      ? Color(0xFF979797)
+                      : Colors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
+              )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _Header extends StatelessWidget {
   const _Header({super.key});
 
@@ -82,43 +127,16 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          //정렬
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 30),
-          child: Text("처음 오셨네요!",
-          style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
-        ),
+        // 여백 추가 (높이 10
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              //정렬
+              alignment: Alignment.centerLeft,
               padding: const EdgeInsets.only(left: 30),
-
-              child: RichText(
-                text: TextSpan(
-                  style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)), // 기본 스타일
-                  children: <TextSpan>[
-                    TextSpan(text: '만나서 반가워요, '),
-                    TextSpan(
-                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "공고등록자" + '님!',
-                      style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
-                    ),
-                    TextSpan(text: '님!'),
-                  ],
-                ),
-              )
+              child: Text("처음 오셨네요!",
+              style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
             ),
-
-            Container(
-              padding: const EdgeInsets.only(right: 16),
-              child: Image.asset(
-                "assets/images/home/profile.png",
-                width: 32,
-                height: 32,
-              ),
-            ),
-
             // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
             InkWell(
               onTap: () {
@@ -139,9 +157,41 @@ class _Header extends StatelessWidget {
                 ),
               ),
             )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(left: 30),
+
+              child: RichText(
+                text: TextSpan(
+                  style: FontSystem.KR20EB.copyWith(color: Color(0xFF000000)), // 기본 스타일
+                  children: <TextSpan>[
+                    TextSpan(text: '만나서 반가워요, '),
+                    TextSpan(
+                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "사용자",
+                      style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
+                    ),
+                    TextSpan(text: '님!'),
+                  ],
+                ),
+              )
+            ),
+
+            Container(
+              padding: const EdgeInsets.only(right: 16),
+              child: Image.asset(
+                "assets/images/home/profile.png",
+                width: 32,
+                height: 32,
+              ),
+            ),
 
           ],
         ),
+        SizedBox(height: Get.height * 0.030),
       ],
     );
   }
@@ -180,8 +230,6 @@ class _Middle extends StatelessWidget {
 }
 
 class _DogList extends StatelessWidget {
-  const _DogList({super.key});
-
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel()); // GetX를 사용하여 뷰모델 인스턴스를 생성 및 등록
@@ -211,6 +259,40 @@ class _DogList extends StatelessWidget {
       ),
     );
 
+  }
+
+  const _DogList({super.key});
+}
+
+class _BottomButton extends StatelessWidget {
+  const _BottomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
+    return InkWell(
+      onTap: () {
+        // RootViewModel rootViewModel = Get.put(RootViewModel());
+        // rootViewModel.changeIndex(9);
+        Get.to(() => PostScreen());
+
+      },
+      child: Container(
+        width: Get.width * 0.85,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        // 패딩 조정으로 버튼 크기 조정
+        decoration: BoxDecoration(
+          color: Color(0xFFA273FF), // 배경색 설정
+          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+        ),
+        child: Text(
+          '유기견 공고하기', // 버튼 텍스트
+          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
+          textAlign: TextAlign.center, // 텍스트 정렬
+        ),
+      ),
+    );
   }
 }
 
@@ -296,38 +378,6 @@ class _DogComponent extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _BottomButton extends StatelessWidget {
-  const _BottomButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    RootViewModel rootViewModel = Get.put(RootViewModel());
-
-    return InkWell(
-      onTap: () {
-        // RootViewModel rootViewModel = Get.put(RootViewModel());
-        // rootViewModel.changeIndex(9);
-        Get.to(() => PostScreen());
-
-      },
-      child: Container(
-        width: Get.width * 0.85,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        // 패딩 조정으로 버튼 크기 조정
-        decoration: BoxDecoration(
-          color: Color(0xFFA273FF), // 배경색 설정
-          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
-        ),
-        child: Text(
-          '유기견 공고하기', // 버튼 텍스트
-          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
-          textAlign: TextAlign.center, // 텍스트 정렬
-        ),
       ),
     );
   }

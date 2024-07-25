@@ -90,4 +90,57 @@ class UserService {
   //     return false; // 실패로 간주
   //   }
   // }
+
+  Future<bool> signInWithApple(String identityToken, String authorizationCode) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$loginAPI/auth/apple'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'identityToken': identityToken,
+          'authorizationCode': authorizationCode,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+
+        // 데이터 구조 확인 및 안전한 접근
+        if (data != null && data['result'] is Map<String, dynamic>) {
+          var result = data['result'];
+          String? accessToken = result['access_token'] as String?;
+          int? memberId = result['memberId'] as int?;
+          String? email = result['email'] as String?;
+          String? name = result['name'] as String?;
+          String? memberType = result['memberType'] as String?;
+
+          if (accessToken != null && memberId != null) {
+            final authController = Get.find<AuthController>();
+            authController.setToken(accessToken);
+            authController.setMemberId(memberId);
+
+            await UserPreferences.setMemberId(memberId);
+            await UserPreferences.setEmail(email ?? '');
+            await UserPreferences.setName(name ?? '');
+            await UserPreferences.setMemberType(memberType ?? '');
+
+            return true;
+          }
+        }
+
+        print('Invalid response structure');
+        return false;
+      } else {
+        print('Apple Sign In failed. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Apple Sign In Error: $e');
+      return false;
+    }
+  }
+
 }
