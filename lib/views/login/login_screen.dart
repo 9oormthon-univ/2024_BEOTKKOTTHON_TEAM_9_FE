@@ -10,6 +10,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:bommeong/viewModels/login/login_viewmodel.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginScreen extends BaseScreen<LoginViewModel> {
   const LoginScreen({super.key});
@@ -157,7 +158,11 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                     ),
                   ],
                 ),
-                Spacer(flex: 3), // 하단 공간
+                SignInWithAppleButton(
+                  onPressed: () => viewModel.signInWithApple(),
+                  style: SignInWithAppleButtonStyle.black,
+                ),// 하단 공간
+                Spacer(flex: 3),
               ],
             ),
           );

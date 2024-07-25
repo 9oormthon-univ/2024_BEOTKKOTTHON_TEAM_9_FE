@@ -37,6 +37,7 @@ dependencies:
   foundation: ^0.0.5
   flutter_daum_postcode: ^0.0.3
   daum_postcode_search: ^0.0.2
+  sign_in_with_apple: ^6.1.1
 
 dev_dependencies:
   flutter_test:

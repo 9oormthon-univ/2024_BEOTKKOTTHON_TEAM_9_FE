@@ -65,5 +65,16 @@ class UserPreferences {
     await _preferences.clear();
   }
 
+  static Future<void> clearUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('memberId');
+    await prefs.remove('email');
+    await prefs.remove('name');
+    await prefs.remove('memberType');
+    // 토큰도 저장했다면 다음 줄을 추가하세요
+    // await prefs.remove('token');
+    print('User data cleared from local storage');
+  }
+
 }
 
