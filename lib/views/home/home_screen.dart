@@ -21,7 +21,6 @@ import 'package:bommeong/views/home/doginfo_screen.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/services/userpreferences_service.dart';
-import 'package:remedi_kopo/remedi_kopo.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({super.key});

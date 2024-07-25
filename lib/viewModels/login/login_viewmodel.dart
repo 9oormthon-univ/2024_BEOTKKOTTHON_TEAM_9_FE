@@ -2,10 +2,11 @@
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import '../../services/login_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class LoginViewModel extends GetxController{
+class LoginViewModel extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final UserService _userService = UserService();
@@ -19,7 +20,6 @@ class LoginViewModel extends GetxController{
 
   Future<void> signInWithApple() async {
     try {
-      // 실제 Apple Sign In 대신 모의 구현 사용
       final credential = await _getMockAppleCredential();
 
       bool isSuccess = await _userService.signInWithApple(
@@ -50,5 +50,31 @@ class LoginViewModel extends GetxController{
       givenName: 'John',
       userIdentifier: 'mock_user_identifier_${DateTime.now().millisecondsSinceEpoch}',
     );
+  }
+
+  Future<void> loginWithKakao() async {
+    try {
+      if (await isKakaoTalkInstalled()) {
+        await UserApi.instance.loginWithKakaoTalk();
+      } else {
+        await UserApi.instance.loginWithKakaoAccount();
+      }
+      print('카카오톡으로 로그인 성공');
+      User user = await UserApi.instance.me();
+      print('사용자 정보: ${user.kakaoAccount?.profile?.nickname}');
+      // 로그인 성공 시 필요한 로직 추가
+    } catch (e) {
+      print('카카오톡으로 로그인 실패: $e');
+    }
+    }
+
+
+  Future<void> logout() async {
+    try {
+      await UserApi.instance.logout();
+      print('로그아웃 성공');
+    } catch (e) {
+      print('로그아웃 실패: $e');
+    }
   }
 }
