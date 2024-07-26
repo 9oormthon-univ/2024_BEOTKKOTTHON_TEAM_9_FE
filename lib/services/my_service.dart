@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:bommeong/models/my/my_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../providers/AuthController.dart';
 import 'userpreferences_service.dart';
 
 class UserService {

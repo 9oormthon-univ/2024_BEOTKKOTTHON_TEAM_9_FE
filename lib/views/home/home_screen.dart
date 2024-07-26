@@ -1,7 +1,6 @@
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
-import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
 import 'package:bommeong/views/privacy/privacy_consent_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -275,7 +274,6 @@ class _BottomButton extends StatelessWidget {
       onTap: () {
         // RootViewModel rootViewModel = Get.put(RootViewModel());
         // rootViewModel.changeIndex(9);
-        Get.to(() => PostScreen());
 
       },
       child: Container(

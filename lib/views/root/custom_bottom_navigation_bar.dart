@@ -17,7 +17,7 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
               splashFactory: NoSplash.splashFactory,
             ),
             child: BottomAppBar(
-              elevation: 0,
+              elevation: 6,
               shape: const CircularNotchedRectangle(),
               notchMargin: 6.0,
               clipBehavior: Clip.antiAlias,

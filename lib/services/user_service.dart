@@ -37,7 +37,7 @@ class GetDogList {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // 액세스 토큰 추가
+        'Authorization': 'Bearer $token',
       },
     );
 

@@ -1,6 +1,5 @@
 import 'package:bommeong/views/chat/chat_screen.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
-import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/like/like_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
