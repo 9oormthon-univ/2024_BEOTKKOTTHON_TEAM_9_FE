@@ -10,7 +10,7 @@ import 'user_service.dart';
 import 'userpreferences_service.dart';
 
 class UserService {
-  String? loginAPI = dotenv.env['loginAPI'];
+  String? loginAPI = '${dotenv.env['API']}/user/login';
 
   Future<String?> attemptLogIn(String email, String password) async {
     try {
