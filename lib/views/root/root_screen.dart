@@ -12,8 +12,6 @@ import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/home/home_screen.dart';
 import 'package:bommeong/views/root/custom_bottom_navigation_bar.dart';
 import '../../viewModels/root/root_viewmodel.dart';
-import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
-
 import '../privacy/privacy_consent_screen.dart';
 
 class RootScreen extends BaseScreen<RootViewModel> {

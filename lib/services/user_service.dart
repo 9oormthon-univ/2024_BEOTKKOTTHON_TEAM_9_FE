@@ -17,7 +17,7 @@ import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 class GetDogList {
   late final LoginViewModel loginViewModel;
-  bool hasFetched = false; // API 호출 여부를 추적하는 변수 추가
+  bool hasFetched = false; // API 호출 여부를 추적하는 변수
   GetDogList(this.loginViewModel);
 
   Future<List<DogList>> fetchItems(int pageKey) async {
