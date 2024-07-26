@@ -6,7 +6,8 @@ import 'package:bommeong/services/chat_service.dart';
 class MessageViewModel extends GetxController {
   RxInt dogId = 0.obs;
   RxList<ChatMessage> messages = <ChatMessage>[].obs;
-  RxBool isLoading = false.obs;
+  var isLoading = false.obs;
+  var typingUsers = <types.User>[].obs;
 
   @override
   void onInit() {
@@ -17,9 +18,12 @@ class MessageViewModel extends GetxController {
     messages.clear();
   }
 
-  List<types.Message> get chatMessages => messages.reversed.map((m) => m.toChatMessage()).toList();
+  List<types.Message> get chatMessages =>
+      messages.reversed.map((m) => m.toChatMessage()).toList();
 
   void sendMessage(String text, String userId) {
+    // 상대방이 타이핑 중인 것으로 가정하여 인디케이터를 활성화합니다.
+
     final userMessage = ChatMessage.fromUserInput(text, userId);
     messages.add(userMessage);
     fetchReplyFromDummyAPI(text, userId);
@@ -35,7 +39,7 @@ class MessageViewModel extends GetxController {
     isLoading.value = false;
   }
 
-Future<void> setId(int id) async{
+  Future<void> setId(int id) async {
     print("아이디는 : ${id}");
     this.dogId.value = id;
   }
