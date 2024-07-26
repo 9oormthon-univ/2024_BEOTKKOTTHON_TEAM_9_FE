@@ -2,16 +2,20 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/like/like_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'userpreferences_service.dart';
 
 class LikeService {
   Future<bool> toggleLike(LikeRequest request) async {
     var url = Uri.parse('${dotenv.env['BOM_API']}/post/like');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
     var response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(request.toJson()),
     );

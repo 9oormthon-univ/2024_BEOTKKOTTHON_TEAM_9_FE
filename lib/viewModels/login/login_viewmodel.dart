@@ -3,6 +3,7 @@ import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/login_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -11,11 +12,50 @@ class LoginViewModel extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final UserService _userService = UserService();
 
+  final _token = RxString('');
+
+  String get token => _token.value;
+
+  bool get isAuthenticated => _token.value.isNotEmpty;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadToken();
+  }
+
+  Future<void> _loadToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedToken = prefs.getString('access_token');
+    if (savedToken != null) {
+      setToken(savedToken);
+    }
+  }
+
+  void setToken(String newToken) async {
+    _token.value = newToken;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', newToken);
+  }
+
   Future<bool> attemptLogIn() async {
-    return _userService.attemptLogIn(
-      emailController.text,
-      passwordController.text,
-    );
+    try {
+      String? token = await _userService.attemptLogIn(
+        emailController.text,
+        passwordController.text,
+      );
+      print('Received token: $token'); // 디버깅을 위한 로그 추가
+      if (token != null && token.isNotEmpty) {
+        setToken(token);
+        return true;
+      } else {
+        print('Login failed: Token is null or empty');
+        return false;
+      }
+    } catch (e) {
+      print('Error during login attempt: $e');
+      return false;
+    }
   }
 
   Future<void> signInWithApple() async {

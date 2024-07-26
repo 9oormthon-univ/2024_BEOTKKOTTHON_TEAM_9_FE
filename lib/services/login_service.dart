@@ -4,44 +4,56 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/AuthController.dart';
 import 'user_service.dart';
 import 'userpreferences_service.dart';
+
 class UserService {
   String? loginAPI = dotenv.env['loginAPI'];
 
-  Future<bool> attemptLogIn(String email, String password) async {
-      AuthService authService = AuthService();
-      authService.login();
-      final authController = Get.put(AuthController());
+  Future<String?> attemptLogIn(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse(loginAPI!),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'email': email,
+          'password': password,
+        }),
+      );
 
-    final response = await http.post(
-      Uri.parse(loginAPI!),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'email': email,
-        'password': password,
-      }),
-    );
-    if (response.statusCode == 200) {
-      // 응답에서 accessToken 추출
-      var data = json.decode(response.body);
-      String accessToken = data['result']['access_token'];
-      int memberId = data['result']['memberId'];
-      authController.setToken(accessToken);
-      authController.setMemberId(memberId);
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
-      // 사용자 정보를 저장
-      await UserPreferences.setMemberId(memberId);
-      await UserPreferences.setEmail(data['result']['email']);
-      await UserPreferences.setName(data['result']['name']);
-      await UserPreferences.setMemberType(data['result']['memberType']);
-      return true;
-    } else {
-      return false;
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        if (data['result'] != null && data['result']['accessToken'] != null) {
+          String accessToken = data['result']['accessToken'];
+          int memberId = data['result']['memberId'];
+
+          // 토큰 저장
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('access_token', accessToken);
+
+          // 사용자 정보 저장
+          await UserPreferences.setMemberId(memberId);
+          await UserPreferences.setEmail(data['result']['email']);
+          await UserPreferences.setName(data['result']['name']);
+          await UserPreferences.setMemberType(data['result']['memberType']);
+
+          return accessToken;
+        }
+      }
+
+      print('Login failed. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return null;
+    } catch (e) {
+      print('Error during login: $e');
+      return null;
     }
   }
-
   // Future<bool> attemptLogIn(String email, String password) async {
   //   // 인위적인 지연을 만들어 실제 API 호출과 유사한 상황을 만듭니다.
   //   await Future.delayed(Duration(seconds: 2));
@@ -143,4 +155,26 @@ class UserService {
     }
   }
 
+  Future<dynamic> fetchUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    if (token == null) {
+      throw Exception('No token found');
+    }
+
+    final response = await http.get(
+      Uri.parse('$loginAPI/user/info'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load user info');
+    }
+  }
 }
