@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bommeong/views/privacy/regulatory_notice_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -940,7 +941,7 @@ class _EighthButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              QuestionNum.value = 7;
+              Get.to(() => RegulatoryNoticeScreen());
             },
             child: Text(
               '네, 있습니다.',
@@ -963,7 +964,7 @@ class _EighthButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              QuestionNum.value = 7;
+              Get.to(() => RegulatoryNoticeScreen());
             },
             child: Text(
               '아니오, 없습니다.',
