@@ -7,18 +7,26 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'userpreferences_service.dart';
 
 class GetChatList {
   Future<List<ChatList>> fetchItems(int pageKey) async {
 
-    String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${UserPreferences.getMemberId()}'; // 일단 이걸로
+    String? mainpageAPI = '${dotenv.env['API']}/chat/${UserPreferences.getMemberId()}';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('Chat : No access token available');
+    }
 
     final response = await http.get(
       Uri.parse(mainpageAPI),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
 
@@ -62,27 +70,32 @@ List<ChatList> processResponse(String responseBody) {
 class GetGPTChat {
   Future<String> fetchItems(String input) async {
     DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
-    int PostId = dogInfoViewModel.dogId.value;
 
+    int PostId = dogInfoViewModel.dogId.value;
     UserPreferences userPreferences = UserPreferences();
     int MemberId = UserPreferences.getMemberId();
 
     print(PostId);
     print(MemberId);
 
+    String? mainpageAPI = '${dotenv.env['API']}/chat/${PostId}/${MemberId}';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
 
-    String? mainpageAPI = '${dotenv.env['BOM_API']}/chat/${PostId}/${MemberId}'; //일단 이걸로
+    if (token == null || token.isEmpty) {
+      throw Exception('GPT : No access token available');
+    }
 
     var data = jsonEncode({
       "input": input,
     });
-
 
     final response = await http.post(
       Uri.parse(mainpageAPI),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
       body: data,
     );
@@ -97,5 +110,4 @@ class GetGPTChat {
       throw Exception('Failed to load items');
     }
   }
-
 }
