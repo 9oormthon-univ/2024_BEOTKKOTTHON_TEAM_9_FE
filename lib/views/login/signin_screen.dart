@@ -1,18 +1,31 @@
+// signin_screen.dart
 import 'package:bommeong/viewModels/login/signin_viewmodel.dart';
 import 'package:bommeong/views/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../utilities/font_system.dart';
 
 class SignInScreen extends StatelessWidget {
   final viewModel = SignInViewModel();
   final String membertype;
-  SignInScreen({Key? key, required this.membertype}) : super(key: key);
+  final String email;
+  final String name;
+  final String phone;
+
+  SignInScreen({
+    Key? key,
+    required this.membertype,
+    this.email = '',
+    this.name = '',
+    this.phone = '',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     viewModel.membertypeController.text = membertype;
+    viewModel.emailController.text = email;
+    viewModel.nameController.text = name;
+    viewModel.phoneController.text = phone;
 
     return Scaffold(
       appBar: AppBar(
@@ -140,6 +153,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
+
 
 
 class CustomTextFormField extends StatelessWidget {

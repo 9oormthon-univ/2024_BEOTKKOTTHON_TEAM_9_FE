@@ -28,5 +28,4 @@ class SignInViewModel {
       "B",
     );
   }
-
 }
