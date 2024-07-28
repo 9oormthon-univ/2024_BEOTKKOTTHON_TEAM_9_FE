@@ -36,6 +36,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(),
       body: AnimatedSwitcher(
         duration: Duration(seconds: 1),
@@ -66,9 +67,9 @@ class LoadingScreen1 extends StatelessWidget {
               children: <TextSpan>[
                 TextSpan(text: '반가워요, '),
                 TextSpan(
-                    text: myViewModel.useremail.value,
+                    text: myViewModel.userName.value,
                     style: FontSystem.KR24B.copyWith(color: Color(0xFFA273FF))),
-                TextSpan(text: ' 님\n\n', style: TextStyle(fontSize: 24.0)),
+                TextSpan(text: '님\n\n', style: TextStyle(fontSize: 24.0)),
                 TextSpan(
                     text: '봄멍', style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF))),
                 TextSpan(text: '은\n', style: FontSystem.KR22R.copyWith(color: Colors.black)),
