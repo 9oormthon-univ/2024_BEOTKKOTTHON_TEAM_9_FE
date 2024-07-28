@@ -44,7 +44,7 @@ class LoginViewModel extends GetxController {
         emailController.text,
         passwordController.text,
       );
-      print('Received token: $token'); // 디버깅을 위한 로그 추가
+      // print('Received token: $token');
       if (token != null && token.isNotEmpty) {
         setToken(token);
         return true;

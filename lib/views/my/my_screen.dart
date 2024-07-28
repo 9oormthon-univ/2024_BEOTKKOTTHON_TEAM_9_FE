@@ -93,6 +93,7 @@ class _TopPart extends StatelessWidget {
           ),
           SizedBox(width: Get.width * 0.05),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -107,8 +108,7 @@ class _TopPart extends StatelessWidget {
                       borderRadius: BorderRadius.circular(7.5),
                     ),
                     child: Text(myViewModel.membertype.value,
-                        style: FontSystem.KR14M
-                            .copyWith(color: Color(0xFFA273FF))),
+                        style: FontSystem.KR14M.copyWith(color: Color(0xFFA273FF))),
                   ),
                 ],
               ),
@@ -116,13 +116,14 @@ class _TopPart extends StatelessWidget {
             ],
           ),
           Spacer(),
-          InkWell(
-            onTap: () {
-              UserPreferences.logout();
-              RootViewModel rootViewModel = Get.put(RootViewModel());
-              rootViewModel.changeIndex(8);
-            },
-              child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
+          // Todo: 일단 로그아웃 로직 없앰
+          // InkWell(
+          //   onTap: () {
+          //     UserPreferences.logout();
+          //     RootViewModel rootViewModel = Get.put(RootViewModel());
+          //     rootViewModel.changeIndex(8);
+          //   },
+          //     child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
         ],
       ),
     );

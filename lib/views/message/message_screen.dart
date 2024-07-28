@@ -24,7 +24,6 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
         Expanded(
           child: Obx(() {
             if (messageViewModel.isLoading.value) {
-              // isLoading이 true일 때 로딩 인디케이터를 보여줍니다.
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +69,8 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
           //정렬
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _TopButton(),
+            // Todo: 일단 입양신청서 주석처리
+            // _TopButton(),
             Spacer(
               flex: 3,
             ),
@@ -119,7 +119,7 @@ class _TopButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         transformAlignment: Alignment.center,
-        //양쪽 정렬
+        // 양쪽 정렬
         width: Get.width * 0.3,
         height: 40,
         decoration: BoxDecoration(

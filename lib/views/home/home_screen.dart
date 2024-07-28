@@ -105,11 +105,9 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // 여백 추가 (높이 10
         Row(
           children: [
             Container(
-              //정렬
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.only(left: 30),
               child: Text("처음 오셨네요!",

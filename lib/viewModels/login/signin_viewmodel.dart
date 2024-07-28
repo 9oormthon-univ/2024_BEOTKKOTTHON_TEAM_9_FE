@@ -25,7 +25,8 @@ class SignInViewModel {
       passwordController.text,
       nameController.text,
       phoneController.text,
-      membertypeController.text,
+      "B",
     );
   }
+
 }

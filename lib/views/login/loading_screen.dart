@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../main_app.dart';
 import '../../utilities/app_routes.dart';
+import '../../utilities/font_system.dart';
+import '../../viewModels/my/my_viewmodel.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -24,8 +26,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
       setState(() {
         _currentWidget = LoadingScreen2(onComplete: () {
           if (mounted) {
-            // 여기에 바텀 네비게이션 달아야됨
-            // Get.put(HomeViewModel());
             Get.offAllNamed(Routes.ROOT);
           }
         });
@@ -46,6 +46,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
 }
 
 class LoadingScreen1 extends StatelessWidget {
+  MyViewModel myViewModel = Get.put(MyViewModel());
+
   @override
   Widget build(BuildContext context) {
     double imageHeight = Get.height * 0.25; // 화면 높이의 25%
@@ -60,21 +62,18 @@ class LoadingScreen1 extends StatelessWidget {
           child: RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
-              style: TextStyle(
-                fontSize: 22.0,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              style: FontSystem.KR24B.copyWith(color: Colors.black),
               children: <TextSpan>[
-                TextSpan(text: '반가워요, ', style: TextStyle(fontSize: 24.0)),
+                TextSpan(text: '반가워요, '),
                 TextSpan(
-                    text: '현정',
-                    style: TextStyle(fontSize: 24.0, color: Color(0xFFA273FF))),
+                    text: myViewModel.useremail.value,
+                    style: FontSystem.KR24B.copyWith(color: Color(0xFFA273FF))),
                 TextSpan(text: ' 님\n\n', style: TextStyle(fontSize: 24.0)),
                 TextSpan(
-                    text: '봄 ━━ 멍', style: TextStyle(color: Color(0xFFA273FF))),
-                TextSpan(text: '은\n유기견의 페르소나와\n대화할 수 있는 곳이에요'),
+                    text: '봄멍', style: FontSystem.KR22B.copyWith(color: Color(0xFFA273FF))),
+                TextSpan(text: '은\n', style: FontSystem.KR22R.copyWith(color: Colors.black)),
+                TextSpan(text: '유기견의 페르소나', style: FontSystem.KR22B.copyWith(color: Colors.black)),
+                TextSpan(text: '와\n대화할 수 있는 곳이에요', style: FontSystem.KR22R.copyWith(color: Colors.black)),
               ],
             ),
           ),
@@ -120,16 +119,12 @@ class _LoadingScreen2State extends State<LoadingScreen2> {
           RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
-              style: TextStyle(
-                  fontSize: 24.0,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              style: FontSystem.KR24R.copyWith(color: Colors.black),
               children: <TextSpan>[
-                TextSpan(text: '유기견을 관심있게\n보는 당신께\n\n'),
+                TextSpan(text: '유기견을 관심있게\n보는 당신께\n\n\n'),
                 TextSpan(
-                    text: '감사를 전합니다.\n\n',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    text: '감사를 전합니다.',
+                    style: FontSystem.KR25B.copyWith(color: Colors.black)),
               ],
             ),
           ),
