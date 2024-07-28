@@ -1,17 +1,13 @@
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
-import 'package:bommeong/views/login/selectmt_screen.dart';
+import 'package:bommeong/views/login/signin_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:bommeong/viewModels/login/login_viewmodel.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 import '../../utilities/font_system.dart';
 
 class LoginScreen extends BaseScreen<LoginViewModel> {
@@ -121,7 +117,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               Expanded(
                 child: TextButton(
                   onPressed: () {
-                    Get.to(SelectMTScreen());
+                    Get.to(() => SignInScreen(membertype: "B"));
                   },
                   child: Text(
                     '회원가입',
@@ -172,7 +168,7 @@ class _sociallogin extends StatelessWidget {
               SizedBox(width: 7),
               Text(
                 'Sign in with Kakao',
-                style: FontSystem.KR20SB.copyWith(color: Color(0xFF3C1E1E)),
+                style: FontSystem.KR20R.copyWith(color: Color(0xFF3C1E1E)),
               ),
             ],
           ),
