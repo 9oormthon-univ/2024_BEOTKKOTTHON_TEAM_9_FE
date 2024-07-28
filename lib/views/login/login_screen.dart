@@ -12,6 +12,8 @@ import 'package:intl/date_symbol_data_file.dart';
 import 'package:bommeong/viewModels/login/login_viewmodel.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../utilities/font_system.dart';
+
 class LoginScreen extends BaseScreen<LoginViewModel> {
   const LoginScreen({super.key});
 
@@ -20,6 +22,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
     final viewModel = LoginViewModel();
     final RootViewModel rootViewModel = Get.find<RootViewModel>();
     double screenheight = Get.height;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
@@ -30,58 +33,44 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
             "assets/images/login/foot.svg",
             height: Get.height * 0.026,
           ),
-          SizedBox(height: screenheight * 0.01),
           Text(
             '오늘은 봄멍으로!',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.bold,
-            ),
+            style: FontSystem.KR24B.copyWith(color: Colors.black),
           ),
-          SizedBox(height: screenheight * 0.05),
+          SizedBox(height: screenheight * 0.01),
+
           // 아이디 입력 필드
           TextFormField(
-            controller: viewModel.emailController, // 추가: 컨트롤러 연결
+            controller: viewModel.emailController,
             decoration: InputDecoration(
               hintText: '아이디를 입력해주세요',
               fillColor: Color(0xFFF7F4FF),
               filled: true,
-              hintStyle: TextStyle(
-                color: Colors.grey[500],
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
+              hintStyle: FontSystem.KR17M.copyWith(color: Color(0xFFBCBCBC)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
             ),
           ),
-          SizedBox(height: screenheight * 0.02),
+
           // 비밀번호 입력 필드
           TextFormField(
-            controller: viewModel.passwordController, // 추가: 컨트롤러 연결
+            controller: viewModel.passwordController,
             obscureText: true,
             decoration: InputDecoration(
               hintText: '비밀번호를 입력해주세요',
               fillColor: Color(0xFFF7F4FF),
               filled: true,
-              hintStyle: TextStyle(
-                color: Colors.grey[500],
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
+              hintStyle: FontSystem.KR17M.copyWith(color: Color(0xFFBCBCBC)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
             ),
           ),
-          SizedBox(height: screenheight * 0.04),
+          SizedBox(height: screenheight * 0.005),
+
           // 로그인 버튼 필드
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -106,16 +95,11 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
             },
             child: Text(
               '로그인',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.bold,
-              ),
+              style: FontSystem.KR20B.copyWith(color: Colors.white),
             ),
           ),
-          SizedBox(height: screenheight * 0.02),
-          // 밑 비밀번호 찾기 및 회원가입
+
+          // 비밀번호 찾기 및 회원가입
           Row(
             mainAxisAlignment:
                 MainAxisAlignment.spaceEvenly, // 변경: 정렬을 spaceEvenly로
@@ -126,22 +110,13 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                   child: Text(
                     '비밀번호 찾기',
                     textAlign: TextAlign.right, // 오른쪽 정렬
-                    style: TextStyle(
-                      color: Colors.grey[500],
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
+                    style: FontSystem.KR15M.copyWith(color: Color(0xFF9A9A9A)),
                   ),
                 ),
               ),
               Text(
                 '|',
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Pretendard',
-                ),
+                style: FontSystem.KR15M.copyWith(color: Color(0xFF9A9A9A)),
               ),
               Expanded(
                 child: TextButton(
@@ -151,12 +126,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                   child: Text(
                     '회원가입',
                     textAlign: TextAlign.left, // 왼쪽 정렬
-                    style: TextStyle(
-                      color: Colors.grey[500],
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
+                    style: FontSystem.KR15M.copyWith(color: Color(0xFF9A9A9A)),
                   ),
                 ),
               ),
@@ -183,23 +153,28 @@ class _sociallogin extends StatelessWidget {
       children: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFA273FF),
-            minimumSize: Size(double.infinity, 50),
+            backgroundColor: Color(0xFFF9E000),
+            minimumSize: Size(double.infinity, 44),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           onPressed: () async {
             await viewModel.loginWithKakao();
           },
-          child: Text(
-            '카카오 로그인',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/login/kakao.png',
+                height: 24,
+              ),
+              SizedBox(width: 7),
+              Text(
+                'Sign in with Kakao',
+                style: FontSystem.KR20SB.copyWith(color: Color(0xFF3C1E1E)),
+              ),
+            ],
           ),
         ),
       ],
