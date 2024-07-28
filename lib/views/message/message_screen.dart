@@ -66,14 +66,12 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
             right: Get.width * 0.03,
             bottom: Get.width * 0.03),
         child: Row(
-          //정렬
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // 정렬
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Todo: 일단 입양신청서 주석처리
             // _TopButton(),
-            Spacer(
-              flex: 3,
-            ),
+            Spacer(flex: 9),
             Text("채팅", style: FontSystem.KR20B),
             Spacer(flex: 7),
             InkWell(

@@ -1,23 +1,15 @@
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
-import 'package:bommeong/views/home/doginfo_screen.dart';
-import 'package:bommeong/views/login/login_screen.dart';
-import 'package:bommeong/views/privacy/privacy_consent_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/home/home_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
-import '../widget/privacy/privacy_consent_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
-import 'package:bommeong/services/user_service.dart';
-import 'package:bommeong/viewModels/home/home_viewmodel.dart';
-import 'package:bommeong/views/home/doginfo_screen.dart';
-import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
 import 'package:bommeong/services/userpreferences_service.dart';
 
@@ -110,7 +102,7 @@ class _Header extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.only(left: 30),
-              child: Text("처음 오셨네요!",
+              child: Text("오늘 하루는 어떠세요?",
               style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
             ),
             // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
@@ -147,10 +139,10 @@ class _Header extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: '만나서 반가워요, '),
                     TextSpan(
-                      text: UserPreferences.getMemberType() == "B" ? "예비보호자" : "사용자",
-                      style: TextStyle(color: Color(0xFF634EC0)), // '예비보호자' 부분에만 적용할 스타일
+                      text: UserPreferences.getMemberType() == "B" ? "예비 반려인" : "사용자",
+                      style: TextStyle(color: Color(0xFF634EC0)), //
                     ),
-                    TextSpan(text: '님!'),
+                    TextSpan(text: '님! 🐾'),
                   ],
                 ),
               )
