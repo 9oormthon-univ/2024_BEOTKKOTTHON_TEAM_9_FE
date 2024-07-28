@@ -11,6 +11,8 @@ import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../viewModels/like/like_viewmodel.dart';
+
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
   const DogInfoScreen({super.key});
 
@@ -80,25 +82,31 @@ class _BottomBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //뷰모델
-
     final DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
-    print("렌더링은 ${viewModel.items.name}");
+    final LikeViewModel likeViewModel = Get.put(LikeViewModel());
+    // print("렌더링은 ${viewModel.items.name}");
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children : [
+          children: [
             Container(
               child: Row(
-                //왼쪽 정렬
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(viewModel.items.name,
                       style: FontSystem.KR26B),
-                  SvgPicture.asset(
-                    "assets/images/home/heart.svg",
-                    height: 20,
+                  InkWell(
+                    onTap: () {
+                      likeViewModel.toggleLike(viewModel.items.id);
+                    },
+                    child: Obx(() => SvgPicture.asset(
+                      likeViewModel.dogLikeStatus[viewModel.items.id]?.value ?? false
+                          ? "assets/images/home/heart_fill.svg"
+                          : "assets/images/home/heart.svg",
+                      height: 20,
+                    )),
                   ),
                 ],
               ),
@@ -160,7 +168,7 @@ class _TalkBox extends StatelessWidget {
         ),
         Positioned(
           top: 20,
-          left: 20, // 오른쪽 여백을 이렇게 지정합니다.
+          left: 20,
           child: Container(
             width: Get.width * 0.85,
             padding: EdgeInsets.only(right: Get.width * 0.1),

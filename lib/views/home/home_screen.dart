@@ -27,28 +27,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildBody(BuildContext context) {
 
-    if (UserPreferences.getMemberType() == "S") return Column(
-      children: [
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.only(left: 30, right: 16),
-          alignment: Alignment.centerLeft,
-          child: SvgPicture.asset(
-            "assets/images/home/BOMMEONG.svg",
-            height: 16,
-          ),
-        ),
-        SizedBox(height: 22),
-        _Header(),
-        SizedBox(height: 30),
-        _Middle(),
-        SizedBox(height: 20),
-        _DogList(),
-        _BottomButton(),
-      ],
-    );
-
-    else return Column(
+    return Column(
       children: [
         const SizedBox(height: 16),
         Container(
@@ -137,25 +116,25 @@ class _Header extends StatelessWidget {
               style: FontSystem.KR12B.copyWith(color: Color(0xFF979797)),),
             ),
             // ToDO: 인터뷰 스크린 이동용으로 잠시 해놓은 것. 나중에 지우기(InkWell)
-            InkWell(
-              onTap: () {
-                Get.to(() => PrivacyConsentScreen());
-              },
-              child: Container(
-                width: Get.width * 0.10,
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                // 패딩 조정으로 버튼 크기 조정
-                decoration: BoxDecoration(
-                  color: Color(0xFFA273FF), // 배경색 설정
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
-                ),
-                child: Text(
-                  '테스트', // 버튼 텍스트
-                  style: FontSystem.KR10B.copyWith(color: Colors.black), // 텍스트 스타일
-                  textAlign: TextAlign.center, // 텍스트 정렬
-                ),
-              ),
-            )
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(() => PrivacyConsentScreen());
+            //   },
+            //   child: Container(
+            //     width: Get.width * 0.10,
+            //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            //     // 패딩 조정으로 버튼 크기 조정
+            //     decoration: BoxDecoration(
+            //       color: Color(0xFFA273FF), // 배경색 설정
+            //       borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
+            //     ),
+            //     child: Text(
+            //       '테스트', // 버튼 텍스트
+            //       style: FontSystem.KR10B.copyWith(color: Colors.black), // 텍스트 스타일
+            //       textAlign: TextAlign.center, // 텍스트 정렬
+            //     ),
+            //   ),
+            // )
           ],
         ),
         Row(
@@ -257,47 +236,14 @@ class _DogList extends StatelessWidget {
         ),
       ),
     );
-
   }
-
   const _DogList({super.key});
-}
-
-class _BottomButton extends StatelessWidget {
-  const _BottomButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    RootViewModel rootViewModel = Get.put(RootViewModel());
-
-    return InkWell(
-      onTap: () {
-        // RootViewModel rootViewModel = Get.put(RootViewModel());
-        // rootViewModel.changeIndex(9);
-
-      },
-      child: Container(
-        width: Get.width * 0.85,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        // 패딩 조정으로 버튼 크기 조정
-        decoration: BoxDecoration(
-          color: Color(0xFFA273FF), // 배경색 설정
-          borderRadius: BorderRadius.circular(8), // 모서리 둥글기 반경 설정
-        ),
-        child: Text(
-          '유기견 공고하기', // 버튼 텍스트
-          style: FontSystem.KR16B.copyWith(color: Colors.white), // 텍스트 스타일
-          textAlign: TextAlign.center, // 텍스트 정렬
-        ),
-      ),
-    );
-  }
 }
 
 class _DogComponent extends StatelessWidget {
   const _DogComponent({super.key, required this.item});
-
   final DogList item;
+
   @override
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = Get.put(HomeViewModel());
@@ -338,7 +284,6 @@ class _DogComponent extends StatelessWidget {
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
-
               ),
             ),
             child: Row(
@@ -358,11 +303,8 @@ class _DogComponent extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // 여기에 탭했을 때 실행하고 싶은 코드를 작성하세요.
-                    print("Heart icon tapped!");
-                    //여기에서 해당하는 포스트의 좋아요가 변경되도록
+                    // print("Heart icon tapped!");
                     likeViewModel.toggleLike(item.id);
-
                   },
                   child: Obx(() => SvgPicture.asset(
                     likeViewModel.dogLikeStatus[item.id]?.value ?? false // 여기의 좋아요 상태 변수

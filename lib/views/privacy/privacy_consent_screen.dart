@@ -19,8 +19,6 @@ class PrivacyConsentScreen extends BaseScreen<PrivacyViewModel> {
     final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             Column(
@@ -53,8 +51,7 @@ class PrivacyConsentScreen extends BaseScreen<PrivacyViewModel> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   @override
@@ -115,7 +112,6 @@ class _Question extends StatelessWidget {
             ),
           ),
         ),
-        // 여기에 다른 위젯들을 추가할 수 있습니다.
       ],
     );
   }
