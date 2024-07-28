@@ -17,7 +17,7 @@ import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 
 class GetDogList {
   late final LoginViewModel loginViewModel;
-  bool hasFetched = false; // API 호출 여부를 추적하는 변수 추가
+  bool hasFetched = false; // API 호출 여부를 추적하는 변수
   GetDogList(this.loginViewModel);
 
   Future<List<DogList>> fetchItems(int pageKey) async {
@@ -26,8 +26,7 @@ class GetDogList {
 
     if (hasFetched) return [];
 
-    String? mainpageAPI = '${dotenv.env['BOM_API']}/post';
-
+    String? mainpageAPI = '${dotenv.env['API']}/post';
 
     if (token == null || token.isEmpty) {
       throw Exception('No access token available');
@@ -38,7 +37,7 @@ class GetDogList {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // 액세스 토큰 추가
+        'Authorization': 'Bearer $token',
       },
     );
 
@@ -69,10 +68,10 @@ List<int> extractPostIds(String jsonResponse) {
   return postIdList;
 }
 
-class GetLikeDogList {
 
+class GetLikeDogList {
   Future<List<DogList>> fetchItems(int pageKey) async {
-    String? likepageAPI = '${dotenv.env['BOM_API']}/post/like/${UserPreferences.getMemberId()}';
+    String? likepageAPI = '${dotenv.env['API']}/post/like/${UserPreferences.getMemberId()}';
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
     // 페이지 당 아이템 수(limit)를 100으로 설정하여 10페이지 분량의 데이터를 한 번에 요청합니다.
@@ -93,10 +92,11 @@ class GetLikeDogList {
   }
 }
 
+
 class GetDogInfo {
   Future<DogInfo> fetchItems(int id) async {
     // API 대신 사용할 더미 데이터
-    String? mainpageAPI = '${dotenv.env['BOM_API']}/post/${id}';
+    String? mainpageAPI = '${dotenv.env['API']}/post/${id}';
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
     final response = await http.get(
@@ -107,8 +107,6 @@ class GetDogInfo {
         'Authorization': 'Bearer $token',
       },
     );
-
-
     if (response.statusCode == 200) {
       String responseBody = utf8.decode(response.bodyBytes);
       return dogInfoProcessResponse(responseBody);

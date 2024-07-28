@@ -13,7 +13,6 @@ import 'services/user_service.dart';
 
 void main() async {
   /* Open .env file */
-
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/config/.env");
   await initializeDateFormatting();

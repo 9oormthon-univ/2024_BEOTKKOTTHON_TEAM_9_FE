@@ -1,6 +1,5 @@
 import 'package:bommeong/views/chat/chat_screen.dart';
 import 'package:bommeong/views/home/doginfo_screen.dart';
-import 'package:bommeong/views/home/post_screen.dart';
 import 'package:bommeong/views/like/like_screen.dart';
 import 'package:bommeong/views/login/loading_screen.dart';
 import 'package:bommeong/views/login/login_screen.dart';
@@ -13,8 +12,6 @@ import 'package:bommeong/views/base/base_screen.dart';
 import 'package:bommeong/views/home/home_screen.dart';
 import 'package:bommeong/views/root/custom_bottom_navigation_bar.dart';
 import '../../viewModels/root/root_viewmodel.dart';
-import 'package:bommeong/views/widget/privacy/privacy_consent_screen.dart';
-
 import '../privacy/privacy_consent_screen.dart';
 
 class RootScreen extends BaseScreen<RootViewModel> {

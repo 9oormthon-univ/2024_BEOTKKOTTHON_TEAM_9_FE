@@ -10,7 +10,7 @@ import 'user_service.dart';
 import 'userpreferences_service.dart';
 
 class UserService {
-  String? loginAPI = dotenv.env['loginAPI'];
+  String? loginAPI = '${dotenv.env['API']}/user/login';
 
   Future<String?> attemptLogIn(String email, String password) async {
     try {
@@ -54,8 +54,9 @@ class UserService {
       return null;
     }
   }
+
+  // Todo: 더미 로그인 로직
   // Future<bool> attemptLogIn(String email, String password) async {
-  //   // 인위적인 지연을 만들어 실제 API 호출과 유사한 상황을 만듭니다.
   //   await Future.delayed(Duration(seconds: 2));
   //
   //   // 예제를 위한 더미 응답 데이터

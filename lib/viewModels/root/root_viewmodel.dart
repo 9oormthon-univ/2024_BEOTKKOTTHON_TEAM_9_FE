@@ -14,9 +14,7 @@ class RootViewModel extends GetxController {
     _selectedIndex = 0.obs;
 
   }
-
     void changeIndex(int index) {
       _selectedIndex.value = index;
     }
-
   }

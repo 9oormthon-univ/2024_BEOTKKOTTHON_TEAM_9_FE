@@ -1,6 +1,5 @@
 import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:bommeong/viewModels/home/doginfo_viewmodel.dart';
-import 'package:bommeong/viewModels/home/post_viewmodel.dart';
 import 'package:bommeong/viewModels/like/like_viewmodel.dart';
 import 'package:bommeong/viewModels/login/login_viewmodel.dart';
 import 'package:bommeong/viewModels/message/message_viewmodel.dart';
@@ -21,11 +20,9 @@ class RootBinding extends Bindings {
     Get.lazyPut(() => LikeViewModel());
     Get.lazyPut(() => MyViewModel());
     Get.lazyPut(() => DogInfoViewModel(),fenix: true);
-    Get.lazyPut(() => PostController(),fenix: true);
     Get.put(LoginViewModel());
     Get.put(PrivacyViewModel());
     //DogInfoViewModel를 최대한 빨리 생성하기위한 코드
-
     Get.lazyPut(() => MessageViewModel());
   }
 }

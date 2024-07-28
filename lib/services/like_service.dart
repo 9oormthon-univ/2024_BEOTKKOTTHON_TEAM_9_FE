@@ -3,17 +3,22 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bommeong/models/like/like_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'userpreferences_service.dart';
 
 class LikeService {
   Future<bool> toggleLike(LikeRequest request) async {
-    var url = Uri.parse('${dotenv.env['BOM_API']}/post/like');
+    var url = Uri.parse('${dotenv.env['API']}/post/like');
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
-    var response = await http.post(
+
+    if (token == null || token.isEmpty) {
+      throw Exception('LikeToggle : No access token available');
+    }
+
+    final response = await http.post(
       url,
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
@@ -32,8 +37,22 @@ class LikeService {
   }
 
   Future<List<int>> fetchAllPostIds() async {
-    final url = Uri.parse('${dotenv.env['BOM_API']}/post/like/${UserPreferences.getMemberId()}');
-    final response = await http.get(url);
+    final url = Uri.parse('${dotenv.env['API']}/post/like/${UserPreferences.getMemberId()}');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('LikeFetch : No access token available');
+    }
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body)["result"];

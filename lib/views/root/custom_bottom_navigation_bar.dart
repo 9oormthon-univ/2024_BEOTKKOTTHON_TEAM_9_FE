@@ -17,6 +17,7 @@ class CustomBottomNavigationBar extends BaseWidget<RootViewModel> {
               splashFactory: NoSplash.splashFactory,
             ),
             child: BottomAppBar(
+              color: Colors.white,
               elevation: 0,
               shape: const CircularNotchedRectangle(),
               notchMargin: 6.0,
