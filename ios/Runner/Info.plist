@@ -11,7 +11,7 @@
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
-    <string>com.bommeong.app</string>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
@@ -51,6 +51,15 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
     <key>KAKAO_APP_KEY</key>
     <string>65e4736c1c1b3b1415a369d14adfadc2</string>
     <key>LSApplicationQueriesSchemes</key>
@@ -66,6 +75,7 @@
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>kakao65e4736c1c1b3b1415a369d14adfadc2</string>
+                <string>bommeong</string>
             </array>
         </dict>
     </array>
