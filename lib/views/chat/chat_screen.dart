@@ -11,6 +11,8 @@ import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../services/userpreferences_service.dart';
+import '../../viewModels/home/doginfo_viewmodel.dart';
+import '../message/message_screen.dart';
 
 class ChatScreen extends BaseScreen<ChatViewModel> {
   const ChatScreen({super.key});
@@ -131,13 +133,13 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MessageViewModel messageViewModel = Get.put(MessageViewModel());
+    DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
     RootViewModel rootViewModel = Get.put(RootViewModel());
 
     return InkWell(
       onTap: () async {
         int? id = UserPreferences.getRandomElementFromDogList();
-        await messageViewModel.setId(id!);
+        await viewModel.setId(id!);
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);

@@ -41,7 +41,7 @@ class MessageViewModel extends GetxController {
 
   Future<void> setId(int id) async {
     print("아이디는 : ${id}");
-    this.dogId.value = id;
+    dogId.value = id;
   }
 
   @override

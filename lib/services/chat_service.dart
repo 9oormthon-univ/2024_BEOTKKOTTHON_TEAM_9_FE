@@ -75,39 +75,51 @@ class GetGPTChat {
     UserPreferences userPreferences = UserPreferences();
     int MemberId = UserPreferences.getMemberId();
 
-    print(PostId);
-    print(MemberId);
+    print('PostId: $PostId');
+    print('MemberId: $MemberId');
 
-    String? mainpageAPI = '${dotenv.env['API']}/chat/${PostId}/${MemberId}';
+    String? mainpageAPI = '${dotenv.env['API']}/chat/$PostId/$MemberId';
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
 
     if (token == null || token.isEmpty) {
-      throw Exception('GPT : No access token available');
+      print('GPT: No access token available');
+      throw Exception('GPT: No access token available');
     }
 
     var data = jsonEncode({
       "input": input,
     });
 
-    final response = await http.post(
-      Uri.parse(mainpageAPI),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: data,
-    );
+    print('API URL: $mainpageAPI');
+    print('Request body: $data');
 
-    if (response.statusCode == 200) {
-      String responseBody = utf8.decode(response.bodyBytes);
-      Map<String, dynamic> decodedResponse = json.decode(responseBody);
-      dynamic results = decodedResponse['result'];
-      return results['response'];
+    try {
+      final response = await http.post(
+        Uri.parse(mainpageAPI),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: data,
+      );
 
-    } else {
-      throw Exception('Failed to load items');
+      print('Response status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        String responseBody = utf8.decode(response.bodyBytes);
+        Map<String, dynamic> decodedResponse = json.decode(responseBody);
+        dynamic results = decodedResponse['result'];
+        return results['response'];
+      } else {
+        print('Failed to load items: ${response.statusCode}');
+        throw Exception('Failed to load items: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching items: $e');
+      throw Exception('Error fetching items: $e');
     }
   }
 }
