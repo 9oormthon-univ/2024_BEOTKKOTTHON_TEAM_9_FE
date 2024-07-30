@@ -134,12 +134,15 @@ class _BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DogInfoViewModel viewModel = Get.put(DogInfoViewModel());
+    MessageViewModel messageViewModel = Get.put(MessageViewModel());
     RootViewModel rootViewModel = Get.put(RootViewModel());
 
     return InkWell(
       onTap: () async {
         int? id = UserPreferences.getRandomElementFromDogList();
         await viewModel.setId(id!);
+        await messageViewModel.setId(id!);
+        
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);

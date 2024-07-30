@@ -10,7 +10,6 @@ import 'package:bommeong/utilities/font_system.dart';
 import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../viewModels/like/like_viewmodel.dart';
 
 class DogInfoScreen extends BaseScreen<DogInfoViewModel> {
