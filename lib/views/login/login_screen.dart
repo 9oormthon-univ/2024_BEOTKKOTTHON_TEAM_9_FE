@@ -128,10 +128,11 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               ),
             ],
           ),
-          SignInWithAppleButton(
-            onPressed: () => viewModel.signInWithApple(),
-            style: SignInWithAppleButtonStyle.black,
-          ), // 하단 공간
+          // Todo: 애플 로그인 일단 비활성화
+          // SignInWithAppleButton(
+          //   onPressed: () => viewModel.signInWithApple(),
+          //   style: SignInWithAppleButtonStyle.black,
+          // ),
           _sociallogin(),
           SizedBox(height: screenheight * 0.15),
         ],

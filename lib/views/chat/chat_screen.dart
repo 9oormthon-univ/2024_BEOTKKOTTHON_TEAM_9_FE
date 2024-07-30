@@ -9,7 +9,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import '../../services/userpreferences_service.dart';
 import '../../viewModels/home/doginfo_viewmodel.dart';
 import '../message/message_screen.dart';
@@ -142,7 +141,7 @@ class _BottomButton extends StatelessWidget {
         int? id = UserPreferences.getRandomElementFromDogList();
         await viewModel.setId(id!);
         await messageViewModel.setId(id!);
-        
+
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);
@@ -170,18 +169,29 @@ class _ChatLogs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatViewModel viewModel = Get.put(ChatViewModel());
+    ChatViewModel chatviewModel = Get.put(ChatViewModel());
+    MessageViewModel messageViewModel = Get.put(MessageViewModel());
+    DogInfoViewModel dogInfoViewModel = Get.put(DogInfoViewModel());
+    RootViewModel rootViewModel = Get.put(RootViewModel());
+
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 24, right: 24),
         child: PagedListView<int, ChatList>(
-          pagingController: viewModel.pagingController,
+          pagingController: chatviewModel.pagingController,
           builderDelegate: PagedChildBuilderDelegate<ChatList>(
-            itemBuilder: (context, item, index) => Container(
-              // 아이템 빌드 로직
-              padding: EdgeInsets.all(0),
-              child:
-                  _LogComponent(item: item), // DogComponent 대신 실제 컴포넌트를 사용하세요.
+            itemBuilder: (context, item, index) => InkWell(
+              // 아이템 선택 시 화면 전환
+              onTap: () async {
+                await messageViewModel.setId(item.postid);
+                await dogInfoViewModel.setId(item.postid);
+                RootViewModel rootViewModel = Get.put(RootViewModel());
+                rootViewModel.changeIndex(5);
+              },
+              child: Container(
+                padding: EdgeInsets.all(0),
+                child: _LogComponent(item: item),
+              ),
             ),
           ),
         ),
@@ -240,7 +250,6 @@ class _LogComponent extends StatelessWidget {
                   style:
                   FontSystem.KR14M.copyWith(color: Color(0xFFADADAD))),
             ],
-
           ),
           SizedBox(height: 15),
           Container(

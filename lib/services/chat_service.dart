@@ -45,24 +45,23 @@ List<ChatList> processResponse(String responseBody) {
   List<dynamic> results = decodedResponse['result'];
 
   for (var item in results) {
-    print(item['imageUrl']);
-    print(item['name']);
-    print(item['status']);
-    print(item['date']);
+    // print(item['imageUrl']);
+    // print(item['name']);
+    // print(item['status']);
+    // print(item['date']);
     chatlists.add(ChatList(
       imagePath: item['imageUrl'],
       name: item['name'],
       status: item['status'] == 'before' ? '아직 친구를 기다리고있어요!' : '좋은친구와 함께하게 됐어요!🎉', //?
       date: item['date'] == null ? DateTime.now() : DateTime.parse(item['date']),
+      postid: item['postId'],
     ));
   }
 
-  print(chatlists);
-
+  // print(chatlists);
   ChatViewModel chatViewModel = Get.put(ChatViewModel());
   if(chatlists.length == 0) chatViewModel.isHaveChat.value = false;
   else chatViewModel.isHaveChat.value = true;
-
   return chatlists;
 }
 
