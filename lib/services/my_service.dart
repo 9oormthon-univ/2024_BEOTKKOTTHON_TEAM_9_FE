@@ -26,9 +26,10 @@ class UserService {
     );
 
     if (response.statusCode == 200){
-      var data = json.decode(response.body);
+      var data = json.decode(utf8.decode(response.bodyBytes));
       UserInfoModel userInfo = UserInfoModel.fromJson(data['result']);
       return userInfo;
+
     } else {
       throw Exception('Failed to load user info');
     }

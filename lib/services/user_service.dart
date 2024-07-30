@@ -45,8 +45,8 @@ class GetDogList {
       String responseBody = utf8.decode(response.bodyBytes);
       List<int> postIdList = extractPostIds(responseBody);
       print('멍멍이들: $postIdList');
-
       UserPreferences.setDogList(postIdList);
+
       hasFetched = true;
       return processResponse(responseBody);
     } else {

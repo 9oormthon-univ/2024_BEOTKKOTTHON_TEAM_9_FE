@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserSignInService {
-  String? signAPI = '${dotenv.env['API']}/signup';
+  String? signAPI = '${dotenv.env['API']}/user/signup';
 
   Future<bool> attemptSignIn(String email, String password, String name, String phone, String memberType) async {
     final response = await http.post(

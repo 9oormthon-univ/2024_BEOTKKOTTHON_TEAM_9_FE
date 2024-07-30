@@ -36,6 +36,7 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
   // Scaffold를 구성하는 메서드
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
+
       extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: screenBackgroundColor,
@@ -75,7 +76,7 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
 
   // 키보드가 나타날 때 화면을 조절할지 여부를 정의하는 메서드
   @protected
-  bool get resizeToAvoidBottomInset => true;
+  bool get resizeToAvoidBottomInset => false;
 
   // Floating Action Button을 구성하는 메서드
   @protected

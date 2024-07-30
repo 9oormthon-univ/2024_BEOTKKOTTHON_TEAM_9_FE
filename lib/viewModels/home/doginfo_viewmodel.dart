@@ -3,7 +3,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/user_service.dart';
 
-
 class DogInfoViewModel extends GetxController {
   final GetDogInfo apiService = GetDogInfo();
   RxInt dogId = 0.obs;
