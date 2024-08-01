@@ -45,6 +45,11 @@ dev_dependencies:
     flutter_lints: ^4.0.0
     intl_translation: ^0.20.0
 
+flutter_icons:
+    ndroid: "launcher_icon"
+    ios: true
+    image_path: "assets/images/play_store.png"
+
 flutter:
     uses-material-design: true
 
