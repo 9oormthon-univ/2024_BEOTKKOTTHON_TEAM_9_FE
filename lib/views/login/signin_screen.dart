@@ -131,6 +131,13 @@ class SignInScreen extends StatelessWidget {
                           viewModel.confirmPasswordController.text) {
                         bool isSuccess = await viewModel.attemptSignIn();
                         if (isSuccess) {
+                          Get.snackbar(
+                            '회원가입에 감사드립니다 🐾',
+                            '가입하신 이메일과 비밀번호로 로그인 해주세요!',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Color(0xFFA273FF),
+                            colorText: Colors.white,
+                          );
                           Get.to(LoginScreen());
                         } else {
                           print("Sign in failed");
