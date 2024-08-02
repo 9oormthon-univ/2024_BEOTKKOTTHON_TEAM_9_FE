@@ -23,7 +23,7 @@ class MyViewModel extends GetxController {
       UserInfoModel userInfo = await UserService.fetchItems();
       isHaveDog.value = userInfo.isHaveDog ?? false;
       userName.value = userInfo.userName.toString() ?? "User";
-      membertype.value = userInfo.membertype == "B" ? "(예비)반려인" : "입양 공고자";
+      membertype.value = "(예비)반려인";
       useremail.value = userInfo.useremail ?? "User1234@naver.com";
       applyAdoption.value = userInfo.applyAdoption == "A" ? "assets/images/my/progress2.svg" : "assets/images/my/progress1.svg";
       dogImage.value = userInfo.dogImage ?? "assets/images/my/dog.svg";
