@@ -213,7 +213,6 @@ class _DogList extends StatelessWidget {
             childAspectRatio: 1 / 1.2,
             crossAxisSpacing: 0,
             mainAxisSpacing: 0,
-
           ),
           builderDelegate: PagedChildBuilderDelegate<DogList>(
             itemBuilder: (context, item, index) => Container(

@@ -55,7 +55,6 @@ class UserInfoModel {
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) {
 
-
     return UserInfoModel(
       isHaveDog: json['adoption'] != null,// 기본값으로 false 설정
       userName: json['name'] as String,

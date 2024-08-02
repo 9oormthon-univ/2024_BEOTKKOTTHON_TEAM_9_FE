@@ -6,8 +6,6 @@ import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import '../../viewModels/privacy/privacy_viewmodel.dart';
 import '../../viewModels/root/root_viewmodel.dart';
-import 'adoption_screen.dart';
-import 'hand_sign_screen.dart';
 
 final QuestionNum = 0.obs;
 final allYes = false.obs;
@@ -266,6 +264,8 @@ class _ShowNoticeWidget extends StatelessWidget {
 
 class _SubmissionButton extends StatelessWidget {
   _SubmissionButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
+  RootViewModel rootViewModel = Get.put(RootViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -282,10 +282,23 @@ class _SubmissionButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: allYes.value ? () {
-              // Todo: 이거 쓰는데 왜 바텀네비게이션 안되냐
-              // Get.toNamed('/home');
-            } : null,
+            onPressed: allYes.value
+                ? () async {
+              bool success = await viewModel.attemptPost();
+              if (success) {
+                RootViewModel rootViewModel = Get.put(RootViewModel());
+                rootViewModel.changeIndex(0);
+              } else {
+                Get.snackbar(
+                  'Error',
+                  'Failed to submit the application.',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
+              }
+            }
+                : null,
             child: Text(
               '신청서 제출하기',
               style: FontSystem.KR16B.copyWith(

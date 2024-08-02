@@ -167,9 +167,14 @@ class _FirstQuestion extends StatelessWidget {
 class _SecondQuestion extends StatelessWidget {
   _SecondQuestion({super.key});
   final TextEditingController _controller = TextEditingController();
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
+    _controller.addListener(() {
+      viewModel.setPetHistory(_controller.text);
+    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -257,10 +262,14 @@ class _ThirdQuestion extends StatelessWidget {
 // 4
 class _FourthQuestion extends StatelessWidget {
   _FourthQuestion({super.key});
+  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
+    _controller.addListener(() {
+      viewModel.setCurrentPet(_controller.text);
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -281,95 +290,24 @@ class _FourthQuestion extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('반려 동물의 종류는 무엇인가요?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
-              TextField(
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFA273FF)),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Text('반려 동물의 나이는?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
-              TextField(
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFA273FF)),
-                  ),
-                  suffixText: '살',
-                ),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 20),
-              Text('반려 동물의 성별은?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
-              Obx(() => Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('암컷'),
-                      leading: Radio<String>(
-                        value: '암컷',
-                        groupValue: viewModel.gender.value,
-                        onChanged: (value) {
-                          viewModel.setGender(value!);
-                        },
-                        activeColor: Color(0xFFA273FF),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('수컷'),
-                      leading: Radio<String>(
-                        value: '수컷',
-                        groupValue: viewModel.gender.value,
-                        onChanged: (value) {
-                          viewModel.setGender(value!);
-                        },
-                        activeColor: Color(0xFFA273FF),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              SizedBox(height: 20),
-              Text('반려 동물은 중성화 수술을 했나요?', style: FontSystem.KR16M.copyWith(color: Colors.black)),
-              Obx(() => Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('네'),
-                      leading: Radio<String>(
-                        value: '네',
-                        groupValue: viewModel.neutered.value,
-                        onChanged: (value) {
-                          viewModel.setNeutered(value!);
-                        },
-                        activeColor: Color(0xFFA273FF),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('아니요'),
-                      leading: Radio<String>(
-                        value: '아니요',
-                        groupValue: viewModel.neutered.value,
-                        onChanged: (value) {
-                          viewModel.setNeutered(value!);
-                        },
-                        activeColor: Color(0xFFA273FF),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-            ],
+        Container(
+          height: 370,
+          decoration: BoxDecoration(
+            color: Colors.white, // 배경을 흰색으로 변경
+            borderRadius: BorderRadius.circular(10), // 모서리 곡률 10
+            border: Border.all(
+              color: Color(0xFFCCB7F7), // 가장자리에 스트로크 추가
+              width: 1, // 스트로크 너비 설정
+            ),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: TextField(
+            controller: _controller,
+            maxLines: null, // 무제한 줄 입력 가능
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: "클릭하여 작성해주세요.",
+            ),
           ),
         ),
       ],
@@ -445,9 +383,13 @@ class _SixthQuestion extends StatelessWidget {
 class _SeventhQuestion extends StatelessWidget {
   _SeventhQuestion({super.key});
   final TextEditingController _controller = TextEditingController();
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
+    _controller.addListener(() {
+      viewModel.setReasonForAdoption(_controller.text);
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -569,7 +511,8 @@ class _StartButton extends StatelessWidget {
 }
 // 1 -> 2(예) or 1 -> 3(아니오)
 class _FirstButton extends StatelessWidget {
-  const _FirstButton({super.key});
+  _FirstButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -589,6 +532,7 @@ class _FirstButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 2;
+              viewModel.setPetHistoryAnswer("YES");
             },
             child: Text(
               '네, 있습니다.',
@@ -612,6 +556,7 @@ class _FirstButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 3;
+              viewModel.setPetHistoryAnswer("NO");
             },
             child: Text(
               '아니오, 없습니다.',
@@ -627,7 +572,7 @@ class _FirstButton extends StatelessWidget {
 }
 // 2(주관식) -> 3
 class _SecondButton extends StatelessWidget {
-  const _SecondButton({super.key});
+  _SecondButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -646,7 +591,6 @@ class _SecondButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              // viewModel.thirdResponse.value = _controller.text;
               QuestionNum.value = 3;
             },
             child: Text(
@@ -661,7 +605,8 @@ class _SecondButton extends StatelessWidget {
 }
 // 3 -> 4(예) or 3 -> 5(아니오)
 class _ThirdButton extends StatelessWidget {
-  const _ThirdButton({super.key});
+  _ThirdButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -681,6 +626,7 @@ class _ThirdButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 4;
+              viewModel.setCurrentPetAnswer("YES");
             },
             child: Text(
               '네, 있습니다.',
@@ -704,6 +650,7 @@ class _ThirdButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 5;
+              viewModel.setCurrentPetAnswer("NO");
             },
             child: Text(
               '아니오, 없습니다.',
@@ -751,7 +698,8 @@ class _FourthButton extends StatelessWidget {
 }
 // 5 -> 6(예) or 5 -> 7(아니오)
 class _FifthButton extends StatelessWidget {
-  const _FifthButton({super.key});
+  _FifthButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -771,6 +719,7 @@ class _FifthButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 6;
+              viewModel.setFamilyAnswer("YES");
             },
             child: Text(
               '네, 있습니다.',
@@ -794,6 +743,7 @@ class _FifthButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 7;
+              viewModel.setFamilyAnswer("NO");
             },
             child: Text(
               '아니오, 없습니다.',
@@ -809,7 +759,8 @@ class _FifthButton extends StatelessWidget {
 }
 // 6 -> 7
 class _SixthButton extends StatelessWidget {
-  const _SixthButton({super.key});
+  _SixthButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -829,6 +780,7 @@ class _SixthButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 7;
+              viewModel.setFamilyAgreement("AGREE");
             },
             child: Text(
               '모두 찬성',
@@ -852,6 +804,7 @@ class _SixthButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 7;
+              viewModel.setFamilyAgreement("PARTIALLY_AGREE");
             },
             child: Text(
               '부분 찬성',
@@ -875,6 +828,7 @@ class _SixthButton extends StatelessWidget {
             ),
             onPressed: () {
               QuestionNum.value = 7;
+              viewModel.setFamilyAgreement("DISAGREE");
             },
             child: Text(
               '모두 반대',
@@ -922,7 +876,8 @@ class _SeventhButton extends StatelessWidget {
 }
 // 8
 class _EighthButton extends StatelessWidget {
-  const _EighthButton({super.key});
+  _EighthButton({super.key});
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -941,6 +896,7 @@ class _EighthButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              viewModel.setDogNewsAnswer("YES");
               Get.to(() => RegulatoryNoticeScreen());
             },
             child: Text(
@@ -964,6 +920,7 @@ class _EighthButton extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              viewModel.setDogNewsAnswer("NO");
               Get.to(() => RegulatoryNoticeScreen());
             },
             child: Text(

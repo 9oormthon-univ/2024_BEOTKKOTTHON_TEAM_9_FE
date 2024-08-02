@@ -27,16 +27,13 @@ class PrivacyConsentScreen extends BaseScreen<PrivacyViewModel> {
                   padding: const EdgeInsets.all(10.0),
                   child: _Header(),
                 ),
+                _Question(),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: _Question(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: _Body(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: _Checkbox(),
                 ),
                 Padding(
@@ -96,7 +93,7 @@ class _Question extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽으로 정렬
       children: [
         Container(
-          padding: EdgeInsets.all(20), // 텍스트에 패딩 추가
+          padding: EdgeInsets.fromLTRB(30, 50, 30, 30),
           width: MediaQuery.of(context).size.width - 40,
           child: RichText(
             text: TextSpan(
@@ -204,6 +201,8 @@ class _Checkbox extends StatelessWidget {
 }
 
 class _Signature extends StatelessWidget {
+  final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -211,14 +210,13 @@ class _Signature extends StatelessWidget {
         InkWell(
           // Todo: 서명 다시하면 해당 서명으로 업데이터 해야됨
           onTap: () async {
-            // 서명 페이지로 이동하고 File로 서명 결과를 받아옴
             final File? result = await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SignaturePage()),
             );
             if (result != null) {
               signatureData.value = result;
-              // viewModel.updateUploadFile(result); // viewModel 사용 시
+              viewModel.updateUploadFile(result); // viewModel 사용 시
             }
           },
           child: Obx(() => Container(
@@ -251,7 +249,7 @@ class _Completebutton extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width - 40, // 핸드폰 가로 너비에서 40(양쪽 20씩)을 뺀 값
-          height: 50,
+          height: 60,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: isAgreed_1.value && signatureData.value != null ? Color(0xFFA273FF) : Color(0xFFCBB9F0),

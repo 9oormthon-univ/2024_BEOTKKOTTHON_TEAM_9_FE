@@ -195,6 +195,7 @@ class _BottomButton extends StatelessWidget {
       onTap: () async {
         //스크린 렌더링 전에 할거
         await messageViewModel.setId(viewModel.items.id);
+        await messageViewModel.TrueChat();
         // Get.to(() => MessageScreen());
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);

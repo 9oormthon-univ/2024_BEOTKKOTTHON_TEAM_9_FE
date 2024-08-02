@@ -7,7 +7,6 @@ import 'package:bommeong/viewModels/chat/chat_viewmodel.dart';
 import 'package:bommeong/views/base/base_screen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:bommeong/utilities/font_system.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../services/userpreferences_service.dart';
 import '../../viewModels/home/doginfo_viewmodel.dart';
@@ -27,7 +26,6 @@ class ChatScreen extends BaseScreen<ChatViewModel> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator()); // 로딩 인디케이터 표시
         }
-
         // 에러가 발생한 경우 처리
         if (snapshot.hasError) {
           return Center(child: Text('데이터 로딩 중 에러가 발생했습니다.'));
@@ -141,8 +139,8 @@ class _BottomButton extends StatelessWidget {
         int? id = UserPreferences.getRandomElementFromDogList();
         await viewModel.setId(id!);
         await messageViewModel.setId(id!);
-
-        // Get.to(() => MessageScreen());
+        await messageViewModel.RandomChat();
+        // Get.to(() => MessageScreen(Randomchat: true));
         RootViewModel rootViewModel = Get.put(RootViewModel());
         rootViewModel.changeIndex(5);
       },
@@ -185,6 +183,7 @@ class _ChatLogs extends StatelessWidget {
               onTap: () async {
                 await messageViewModel.setId(item.postid);
                 await dogInfoViewModel.setId(item.postid);
+                await messageViewModel.RandomChat();
                 RootViewModel rootViewModel = Get.put(RootViewModel());
                 rootViewModel.changeIndex(5);
               },
