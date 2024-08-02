@@ -286,13 +286,18 @@ class _SubmissionButton extends StatelessWidget {
                 ? () async {
               bool success = await viewModel.attemptPost();
               if (success) {
-                RootViewModel rootViewModel = Get.put(RootViewModel());
-                rootViewModel.changeIndex(0);
+                Get.snackbar(
+                  '입양 신청에 감사드립니다 🐾',
+                  '보호소 측에서 검토 후, 차후에 연락이 있을 예정이니 조금만 기다려주세요!',
+                  snackPosition: SnackPosition.TOP,
+                  backgroundColor: Color(0xFFA273FF),
+                  colorText: Colors.white,
+                );
               } else {
                 Get.snackbar(
                   'Error',
                   'Failed to submit the application.',
-                  snackPosition: SnackPosition.BOTTOM,
+                  snackPosition: SnackPosition.TOP,
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
                 );

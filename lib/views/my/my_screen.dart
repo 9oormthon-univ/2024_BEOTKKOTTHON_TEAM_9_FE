@@ -1,4 +1,6 @@
 import 'package:bommeong/services/userpreferences_service.dart';
+import 'package:bommeong/viewModels/login/login_viewmodel.dart';
+import 'package:bommeong/views/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bommeong/viewModels/my/my_viewmodel.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
 import 'package:bommeong/viewModels/root/root_viewmodel.dart';
+
+import '../../services/user_service.dart';
 
 class MyScreen extends BaseScreen<MyViewModel> {
   const MyScreen({super.key});
@@ -81,6 +85,7 @@ class _TopPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MyViewModel myViewModel = Get.put(MyViewModel());
+    LoginViewModel loginViewModel = Get.put(LoginViewModel());
 
     return Container(
       padding:
@@ -116,14 +121,23 @@ class _TopPart extends StatelessWidget {
             ],
           ),
           Spacer(),
-          // Todo: 일단 로그아웃 로직 없앰
-          // InkWell(
-          //   onTap: () {
-          //     UserPreferences.logout();
-          //     RootViewModel rootViewModel = Get.put(RootViewModel());
-          //     rootViewModel.changeIndex(8);
-          //   },
-          //     child: Icon(Icons.arrow_forward_ios, size: 20, color: Color(0xFFA273FF))),
+          InkWell(
+            onTap: () {
+              loginViewModel.attemptLogOut();
+            },
+              child: Container(
+                height: Get.height * 0.03,
+                width: Get.width * 0.2,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xFFA273FF),
+                  borderRadius: BorderRadius.circular(7.5),
+                ),
+                child: Text("로그아웃",
+                    style: FontSystem.KR14B.copyWith(color: Colors.white)),
+              ),
+          ),
+          SizedBox(width : Get.width * 0.04),
         ],
       ),
     );

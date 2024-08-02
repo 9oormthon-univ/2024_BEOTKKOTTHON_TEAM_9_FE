@@ -37,7 +37,7 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
           ],
         ),
         Positioned(
-          bottom: 140,
+          bottom: 30,
           left: 0,
           right: 0,
           child: Padding(

@@ -139,7 +139,7 @@ class _Header extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: '만나서 반가워요, '),
                     TextSpan(
-                      text: UserPreferences.getMemberType() == "B" ? "예비 반려인" : "사용자",
+                      text: "예비 반려인",
                       style: TextStyle(color: Color(0xFF634EC0)), //
                     ),
                     TextSpan(text: '님! 🐾'),

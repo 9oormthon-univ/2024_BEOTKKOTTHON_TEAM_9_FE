@@ -64,7 +64,6 @@ class PrivacyViewModel extends GetxController {
       uploadFile: uploadFile,  // 이미지를 File 객체로 전달
       adoptApplication: application,
     );
-    // 서비스 호출
     return await _userService.submitAnnouncement(post);
   }
 }

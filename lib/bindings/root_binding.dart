@@ -21,7 +21,7 @@ class RootBinding extends Bindings {
     Get.lazyPut(() => MyViewModel());
     Get.lazyPut(() => DogInfoViewModel(),fenix: true);
     Get.put(LoginViewModel());
-    Get.put(PrivacyViewModel());
+    Get.lazyPut(() => PrivacyViewModel());
     //DogInfoViewModel를 최대한 빨리 생성하기위한 코드
     Get.lazyPut(() => MessageViewModel());
   }

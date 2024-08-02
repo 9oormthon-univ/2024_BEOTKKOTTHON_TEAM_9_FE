@@ -165,8 +165,6 @@ List<DogList> processResponse(String responseBody) {
   return doglists;
 }
 
-
-
 DogInfo dogInfoProcessResponse(String responseBody) {
   Map<String, dynamic> decodedResponse = json.decode(responseBody);
   dynamic results= decodedResponse['result'];
