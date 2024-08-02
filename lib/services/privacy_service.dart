@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:bommeong/services/userpreferences_service.dart';
+import 'package:bommeong/views/home/home_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -7,10 +9,20 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../main_app.dart';
 import '../models/privacy/privacy_state.dart';
+import '../utilities/app_routes.dart';
 import '../viewModels/root/root_viewmodel.dart';
+import '../views/root/root_screen.dart';
 
 class PrivacyService {
+
+  // void restartApp() {
+  //   Get.offAll(() => MainApp(initialRoute: Routes.HOME),
+  //       transition: Transition.fade);
+  //   Get.reset();
+  // }
+
   Future<bool> submitAnnouncement(Post post) async {
     try {
       // 환경 변수에서 API URL 가져오기
@@ -32,7 +44,6 @@ class PrivacyService {
       request.fields.addAll({
         'postId': post.postId,
         'memberId': post.memberId,
-        'status': 'A',
         'adoptApplication.petHistoryAnswer': post.adoptApplication.petHistoryAnswer,
         'adoptApplication.petHistory': post.adoptApplication.petHistory,
         'adoptApplication.currentPetAnswer': post.adoptApplication.currentPetAnswer,
@@ -72,13 +83,16 @@ class PrivacyService {
 
       // 응답 처리
       if (response.statusCode == 200) {
-        print('Announcement submitted successfully');
-        print(respStr);
-
-        await UserPreferences.setDogId("YES");
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //     restartApp();
+      //   });
 
         RootViewModel rootViewModel = Get.put(RootViewModel());
+        Get.offAll(() => RootScreen());
         rootViewModel.changeIndex(0);
+
+
+        await UserPreferences.setDogId("YES");
         return true;
       } else {
         print('Failed to submit announcement');

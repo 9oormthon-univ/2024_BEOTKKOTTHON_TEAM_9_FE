@@ -19,6 +19,7 @@ class MainApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: "Bommeong",
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

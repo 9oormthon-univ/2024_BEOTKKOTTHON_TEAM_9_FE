@@ -60,6 +60,16 @@ class LoginViewModel extends GetxController {
     }
   }
 
+  Future<bool> attemptLogOut() async {
+    try {
+      await _userService.attemptLogOut();
+      return true;
+    } catch (e) {
+      print('Error during login attempt: $e');
+      return false;
+    }
+  }
+
   Future<void> signInWithApple() async {
     try {
       final credential = await _getMockAppleCredential();
@@ -126,4 +136,5 @@ class LoginViewModel extends GetxController {
       print('로그아웃 실패: $e');
     }
   }
+
 }

@@ -3,12 +3,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:bommeong/models/home/dog_state.dart';
 import 'package:bommeong/services/chat_service.dart';
 
-
 class ChatViewModel extends GetxController {
+  // Todo: dispose 추후에 넣어야함
   RxBool isHaveChat = true.obs;
   final PagingController<int, ChatList> pagingController = PagingController(firstPageKey: 0);
   final GetChatList apiService = GetChatList();
-
 
   @override
   void onInit() {
@@ -18,12 +17,17 @@ class ChatViewModel extends GetxController {
     });
   }
 
-
   Future<void> fetchPage(int pageKey) async {
     try {
+      // API로부터 데이터를 가져옵니다.
       final newItems = await apiService.fetchItems(pageKey);
-      num pageSize = 6;
+
+      // 페이지 크기를 설정합니다.
+      const pageSize = 6;
+
+      // 마지막 페이지인지 확인합니다.
       final isLastPage = newItems.length < pageSize;
+
       if (isLastPage) {
         pagingController.appendLastPage(newItems);
       } else {
@@ -57,20 +61,14 @@ class ChatViewModel extends GetxController {
       if (newItems.isNotEmpty) {
         isHaveChat.value = true;
 
-        // PagingController를 리프레시하거나 업데이트하는 로직
-        // 여기서는 간단하게 PagingController를 리프레시하는 방법을 사용합니다.
-        pagingController.refresh();
+        // 현재 페이지에 새 데이터를 추가합니다.
+        pagingController.refresh(); // 데이터 갱신
       } else {
         isHaveChat.value = false;
       }
     } catch (error) {
       print("Error updating chat list: $error");
+      pagingController.error = error;
     }
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    pagingController.dispose();
   }
 }

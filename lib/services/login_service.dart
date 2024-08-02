@@ -5,12 +5,29 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../main_app.dart';
 import '../providers/AuthController.dart';
+import '../utilities/app_routes.dart';
 import 'user_service.dart';
 import 'userpreferences_service.dart';
+import 'package:flutter/material.dart';
 
 class UserService {
   String? loginAPI = '${dotenv.env['API']}/user/login';
+  String? logoutAPI = '${dotenv.env['API']}/user/logout';
+  bool isLoggedIn = UserPreferences.getEmail().isNotEmpty;
+
+  void restartApp() {
+    // 모든 라우트를 제거하고 새로운 인스턴스의 MainApp으로 이동
+    Get.offAll(() => MainApp(initialRoute: Routes.LOGIN),
+        transition: Transition.fade);
+
+    // 로그인 상태 초기화
+    isLoggedIn = false;
+
+    // GetX 컨트롤러 초기화 (만약 사용 중이라면)
+    Get.reset();
+  }
 
   Future<String?> attemptLogIn(String email, String password) async {
     try {
@@ -30,18 +47,19 @@ class UserService {
         var data = json.decode(response.body);
         if (data['result'] != null && data['result']['accessToken'] != null) {
           String accessToken = data['result']['accessToken'];
+          String refreshToken = data['result']['refreshToken'];
           int memberId = data['result']['memberId'];
 
           // 토큰 저장
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('access_token', accessToken);
+          await prefs.setString('refresh_token', refreshToken);
 
           // 사용자 정보 저장
           await UserPreferences.setMemberId(memberId);
           await UserPreferences.setEmail(data['result']['email']);
           await UserPreferences.setName(data['result']['name']);
           await UserPreferences.setMemberType(data['result']['memberType']);
-
           return accessToken;
         }
       }
@@ -178,4 +196,38 @@ class UserService {
       throw Exception('Failed to load user info');
     }
   }
+
+  Future<void> attemptLogOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('refresh_token');
+
+    if (token == null) {
+      print('No token found, proceeding with logout');
+    } else {
+      try {
+        final response = await http.get(
+          Uri.parse(logoutAPI!),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode != 200) {
+          print('Failed to logout user. Status code: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Logout Error: $e');
+      }
+    }
+
+    // 로컬 데이터 삭제
+    await UserPreferences.logout();
+
+    // UI 스레드에서 앱 재시작
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      restartApp();
+    });
+  }
+
 }
