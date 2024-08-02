@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bommeong/views/privacy/regulatory_notice_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,24 +16,38 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
 
     return Obx(() => Stack(
       children: [
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _Header(),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(25, 40, 25, 0),
-              child: QuestionNum.value == 0 ? _Question() :
-              QuestionNum.value == 1 ? _FirstQuestion() :
-              QuestionNum.value == 2 ? _SecondQuestion() :
-              QuestionNum.value == 3 ? _ThirdQuestion() :
-              QuestionNum.value == 4 ? _FourthQuestion() :
-              QuestionNum.value == 5 ? _FifthQuestion() :
-              QuestionNum.value == 6 ? _SixthQuestion() :
-              QuestionNum.value == 7 ? _SeventhQuestion() : _EighthQuestion()
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: _Header(),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(25, 40, 25, 0),
+                child: QuestionNum.value == 0
+                    ? _Question()
+                    : QuestionNum.value == 1
+                    ? _FirstQuestion()
+                    : QuestionNum.value == 2
+                    ? _SecondQuestion()
+                    : QuestionNum.value == 3
+                    ? _ThirdQuestion()
+                    : QuestionNum.value == 4
+                    ? _FourthQuestion()
+                    : QuestionNum.value == 5
+                    ? _FifthQuestion()
+                    : QuestionNum.value == 6
+                    ? _SixthQuestion()
+                    : QuestionNum.value == 7
+                    ? _SeventhQuestion()
+                    : _EighthQuestion(),
+              ),
+            ],
+          ),
         ),
         Positioned(
           bottom: 30,
@@ -42,14 +55,23 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
           right: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: QuestionNum.value == 0 ? _StartButton() :
-                    QuestionNum.value == 1 ? _FirstButton() :
-                     QuestionNum.value == 2 ? _SecondButton() :
-                      QuestionNum.value == 3 ? _ThirdButton() :
-                        QuestionNum.value == 4 ? _FourthButton() :
-                          QuestionNum.value == 5 ? _FifthButton() :
-                            QuestionNum.value == 6 ? _SixthButton() :
-                              QuestionNum.value == 7 ? _SeventhButton() : _EighthButton()
+            child: QuestionNum.value == 0
+                ? _StartButton()
+                : QuestionNum.value == 1
+                ? _FirstButton()
+                : QuestionNum.value == 2
+                ? _SecondButton()
+                : QuestionNum.value == 3
+                ? _ThirdButton()
+                : QuestionNum.value == 4
+                ? _FourthButton()
+                : QuestionNum.value == 5
+                ? _FifthButton()
+                : QuestionNum.value == 6
+                ? _SixthButton()
+                : QuestionNum.value == 7
+                ? _SeventhButton()
+                : _EighthButton(),
           ),
         ),
       ],
