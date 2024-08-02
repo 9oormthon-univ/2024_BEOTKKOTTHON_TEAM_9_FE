@@ -188,15 +188,10 @@ class _FirstQuestion extends StatelessWidget {
 // 2
 class _SecondQuestion extends StatelessWidget {
   _SecondQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setPetHistory(_controller.text);
-    });
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -234,7 +229,7 @@ class _SecondQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            controller: viewModel.setPetHistoryController, // 사용자 입력을 추적하는 컨트롤러 추가
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -284,14 +279,10 @@ class _ThirdQuestion extends StatelessWidget {
 // 4
 class _FourthQuestion extends StatelessWidget {
   _FourthQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setCurrentPet(_controller.text);
-    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -324,7 +315,7 @@ class _FourthQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller,
+            controller: viewModel.setCurrentPetController,
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -404,14 +395,10 @@ class _SixthQuestion extends StatelessWidget {
 // 7
 class _SeventhQuestion extends StatelessWidget {
   _SeventhQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setReasonForAdoption(_controller.text);
-    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -450,7 +437,7 @@ class _SeventhQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            controller: viewModel.setReasonForAdoptionController, // 사용자 입력을 추적하는 컨트롤러 추가
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,

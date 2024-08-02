@@ -34,6 +34,8 @@ class GetChatList {
       String responseBody = utf8.decode(response.bodyBytes);
       return processResponse(responseBody);
     } else {
+      String responseBody = utf8.decode(response.bodyBytes);
+      print(responseBody);
       throw Exception('Failed to load items');
     }
   }
