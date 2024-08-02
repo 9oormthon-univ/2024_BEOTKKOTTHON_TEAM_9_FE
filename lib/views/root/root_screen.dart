@@ -30,8 +30,6 @@ class RootScreen extends BaseScreen<RootViewModel> {
           MyScreen(), // 3
           DogInfoScreen(), // 4
           MessageScreen(), // 5
-          OnboardingScreen(0), //6
-          OnboardingScreen(2), //7
           LoginScreen(), //8
           PrivacyConsentScreen(), //9
         ],

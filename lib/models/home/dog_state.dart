@@ -65,12 +65,14 @@ class ChatList {
   final String name;
   final String status; // 입양 됐는지 아닌지를 알려주는 상태
   final DateTime date; // 마지막 메시지를 받거나 보낸 날짜
+  final int postid;
 
   ChatList({
     required this.imagePath,
     required this.name,
     required this.status,
     required this.date,
+    required this.postid,
   });
 
   factory ChatList.fromJson(Map<String, dynamic> json) {
@@ -79,6 +81,7 @@ class ChatList {
       name: json['name'] as String,
       status: json['status'] as String,
       date: DateTime.parse(json['date'] as String),
+      postid : json['postid'] as int,
     );
   }
 
@@ -88,6 +91,7 @@ class ChatList {
       'name': name,
       'status': status,
       'date': date.toIso8601String(),
+      'Postid': postid,
     };
   }
 }

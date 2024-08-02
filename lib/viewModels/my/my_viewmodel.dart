@@ -5,7 +5,7 @@ import 'package:bommeong/services/my_service.dart';
 class MyViewModel extends GetxController {
   RxBool isHaveDog = true.obs;
   RxString userImage = "assets/images/home/face.png".obs;
-  RxString userName = "공백".obs;
+  RxString userName = "예비 반려인".obs;
   RxString membertype = "(예비)반려인".obs;
   RxString useremail = "ghkd2271@nate.com".obs;
   RxString applyAdoption = "assets/images/my/progress1.svg".obs;

@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/login_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../views/login/signin_screen.dart';
+
 class LoginViewModel extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -44,7 +46,7 @@ class LoginViewModel extends GetxController {
         emailController.text,
         passwordController.text,
       );
-      print('Received token: $token'); // 디버깅을 위한 로그 추가
+      // print('Received token: $token');
       if (token != null && token.isNotEmpty) {
         setToken(token);
         return true;
@@ -102,11 +104,18 @@ class LoginViewModel extends GetxController {
       print('카카오톡으로 로그인 성공');
       User user = await UserApi.instance.me();
       print('사용자 정보: ${user.kakaoAccount?.profile?.nickname}');
-      // 로그인 성공 시 필요한 로직 추가
+
+      // 회원가입 화면으로 이동하면서 사용자 정보를 전달
+      Get.to(() => SignInScreen(
+        membertype: "B",
+        email: user.kakaoAccount?.email ?? '',
+        name: user.kakaoAccount?.profile?.nickname ?? '',
+        phone: user.kakaoAccount?.phoneNumber ?? '',
+      ));
     } catch (e) {
       print('카카오톡으로 로그인 실패: $e');
     }
-    }
+  }
 
 
   Future<void> logout() async {

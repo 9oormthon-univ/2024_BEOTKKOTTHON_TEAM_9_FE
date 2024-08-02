@@ -3,110 +3,69 @@ import 'package:get/get.dart';
 import 'dart:io';
 import '../../models/privacy/privacy_state.dart';
 import '../../services/privacy_service.dart';
+import '../../services/userpreferences_service.dart';
 
 class PrivacyViewModel extends GetxController {
-  final Privacy announcement = Privacy();
   final PrivacyService _userService = PrivacyService();
-  final TextEditingController firstConsent = TextEditingController();
-  final TextEditingController firstResponse = TextEditingController();
-  final TextEditingController secondResponse = TextEditingController();
-  final TextEditingController thirdResponse = TextEditingController();
-  final TextEditingController fourthResponse = TextEditingController();
-  final TextEditingController firstAdoptionResponse = TextEditingController();
-  final TextEditingController secondAdoptionResopnse = TextEditingController();
 
+  // ViewModel 변수들
+  var petHistoryAnswer = ''.obs;
+  var petHistory = ''.obs;
+  var familyAnswer = ''.obs;
+  var familyAgreement = ''.obs;
+  var currentPetAnswer = ''.obs;
+  var currentPet = ''.obs;
+  var reasonForAdoption = ''.obs;
+  var dogNewsAnswer = ''.obs;
   var gender = ''.obs;
   var neutered = ''.obs;
+  File? uploadFile;
 
-  // 질문 번호를 관리하는 변수
-  var questionNum = 0.obs;
+  // 각 변수에 대한 setter
+  void setGender(String value) => gender.value = value;
+  void setNeutered(String value) => neutered.value = value;
+  void updateUploadFile(File selectedPicture) => uploadFile = selectedPicture;
+  void setPetHistoryAnswer(String value) => petHistoryAnswer.value = value;
+  void setPetHistory(String value) => petHistory.value = value;
+  void setFamilyAnswer(String value) => familyAnswer.value = value;
+  void setFamilyAgreement(String value) => familyAgreement.value = value;
+  void setCurrentPetAnswer(String value) => currentPetAnswer.value = value;
+  void setCurrentPet(String value) => currentPet.value = value;
+  void setReasonForAdoption(String value) => reasonForAdoption.value = value;
+  void setDogNewsAnswer(String value) => dogNewsAnswer.value = value;
 
-  // 각 질문에 대한 대답을 관리하는 변수
-  var firstQuestionResponse = ''.obs;
-  var secondQuestionResponse = ''.obs;
-  var thirdQuestionResponse = ''.obs;
-  var fourthQuestionPetType = ''.obs;
-  var fourthQuestionPetAge = ''.obs;
-  var fourthQuestionGender = ''.obs;
-  var fourthQuestionNeutered = ''.obs;
-  var fifthQuestionResponse = ''.obs;
-  var sixthQuestionResponse = ''.obs;
-  var seventhQuestionResponse = ''.obs;
-  var eighthQuestionResponse = ''.obs;
-
-  // 질문 번호를 업데이트하는 메서드
-  void updateQuestionNum(int value) {
-    questionNum.value = value;
-  }
-
-  // 각 질문의 대답을 업데이트하는 메서드
-  void updateFirstQuestionResponse(String value) {
-    firstQuestionResponse.value = value;
-  }
-
-  void updateSecondQuestionResponse(String value) {
-    secondQuestionResponse.value = value;
-  }
-
-  void updateThirdQuestionResponse(String value) {
-    thirdQuestionResponse.value = value;
-  }
-
-  void updateFourthQuestionPetType(String value) {
-    fourthQuestionPetType.value = value;
-  }
-
-  void updateFourthQuestionPetAge(String value) {
-    fourthQuestionPetAge.value = value;
-  }
-
-  void updateFourthQuestionGender(String value) {
-    fourthQuestionGender.value = value;
-  }
-
-  void updateFourthQuestionNeutered(String value) {
-    fourthQuestionNeutered.value = value;
-  }
-
-  void updateFifthQuestionResponse(String value) {
-    fifthQuestionResponse.value = value;
-  }
-
-  void updateSixthQuestionResponse(String value) {
-    sixthQuestionResponse.value = value;
-  }
-
-  void updateSeventhQuestionResponse(String value) {
-    seventhQuestionResponse.value = value;
-  }
-
-  void updateEighthQuestionResponse(String value) {
-    eighthQuestionResponse.value = value;
-  }
-
-  void updateUploadFile(File selectedPicture) {
-    announcement.uploadFile = selectedPicture;
-    update();
-  }
-
-  Future<bool> attemptpost() async {
-    return _userService.submitAnnouncement(
-      firstConsent.text,
-      firstResponse.text,
-      secondResponse.text,
-      thirdResponse.text,
-      fourthResponse.text,
-      firstAdoptionResponse.text,
-      secondAdoptionResopnse.text,
-      announcement.uploadFile,
+  // AdoptApplication 생성
+  AdoptApplication createAdoptApplication() {
+    return AdoptApplication(
+      petHistoryAnswer: petHistoryAnswer.value,
+      petHistory: petHistory.value,
+      familyAnswer: familyAnswer.value,
+      familyAgreement: familyAgreement.value,
+      currentPetAnswer: currentPetAnswer.value,
+      currentPet: currentPet.value,
+      reasonForAdoption: reasonForAdoption.value,
+      dogNewsAnswer: dogNewsAnswer.value,
     );
   }
 
-  void setGender(String value) {
-    gender.value = value;
-  }
+  // 서버에 데이터를 전송
+  Future<bool> attemptPost() async {
+    // AdoptApplication 생성
+    final application = createAdoptApplication();
 
-  void setNeutered(String value) {
-    neutered.value = value;
+    // 사용자 ID 가져오기
+    final memberId = UserPreferences.getMemberId();
+    final postId = UserPreferences.getPostId();
+
+    // Post 객체 생성
+    final post = Post(
+      postId: postId.toString(),
+      memberId: memberId.toString(),
+      uploadFile: uploadFile,  // 이미지를 File 객체로 전달
+      adoptApplication: application,
+    );
+    // 서비스 호출
+    return await _userService.submitAnnouncement(post);
   }
 }
+
