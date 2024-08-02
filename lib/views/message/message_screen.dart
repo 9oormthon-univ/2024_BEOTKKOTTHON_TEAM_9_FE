@@ -20,7 +20,7 @@ class MessageScreen extends BaseScreen<ChatViewModel> {
     return Column(
       children: [
         Obx(() {
-          if (messageViewModel.chatMessages_length >= 6 && messageViewModel.isRandomChat.value) {
+          if (messageViewModel.chatMessages_length >= 6 && messageViewModel.isRandomChat.value && !messageViewModel.isLoading.value) {
             return const _TopButton();
           } else {
             return const SizedBox.shrink(); // 빈 공간 반환
