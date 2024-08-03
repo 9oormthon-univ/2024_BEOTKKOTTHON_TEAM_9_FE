@@ -188,4 +188,33 @@ DogInfo dogInfoProcessResponse(String responseBody) {
   );
 }
 
+class LocationService extends GetConnect {
+  Future<Response> fetchNearbyLocations({
+    required double latitude,
+    required double longitude,
+    required double maxDistance,
+  }) async {
+    String? url = '${dotenv.env['API']}/post/by-location?';
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('access_token');
+
+    final response = await post(
+      url,
+      {
+        "latitude": latitude,
+        "longitude": longitude,
+        "maxDistance": maxDistance,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    return response;
+  }
+}
+
+
 

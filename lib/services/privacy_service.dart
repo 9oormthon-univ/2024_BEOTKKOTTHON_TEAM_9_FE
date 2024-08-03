@@ -17,11 +17,11 @@ import '../views/root/root_screen.dart';
 
 class PrivacyService {
 
-  // void restartApp() {
-  //   Get.offAll(() => MainApp(initialRoute: Routes.HOME),
-  //       transition: Transition.fade);
-  //   Get.reset();
-  // }
+  void restartApp() {
+    Get.offAll(() => MainApp(initialRoute: Routes.HOME),
+        transition: Transition.fade);
+    Get.reset();
+  }
 
   Future<bool> submitAnnouncement(Post post) async {
     try {

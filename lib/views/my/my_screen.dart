@@ -8,9 +8,6 @@ import 'package:bommeong/views/base/base_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bommeong/utilities/font_system.dart';
 import 'package:get/get.dart';
-import 'package:bommeong/viewModels/root/root_viewmodel.dart';
-
-import '../../services/user_service.dart';
 
 class MyScreen extends BaseScreen<MyViewModel> {
   const MyScreen({super.key});
@@ -106,14 +103,14 @@ class _TopPart extends StatelessWidget {
                   SizedBox(width: Get.width * 0.02),
                   Container(
                     height: Get.height * 0.03,
-                    width: Get.width * 0.2,
+                    width: Get.width * 0.20,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Color(0xFFF4EEFF),
                       borderRadius: BorderRadius.circular(7.5),
                     ),
                     child: Text(myViewModel.membertype.value,
-                        style: FontSystem.KR14M.copyWith(color: Color(0xFFA273FF))),
+                        style: FontSystem.KR12M.copyWith(color: Color(0xFFA273FF))),
                   ),
                 ],
               ),
@@ -127,7 +124,7 @@ class _TopPart extends StatelessWidget {
             },
               child: Container(
                 height: Get.height * 0.03,
-                width: Get.width * 0.2,
+                width: Get.width * 0.16,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Color(0xFFA273FF),

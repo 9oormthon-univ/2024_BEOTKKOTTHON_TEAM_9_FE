@@ -96,7 +96,7 @@ class _StartWidget extends StatelessWidget {
 
   Widget _buildQuestion(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 50, 0, 0),
       width: MediaQuery.of(context).size.width - 40,
       child: RichText(
         text: TextSpan(

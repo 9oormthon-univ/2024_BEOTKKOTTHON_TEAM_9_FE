@@ -19,4 +19,14 @@ class UserSignInService {
     );
     return response.statusCode == 200;
   }
+
+  Future<bool> checkEmail(String email) async {
+    String? checkEmailAPI = '${dotenv.env['API']}/user/email-check/$email';
+
+    final response = await http.get(
+      Uri.parse(checkEmailAPI!),
+      headers: {'Content-Type': 'application/json'},
+    );
+    return response.statusCode == 200 && jsonDecode(response.body)['code'] == '0000';
+  }
 }

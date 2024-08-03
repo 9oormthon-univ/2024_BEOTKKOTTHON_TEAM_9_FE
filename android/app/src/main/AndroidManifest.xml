@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bommeong.app"> <!-- 번들 ID 설정 -->
+    package="com.beotkkotthon.bommeong"> <!-- 번들 ID 설정 -->
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -17,7 +17,16 @@
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="true"/>
+            android:exported="true">
+
+            <!-- 카카오톡 로그인 지원 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="kakao65e4736c1c1b3b1415a369d14adfadc2"/> <!-- 실제 앱 키로 대체 -->
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".MainActivity"
@@ -26,6 +35,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
             <meta-data

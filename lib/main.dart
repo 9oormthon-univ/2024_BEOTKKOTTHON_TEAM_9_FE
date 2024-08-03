@@ -26,6 +26,5 @@ void main() async {
   bool isLoggedIn = UserPreferences.getEmail().isNotEmpty;
   print('isLoggedIn: $isLoggedIn');
   KakaoSdk.init(nativeAppKey: '65e4736c1c1b3b1415a369d14adfadc2');
-
   runApp(MainApp(initialRoute: isLoggedIn ? Routes.ROOT : Routes.LOGIN));
 }

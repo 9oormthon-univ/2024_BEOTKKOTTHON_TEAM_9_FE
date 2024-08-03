@@ -61,9 +61,25 @@ class SignInScreen extends StatelessWidget {
                       Container(
                         width: (Get.width - 60 - (Get.width * 0.03)) * 0.35,
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Todo: 중복 확인 api 만들어야 함
-                            print("중복 확인 버튼 클릭됨");
+                          onPressed: () async {
+                            bool isSuccess = await viewModel.checkEmail(viewModel.emailController.text);
+                            if(isSuccess) {
+                              Get.snackbar(
+                                '중복되는 로그인이 없습니다 🐾',
+                                '이어서 회원가입을 진행해 주세요!',
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: Color(0xFFA273FF),
+                                colorText: Colors.white,
+                              );
+                            } else {
+                              Get.snackbar(
+                                '중복되는 아이디가 있어요! 🐾',
+                                '다른 아이디를 입력해주세요.',
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFA273FF), // 버튼 배경색
@@ -73,7 +89,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                           child: Text(
                             '중복 확인',
-                            style: FontSystem.KR15SB.copyWith(color: Colors.white),
+                            style: FontSystem.KR14SB.copyWith(color: Colors.white),
                           ),
                         ),
                       ),
@@ -131,6 +147,13 @@ class SignInScreen extends StatelessWidget {
                           viewModel.confirmPasswordController.text) {
                         bool isSuccess = await viewModel.attemptSignIn();
                         if (isSuccess) {
+                          Get.snackbar(
+                            '회원가입에 감사드립니다 🐾',
+                            '가입하신 이메일과 비밀번호로 로그인 해주세요!',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Color(0xFFA273FF),
+                            colorText: Colors.white,
+                          );
                           Get.to(LoginScreen());
                         } else {
                           print("Sign in failed");

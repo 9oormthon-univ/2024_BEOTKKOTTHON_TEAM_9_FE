@@ -8,14 +8,16 @@ import '../../services/userpreferences_service.dart';
 class PrivacyViewModel extends GetxController {
   final PrivacyService _userService = PrivacyService();
 
+  // 컨트롤러
+  final TextEditingController setPetHistoryController = TextEditingController();
+  final TextEditingController setCurrentPetController = TextEditingController();
+  final TextEditingController setReasonForAdoptionController = TextEditingController();
+
   // ViewModel 변수들
   var petHistoryAnswer = ''.obs;
-  var petHistory = ''.obs;
   var familyAnswer = ''.obs;
   var familyAgreement = ''.obs;
   var currentPetAnswer = ''.obs;
-  var currentPet = ''.obs;
-  var reasonForAdoption = ''.obs;
   var dogNewsAnswer = ''.obs;
   var gender = ''.obs;
   var neutered = ''.obs;
@@ -26,24 +28,21 @@ class PrivacyViewModel extends GetxController {
   void setNeutered(String value) => neutered.value = value;
   void updateUploadFile(File selectedPicture) => uploadFile = selectedPicture;
   void setPetHistoryAnswer(String value) => petHistoryAnswer.value = value;
-  void setPetHistory(String value) => petHistory.value = value;
   void setFamilyAnswer(String value) => familyAnswer.value = value;
   void setFamilyAgreement(String value) => familyAgreement.value = value;
   void setCurrentPetAnswer(String value) => currentPetAnswer.value = value;
-  void setCurrentPet(String value) => currentPet.value = value;
-  void setReasonForAdoption(String value) => reasonForAdoption.value = value;
   void setDogNewsAnswer(String value) => dogNewsAnswer.value = value;
 
   // AdoptApplication 생성
   AdoptApplication createAdoptApplication() {
     return AdoptApplication(
       petHistoryAnswer: petHistoryAnswer.value,
-      petHistory: petHistory.value,
+      petHistory: setPetHistoryController.text,
       familyAnswer: familyAnswer.value,
       familyAgreement: familyAgreement.value,
       currentPetAnswer: currentPetAnswer.value,
-      currentPet: currentPet.value,
-      reasonForAdoption: reasonForAdoption.value,
+      currentPet: setCurrentPetController.text,
+      reasonForAdoption: setReasonForAdoptionController.text,
       dogNewsAnswer: dogNewsAnswer.value,
     );
   }

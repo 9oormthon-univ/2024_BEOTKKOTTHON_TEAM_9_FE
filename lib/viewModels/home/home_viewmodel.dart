@@ -49,22 +49,43 @@ class HomeViewModel extends GetxController {
 
   Future<void> searchAddress() async {
     try {
+      // DaumPostcodeSearch를 통한 주소 검색
       final DataModel? result = await Get.to(() => SearchingPage());
-      print("Search result: $result"); // 로그 유지
+      print("Search result: $result");
+
       if (result != null) {
         String fullAddress = result.address ?? '';
         if (result.buildingName != null && result.buildingName!.isNotEmpty) {
           fullAddress += ' (${result.buildingName})';
         }
-        print("Full address: $fullAddress"); // 로그 유지
+
+        print("Full address: $fullAddress");
         selectedAddress.value = fullAddress;
-        print("Selected address: ${selectedAddress.value}"); // 로그 유지
-        update(); // UI 업데이트를 명시적으로 트리거
+        update();
       }
     } catch (error) {
       print("Error during address search: $error");
     }
   }
+
+  // Todo: 후에 고쳐야함
+  // final LocationService locationService = LocationService();
+  // Future<void> fetchLocations() async {
+  //   try {
+  //     final response = await locationService.fetchNearbyLocations(
+  //       latitude: 10,
+  //       longitude: 10,
+  //       maxDistance: 100,
+  //     );
+  //     if (response.isOk) {
+  //       print("성공");
+  //     } else {
+  //       print('Failed to fetch locations: ${response.statusText}');
+  //     }
+  //   } catch (e) {
+  //     print('An error occurred: $e');
+  //   }
+  // }
 
   @override
   void onClose() {
