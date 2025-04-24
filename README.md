@@ -115,5 +115,8 @@ https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_9_FE/assets/59414536/91
 | 💡     | :bulb                      | Adding/updating comments         |
 | 🗃      | :card_file_box             | Database-related modifications   |
 
-## Lisence
-
+## 🏆 Award
+| 수상명 | 사진 |
+| ------ | ---- |
+| 벚꽃톤 우수상 | <div align="center"><img width="600" alt="스크린샷 2025-04-24 오후 1 38 33" src="https://github.com/user-attachments/assets/0fda4dfb-a081-461b-9f51-ea0529da4325" /></div> |
+| 제주톤 대상 | <div align="center"><img width="600" alt="image" src="https://github.com/user-attachments/assets/c17ca358-3cd5-4d23-b274-f7816cedc6ad" /></div> |
