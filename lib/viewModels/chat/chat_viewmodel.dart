@@ -5,7 +5,7 @@ import 'package:bommeong/services/chat_service.dart';
 
 class ChatViewModel extends GetxController {
   // Todo: dispose 추후에 넣어야함
-  RxBool isHaveChat = true.obs;
+  RxBool isHaveChat = false.obs;
   final PagingController<int, ChatList> pagingController = PagingController(firstPageKey: 0);
   final GetChatList apiService = GetChatList();
 

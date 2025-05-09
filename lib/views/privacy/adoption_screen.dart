@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bommeong/views/privacy/regulatory_notice_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,24 +16,38 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
 
     return Obx(() => Stack(
       children: [
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _Header(),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(25, 40, 25, 0),
-              child: QuestionNum.value == 0 ? _Question() :
-              QuestionNum.value == 1 ? _FirstQuestion() :
-              QuestionNum.value == 2 ? _SecondQuestion() :
-              QuestionNum.value == 3 ? _ThirdQuestion() :
-              QuestionNum.value == 4 ? _FourthQuestion() :
-              QuestionNum.value == 5 ? _FifthQuestion() :
-              QuestionNum.value == 6 ? _SixthQuestion() :
-              QuestionNum.value == 7 ? _SeventhQuestion() : _EighthQuestion()
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: _Header(),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(25, 40, 25, 0),
+                child: QuestionNum.value == 0
+                    ? _Question()
+                    : QuestionNum.value == 1
+                    ? _FirstQuestion()
+                    : QuestionNum.value == 2
+                    ? _SecondQuestion()
+                    : QuestionNum.value == 3
+                    ? _ThirdQuestion()
+                    : QuestionNum.value == 4
+                    ? _FourthQuestion()
+                    : QuestionNum.value == 5
+                    ? _FifthQuestion()
+                    : QuestionNum.value == 6
+                    ? _SixthQuestion()
+                    : QuestionNum.value == 7
+                    ? _SeventhQuestion()
+                    : _EighthQuestion(),
+              ),
+            ],
+          ),
         ),
         Positioned(
           bottom: 30,
@@ -42,14 +55,23 @@ class AdoptionScreen extends BaseScreen<PrivacyViewModel> {
           right: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: QuestionNum.value == 0 ? _StartButton() :
-                    QuestionNum.value == 1 ? _FirstButton() :
-                     QuestionNum.value == 2 ? _SecondButton() :
-                      QuestionNum.value == 3 ? _ThirdButton() :
-                        QuestionNum.value == 4 ? _FourthButton() :
-                          QuestionNum.value == 5 ? _FifthButton() :
-                            QuestionNum.value == 6 ? _SixthButton() :
-                              QuestionNum.value == 7 ? _SeventhButton() : _EighthButton()
+            child: QuestionNum.value == 0
+                ? _StartButton()
+                : QuestionNum.value == 1
+                ? _FirstButton()
+                : QuestionNum.value == 2
+                ? _SecondButton()
+                : QuestionNum.value == 3
+                ? _ThirdButton()
+                : QuestionNum.value == 4
+                ? _FourthButton()
+                : QuestionNum.value == 5
+                ? _FifthButton()
+                : QuestionNum.value == 6
+                ? _SixthButton()
+                : QuestionNum.value == 7
+                ? _SeventhButton()
+                : _EighthButton(),
           ),
         ),
       ],
@@ -166,15 +188,10 @@ class _FirstQuestion extends StatelessWidget {
 // 2
 class _SecondQuestion extends StatelessWidget {
   _SecondQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setPetHistory(_controller.text);
-    });
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -212,7 +229,7 @@ class _SecondQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            controller: viewModel.setPetHistoryController, // 사용자 입력을 추적하는 컨트롤러 추가
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -262,14 +279,10 @@ class _ThirdQuestion extends StatelessWidget {
 // 4
 class _FourthQuestion extends StatelessWidget {
   _FourthQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setCurrentPet(_controller.text);
-    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -302,7 +315,7 @@ class _FourthQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller,
+            controller: viewModel.setCurrentPetController,
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -382,14 +395,10 @@ class _SixthQuestion extends StatelessWidget {
 // 7
 class _SeventhQuestion extends StatelessWidget {
   _SeventhQuestion({super.key});
-  final TextEditingController _controller = TextEditingController();
   final PrivacyViewModel viewModel = Get.put(PrivacyViewModel());
 
   @override
   Widget build(BuildContext context) {
-    _controller.addListener(() {
-      viewModel.setReasonForAdoption(_controller.text);
-    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -428,7 +437,7 @@ class _SeventhQuestion extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: TextField(
-            controller: _controller, // 사용자 입력을 추적하는 컨트롤러 추가
+            controller: viewModel.setReasonForAdoptionController, // 사용자 입력을 추적하는 컨트롤러 추가
             maxLines: null, // 무제한 줄 입력 가능
             decoration: InputDecoration(
               border: InputBorder.none,

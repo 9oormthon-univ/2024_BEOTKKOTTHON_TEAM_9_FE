@@ -107,26 +107,34 @@ class LoginViewModel extends GetxController {
   Future<void> loginWithKakao() async {
     try {
       if (await isKakaoTalkInstalled()) {
+        print('카카오톡 설치됨');
         await UserApi.instance.loginWithKakaoTalk();
+        print('카카오톡으로 로그인 성공');
       } else {
+        print('카카오톡 미설치됨');
         await UserApi.instance.loginWithKakaoAccount();
+        print('카카오 계정으로 로그인 성공');
       }
-      print('카카오톡으로 로그인 성공');
-      User user = await UserApi.instance.me();
-      print('사용자 정보: ${user.kakaoAccount?.profile?.nickname}');
 
-      // 회원가입 화면으로 이동하면서 사용자 정보를 전달
-      Get.to(() => SignInScreen(
-        membertype: "B",
-        email: user.kakaoAccount?.email ?? '',
-        name: user.kakaoAccount?.profile?.nickname ?? '',
-        phone: user.kakaoAccount?.phoneNumber ?? '',
-      ));
+      // 로그인 성공 후 사용자 정보 가져오기
+      User user = await UserApi.instance.me();
+      if (user != null) {
+        print('사용자 정보 가져오기 성공: ${user.kakaoAccount?.profile?.nickname}');
+
+        // 회원가입 화면으로 이동하면서 사용자 정보를 전달
+        Get.to(() => SignInScreen(
+          membertype: "B",
+          email: user.kakaoAccount?.email ?? '',
+          name: user.kakaoAccount?.profile?.nickname ?? '',
+          phone: user.kakaoAccount?.phoneNumber ?? '',
+        ));
+      } else {
+        print('사용자 정보를 가져오지 못했습니다.');
+      }
     } catch (e) {
       print('카카오톡으로 로그인 실패: $e');
     }
   }
-
 
   Future<void> logout() async {
     try {
@@ -136,5 +144,4 @@ class LoginViewModel extends GetxController {
       print('로그아웃 실패: $e');
     }
   }
-
 }

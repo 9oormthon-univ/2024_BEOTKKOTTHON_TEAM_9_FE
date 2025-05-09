@@ -28,4 +28,10 @@ class SignInViewModel {
       "B",
     );
   }
+
+  Future<bool> checkEmail(String text) async {
+    return _userService.checkEmail(
+      text,
+    );
+  }
 }
